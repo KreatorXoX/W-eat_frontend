@@ -9,13 +9,20 @@ const ModalLayout = (props: Props) => {
   const navigate = useNavigate()
   return (
     <>
-      <Backdrop onClick={() => navigate('/')} />
+      <Backdrop onClick={() => navigate(-1)} />
       <div
-        className='absolute bg-slate-200 top-[20%] left-0 right-0 mx-auto
-      h-[30rem] w-[40rem] z-20
-      '
+        className={`${
+          dark ? 'bg-gray-600' : 'bg-slate-200'
+        }  lg:bg-gray-600/10 fixed right-0 top-0 z-10 w-full h-full overflow-hidden
+        lg:flex lg:justify-center lg:items-center `}
       >
-        <Outlet />
+        <div
+          className={`${
+            dark ? 'bg-gray-600' : 'bg-slate-200'
+          }  h-full w-full lg:h-[30rem] lg:w-[40rem] rounded-xl`}
+        >
+          <Outlet />
+        </div>
       </div>
     </>
   )

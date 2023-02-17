@@ -5,8 +5,6 @@ import Account from './pages/Account'
 import Auth from './pages/Auth'
 import Error from './pages/Error'
 import Home from './pages/Home'
-import ProductDetail from './pages/ProductDetail'
-import Products from './pages/Products'
 
 const router = createBrowserRouter([
   {
@@ -22,14 +20,6 @@ const router = createBrowserRouter([
           { index: true, element: <Account /> },
           { path: '/account/auth', element: <Auth /> }
         ]
-      },
-      {
-        path: '/products',
-        element: <Products />
-      },
-      {
-        path: '/products/:id',
-        element: <ProductDetail />
       }
     ]
   }
