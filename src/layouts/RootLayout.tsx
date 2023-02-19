@@ -1,29 +1,25 @@
-import { Outlet } from 'react-router-dom'
-import Basket from '../components/Basket'
-import MainNavigation from '../shared/components/Navigation/MainNavigation'
-import { useTheme } from '../context/themeStore'
+import { Outlet } from "react-router-dom";
+import Basket from "../components/Basket";
+import MainNavigation from "../shared/components/Navigation/MainNavigation";
+import { useTheme } from "../context/themeStore";
 
-type Props = {}
+type Props = {};
 
 const RootLayout = (props: Props) => {
-  const dark = useTheme(state => state.dark)
+  const dark = useTheme((state) => state.dark);
   return (
-    <main className={`h-screen ${dark ? 'dark bg-gray-600' : 'bg-slate-100'}`}>
+    <main className={`h-screen ${dark ? "dark bg-gray-600" : "bg-slate-100"} `}>
       <MainNavigation />
-      <div className='h-full dark:bg-gray-600 bg-slate-100 dark:text-slate-200 text-gray-700 w-full max-w-[100rem] mx-auto grid grid-cols-12'>
-        <div className='col-span-full lg:col-span-9 flex justify-center items-center'>
+      <div className="w-full dark:bg-gray-600 bg-slate-100 dark:text-slate-200 text-gray-700 flex flow-row">
+        <div className="w-full lg:w-[calc(100vw-21.5rem)] flex justify-center items-center">
           <Outlet />
         </div>
-        <div
-          className={`col-span-3 hidden lg:inline-block ${
-            dark ? 'border-l' : ''
-          } border-l-gray-500/50`}
-        >
+        <div className="hidden lg:inline-flex lg:w-[21.5rem]">
           <Basket />
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default RootLayout
+export default RootLayout;

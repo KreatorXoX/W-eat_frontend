@@ -1,4 +1,3 @@
-import React from "react";
 import MainNavigation from "../shared/components/Navigation/MainNavigation";
 
 type Props = {};

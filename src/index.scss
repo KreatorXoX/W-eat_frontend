@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.auth--button {
+  padding: 0.35rem 0;
+  width: 100%;
+  border-radius: 10rem;
+}
+
+.basket {
+  position: relative;
+  padding-top: 0;
+  transition: padding 0.33s linear;
+}
+
+html:not([data-scroll="0"]) {
+  .basket {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding-top: 1rem;
+    width: inherit;
+  }
+}

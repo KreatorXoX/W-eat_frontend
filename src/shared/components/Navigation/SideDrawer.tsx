@@ -13,7 +13,7 @@ const SideDrawer = ({ children, show }: Props) => {
       <aside
         className={`${
           dark ? "bg-gray-600" : "bg-slate-200"
-        }  lg:bg-gray-600/10 fixed right-0 top-0 z-20 w-full h-full overflow-hidden
+        }  lg:bg-gray-600/10 fixed right-0 top-0 z-20 w-full overflow-hidden
         lg:flex lg:justify-center lg:items-center `}
       >
         <div
