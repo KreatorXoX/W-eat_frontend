@@ -1,8 +1,9 @@
-import React from "react";
+import { useCart } from "../context/cartStore";
 import { TbPaperBag } from "react-icons/tb";
 type Props = {};
 
 const Basket = (props: Props) => {
+  const cartItems = useCart((state) => state.items);
   return (
     <div
       className="w-[22rem] bg-slate-100 dark:bg-gray-600 basket dark:border-l dark:border-l-slate-200/20 border-l-gray-500/20 border-l
@@ -13,7 +14,11 @@ const Basket = (props: Props) => {
         <div className="flex flex-col justify-center items-center text-4xl">
           <TbPaperBag />
           <p className="text-2xl font-bold mt-5 mb-2">Fill your Bag</p>
-          <span className="text-base">Your bag is Empty</span>
+          {cartItems.length > 0 ? (
+            cartItems.map((item) => <p>{item}</p>)
+          ) : (
+            <span className="text-base">Your bag is Empty</span>
+          )}
         </div>
       </div>
     </div>
