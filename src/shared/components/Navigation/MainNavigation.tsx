@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AiOutlineMenu } from 'react-icons/ai'
 
 import MainHeader from './MainHeader'
@@ -7,6 +7,8 @@ import ThemeButton from '../UI-Elements/ThemeButton'
 
 const MainNavigation = () => {
   const navigate = useNavigate()
+  const path = useLocation().pathname
+  console.log(path)
   return (
     <>
       <MainHeader>
@@ -22,7 +24,13 @@ const MainNavigation = () => {
           <ThemeButton />
           <button
             className=' dark:text-white rounded-full dark:active:bg-gray-700 active:bg-gray-200 dark:hover:bg-gray-800 hover:bg-gray-300 duration-300 p-2'
-            onClick={() => navigate('/account')}
+            onClick={() => {
+              navigate(
+                `${
+                  path === '/' ? '' : path === '/checkout' ? path : ''
+                }/account`
+              )
+            }}
           >
             <AiOutlineMenu className='text-2xl ' />
           </button>
