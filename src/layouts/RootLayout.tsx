@@ -25,7 +25,7 @@ const RootLayout = (props: Props) => {
       </div>
       <Outlet />
       {cart?.length > 0 &&
-        <div className='inline-block lg:hidden fixed bottom-0 mb-2 w-full'>
+        <div className='inline-block lg:hidden fixed bottom-0 mb-2 w-full px-3'>
           <CartButton />
         </div>}
     </main>

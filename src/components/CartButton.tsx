@@ -20,7 +20,7 @@ const CartButton = (props: Props) => {
         <span className='items-center flex justify-center items-center gap-2'>
           <BsFillBasket2Fill className='inline' />
           <span>Basket</span>
-          <span className=' tracking-wide'>($ 60,00)</span>
+          <span className=' tracking-wide'>($ 61,00)</span>
         </span>
       </button>
     </div>
