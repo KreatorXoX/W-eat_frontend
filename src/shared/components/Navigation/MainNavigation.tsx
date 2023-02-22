@@ -18,7 +18,7 @@ const MainNavigation = () => {
           </Link>
         </h1>
         <h2 className='font-semibold text-xl text-violet-900 dark:text-slate-300'>
-          Menu
+          {path.split('/')[1] === 'checkout' ? 'Checkout' : 'Menu'}
         </h2>
         <div className='flex justify-center items-center gap-4'>
           <ThemeButton />

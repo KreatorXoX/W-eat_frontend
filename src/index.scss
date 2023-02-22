@@ -2,33 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 @layer base {
   html {
-    font-family: "Roboto", sans-serif;
+    font-family: 'Roboto', sans-serif;
   }
 }
 
-.form--input {
-  width: 100%;
-  padding: 0.5em 0.5em;
-  border: 1px solid rgb(55 65 81);
-  border-radius: 0.5em;
-}
 .form--controller {
+  position: relative;
   width: 100%;
   padding: 0 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.25em;
-  max-width: 40rem;
   margin: auto;
+  input {
+    width: 100%;
+    padding: 0.5em 0.5em;
+    border-radius: 0.5em;
+    outline: none;
+    color: rgba(55, 65, 81, 0.85);
+    font-weight: 500;
+    border: 1px solid rgba(55, 65, 81, 0.2);
+  }
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+  input:focus {
+    border-color: rgba(96, 165, 250, 0.5);
+    color: rgba(55, 65, 81, 1);
+  }
 }
-.form--controller label {
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+
 .auth--button {
   padding: 0.35rem 0;
   width: 100%;
@@ -41,7 +49,7 @@
   transition: padding 0.33s linear;
 }
 
-html:not([data-scroll="0"]) {
+html:not([data-scroll='0']) {
   .basket {
     position: fixed;
     top: 0;
