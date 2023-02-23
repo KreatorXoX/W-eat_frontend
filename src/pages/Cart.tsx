@@ -16,7 +16,7 @@ const Cart = (props: Props) => {
         <h2 className="w-full text-left font-bold text-xl mt-4 mb-10">
           Basket
         </h2>
-        <div className="flex flex-col gap-5 w-full">
+        <div className="flex flex-col gap-5 w-full h-screen overflow-y-scroll no-scrollbar">
           {cartItems?.length > 0 &&
             cartItems.map((item, idx) => (
               <div className="border-b border-b-gray-500 w-full">
