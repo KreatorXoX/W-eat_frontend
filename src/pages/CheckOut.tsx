@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import { useCart } from "../context/cartStore";
 type Props = {};
 
@@ -53,9 +53,9 @@ const CheckOut = (props: Props) => {
         <form className='flex flex-col gap-4 border-b pb-4'>
           <h2 className='px-4 text-2xl font-semibold tracking-wide'>Personal Details</h2>
           <div className='grid grid-cols-2 gap-4 md:gap-0 md:p-0'>
-            <div className="form--controller col-span-2 lg:col-span-1">
+            <div className={`${true ? 'formDisabled' : ''} form--controller col-span-2 lg:col-span-1`}>
               <label htmlFor="name" id='name' className='dark:text-slate-100 text-gray-600'>First and last name</label>
-              <input id="name" className="form--input dark:bg-gray-200" type="text" />
+              <input id="name" className={`form--input ${false ? 'dark:bg-gray-200':''}`} type="text"/>
             </div>
             <div className="form--controller col-span-2 lg:col-span-1">
               <label htmlFor="email" id='email' className='dark:text-slate-100 text-gray-600'>E-mail</label>
@@ -70,6 +70,8 @@ const CheckOut = (props: Props) => {
           </div>
         </form>
     </div>
+        <Link to='delivery-time'>Delivery</Link>
+        <Link to='payment-method'>Payment Method</Link>
     </div>
     
   );
