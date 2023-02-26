@@ -1,4 +1,6 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import Login from "../components/Forms/Login";
+import Register from "../components/Forms/Register";
 
 interface Props {}
 
@@ -8,9 +10,8 @@ const Auth = (props: Props) => {
 
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      {isRegister && <h2>Register form</h2>}
-      {!isRegister && <h2>Login form</h2>}
-      <Link to="..">Back</Link>
+      {isRegister && <Register />}
+      {!isRegister && <Login />}
     </div>
   );
 };

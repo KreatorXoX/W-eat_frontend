@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../context/cartStore";
 import { TbPlus, TbMinus } from "react-icons/tb";
+import { MdClose } from "react-icons/md";
 type Props = {};
 
 const Cart = (props: Props) => {
@@ -11,12 +12,15 @@ const Cart = (props: Props) => {
     if (cartItems?.length === 0) navigate("/");
   }, []);
   return (
-    <div className="h-screen overflow-y-scroll w-full px-4 text-gray-800 dark:text-slate-100 flex flex-col items-center justify-between z-20">
-      <div className="w-full">
-        <h2 className="w-full text-left font-bold text-xl mt-4 mb-10">
-          Basket
-        </h2>
-        <div className="relative flex flex-col gap-4 overflow-y-scroll h-screen">
+    <div className="h-screen   w-full px-4 text-gray-800 dark:text-slate-100 z-20">
+      <div className="w-full flex flex-col h-full">
+        <div className="w-full flex justify-between items-center mb-5">
+          <h2 className="w-full text-left font-bold text-xl my-5">Basket</h2>
+          <Link to=".." className="text-3xl">
+            <MdClose />
+          </Link>
+        </div>
+        <div className="flex flex-col gap-4 overflow-y-scroll h-full ">
           {cartItems?.length > 0 &&
             cartItems.map((item, idx) => (
               <div className="border-b border-b-gray-500">
@@ -67,72 +71,39 @@ const Cart = (props: Props) => {
                 </div>
               </div>
             ))}
-
-          <div className="w-full sticky bottom-0 bg-slate-200 dark:bg-gray-600">
-            <div className="flex flex-col space-y-3 pt-4 mb-2">
-              <div className="flex flex-row justify-between">
-                <span>Subtotal</span>
-                <span>€ 16,00</span>
-              </div>
-
-              <div className="flex flex-row justify-between">
-                <span>Delivery cost</span>
-                <span>Free</span>
-              </div>
-
-              <div className="flex flex-row justify-between font-semibold">
-                <span>Total</span>
-                <span>€ 16,00</span>
-              </div>
+        </div>
+        <div className="w-full sticky bottom-0 bg-slate-100 dark:bg-gray-600">
+          <div className="flex flex-col space-y-3 pt-4 mb-2">
+            <div className="flex flex-row justify-between">
+              <span>Subtotal</span>
+              <span>€ 16,00</span>
             </div>
-            {cartItems?.length > 0 && location?.pathname !== "/checkout" && (
-              <button
-                onClick={() => navigate("/checkout")}
-                className="bg-orange-600 rounded-full py-2
+
+            <div className="flex flex-row justify-between">
+              <span>Delivery cost</span>
+              <span>Free</span>
+            </div>
+
+            <div className="flex flex-row justify-between font-semibold">
+              <span>Total</span>
+              <span>€ 16,00</span>
+            </div>
+          </div>
+          {cartItems?.length > 0 && location?.pathname !== "/checkout" && (
+            <button
+              onClick={() => navigate("/checkout")}
+              className="bg-orange-600 rounded-full py-2
       text-xl text-slate-100 font-semibold w-full mb-3
       "
-              >
-                <p className="flex items-center justify-center space-x-2 text-lg font-bold">
-                  <span>Checkout</span>
-                  <span className=" tracking-wide">($ 60,00)</span>
-                </p>
-              </button>
-            )}
-          </div>
+            >
+              <p className="flex items-center justify-center space-x-2 text-lg font-bold">
+                <span>Checkout</span>
+                <span className=" tracking-wide">($ 60,00)</span>
+              </p>
+            </button>
+          )}
         </div>
       </div>
-
-      {/* <div className="w-full space-y-10 mb-5">
-        <div className="flex flex-col space-y-3 pt-4">
-          <div className="flex flex-row justify-between">
-            <span>Subtotal</span>
-            <span>€ 16,00</span>
-          </div>
-
-          <div className="flex flex-row justify-between">
-            <span>Delivery cost</span>
-            <span>Free</span>
-          </div>
-
-          <div className="flex flex-row justify-between font-semibold">
-            <span>Total</span>
-            <span>€ 16,00</span>
-          </div>
-        </div>
-        {cartItems?.length > 0 && (
-          <button
-            onClick={() => navigate("/checkout")}
-            className="bg-orange-600 rounded-full py-2
-      text-xl text-slate-100 font-semibold w-full
-      "
-          >
-            <p className="flex items-center justify-center space-x-2 text-lg font-bold">
-              <span>Checkout</span>
-              <span className=" tracking-wide">($ 60,00)</span>
-            </p>
-          </button>
-        )}
-      </div> */}
     </div>
   );
 };

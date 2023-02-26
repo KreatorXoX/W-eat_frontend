@@ -9,7 +9,7 @@ const Account = (props: Props) => {
   const location = useLocation();
 
   return (
-    <div className="dark:text-slate-200 text-gray-700 px-4 space-y-6 overflow-y-hidden">
+    <div className="dark:text-slate-100 text-gray-700 px-4 space-y-6 overflow-y-hidden">
       <div className="flex flex-row justify-between mt-4 items-center ">
         <h1 className="font-bold  text-xl">My account</h1>
         <AiOutlineClose
@@ -24,13 +24,15 @@ const Account = (props: Props) => {
       <div className="flex flex-row gap-4 justify-evenly items-center w-full text-lg font-semibold">
         <button
           onClick={() => navigate("auth")}
-          className="dark:bg-slate-500 bg-slate-100 auth--button hover:opacity-90"
+          className="dark:bg-slate-400 bg-slate-100 auth--button hover:bg-slate-200 transition-colors duration-200
+          dark:hover:bg-slate-500
+          "
         >
           Sign in
         </button>
         <button
           onClick={() => navigate("auth?register=true")}
-          className="bg-orange-500 auth--button text-slate-100"
+          className="bg-orange-500 hover:bg-orange-600 auth--button text-slate-100 transition-colors duration-200"
         >
           Create Account
         </button>
