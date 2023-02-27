@@ -102,7 +102,7 @@ const Register = (props: Props) => {
             terms of use of point collection and privacy statement.
           </p>
           <Link
-            to="/account/auth"
+            to="/account/login"
             className=" font-medium mt-2 text-base text-center tracking-wide underline hover:no-underline"
           >
             I already have an account

@@ -1,77 +1,81 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ModalLayout from './layouts/ModalLayout'
-import RootLayout from './layouts/RootLayout'
-import CheckoutLayout from './layouts/CheckoutLayout'
-import Account from './pages/Account'
-import Auth from './pages/Auth'
-import Error from './pages/Error'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ModalLayout from "./layouts/ModalLayout";
+import RootLayout from "./layouts/RootLayout";
+import CheckoutLayout from "./layouts/CheckoutLayout";
+import Account from "./pages/Account";
 
-import Nutritions from './pages/Nutritions'
-import Cart from './pages/Cart'
-import CartLayout from './layouts/CartLayout'
-import TimePicker from './components/checkout/TimePicker'
-import PaymentMethod from './components/checkout/PaymentMethod'
+import Error from "./pages/Error";
+
+import Nutritions from "./pages/Nutritions";
+import Cart from "./pages/Cart";
+import CartLayout from "./layouts/CartLayout";
+import TimePicker from "./components/checkout/TimePicker";
+import PaymentMethod from "./components/checkout/PaymentMethod";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootLayout />,
     errorElement: <Error />,
     children: [
       {
-        path: '/account',
+        path: "/account",
         element: <ModalLayout />,
         children: [
           { index: true, element: <Account /> },
-          { path: '/account/auth', element: <Auth /> }
-        ]
+          { path: "/account/login", element: <Login /> },
+          { path: "/account/register", element: <Register /> },
+        ],
       },
       {
-        path: '/nutritions',
+        path: "/nutritions",
         element: <ModalLayout />,
         children: [
           {
             index: true,
-            element: <Nutritions />
-          }
-        ]
+            element: <Nutritions />,
+          },
+        ],
       },
       {
-        path: '/cart',
+        path: "/cart",
         element: <CartLayout />,
-        children: [{ index: true, element: <Cart /> }]
-      }
-    ]
+        children: [{ index: true, element: <Cart /> }],
+      },
+    ],
   },
 
   {
-    path: '/checkout',
+    path: "/checkout",
     element: <CheckoutLayout />,
     errorElement: <Error />,
     children: [
       {
-        path: 'account',
+        path: "account",
         element: <ModalLayout />,
         children: [
           { index: true, element: <Account /> },
-          { path: 'auth', element: <Auth /> }
-        ]
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+        ],
       },
       {
-        path: 'delivery-time',
+        path: "delivery-time",
         element: <ModalLayout />,
-        children: [{ index: true, element: <TimePicker /> }]
+        children: [{ index: true, element: <TimePicker /> }],
       },
       {
-        path: 'payment-method',
+        path: "payment-method",
         element: <ModalLayout />,
-        children: [{ index: true, element: <PaymentMethod /> }]
-      }
-    ]
-  }
-])
+        children: [{ index: true, element: <PaymentMethod /> }],
+      },
+    ],
+  },
+]);
 
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

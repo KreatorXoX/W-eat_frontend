@@ -23,7 +23,7 @@ const Account = (props: Props) => {
       </div>
       <div className="flex flex-row gap-4 justify-evenly items-center w-full text-lg font-semibold">
         <button
-          onClick={() => navigate("auth")}
+          onClick={() => navigate("login")}
           className="dark:bg-slate-400 bg-slate-100 auth--button hover:bg-slate-200 transition-colors duration-200
           dark:hover:bg-slate-500
           "
@@ -31,7 +31,7 @@ const Account = (props: Props) => {
           Sign in
         </button>
         <button
-          onClick={() => navigate("auth?register=true")}
+          onClick={() => navigate("register")}
           className="bg-orange-500 hover:bg-orange-600 auth--button text-slate-100 transition-colors duration-200"
         >
           Create Account
