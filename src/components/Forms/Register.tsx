@@ -10,8 +10,6 @@ import { Link } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 type Props = {};
 
-const arr = ["red", "blue", "purple", "orange"];
-const typeers = arr.map((item, idx) => <option key={idx}>{item}</option>);
 const Register = (props: Props) => {
   const { formState, inputHandler } = useForm(
     {

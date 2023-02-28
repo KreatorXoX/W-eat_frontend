@@ -34,12 +34,13 @@
     border: 1px solid rgba(55, 65, 81, 0.2);
   }
   label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 500;
     letter-spacing: 0.35px;
   }
   ::placeholder {
     font-size: 0.9rem;
+    font-weight: 400;
   }
   input:focus,
   select:focus,
@@ -52,6 +53,17 @@
   input {
     background-color: rgba(207, 207, 207, 0.671);
     pointer-events: none;
+  }
+}
+
+.error {
+  input,
+  select,
+  textarea,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border-color: rgb(220 38 38);
   }
 }
 

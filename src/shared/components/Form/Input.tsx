@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from "react";
 import { Validators } from "../../utils/validators";
 import { validate } from "../../utils/validators";
-
+import { BsExclamationTriangle } from "react-icons/bs";
 type State = {
   value: string;
   isValid: boolean;
@@ -119,13 +119,17 @@ function FormInput(props: GeneralInputProps) {
 
   return (
     <div className="flex justify-center items-start w-full">
-      <div className="relative w-full form--controller">
+      <div
+        className={`${
+          !inputState.isValid && inputState.isTouched ? "error" : ""
+        } relative w-full form--controller`}
+      >
         <label htmlFor={props.id}>{props.label}</label>
         {component}
-        <div className="errorLabel">
+        <div className="errorLabel flex items-center">
           {!inputState.isValid && inputState.isTouched && (
-            <span className="text-red-600 text-xs font-semibold italic">
-              {props.errorText}
+            <span className="text-red-600 text-sm font-semibold italic">
+              <BsExclamationTriangle className="inline" /> {props.errorText}
             </span>
           )}
         </div>

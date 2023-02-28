@@ -17,11 +17,7 @@ const CheckOut = (props: Props) => {
         <h1 className="text-2xl font-bold tracking-wide">CheckOut</h1>
         <span className="text-sm tracking-widest">Restraunt Name</span>
       </div>
-      <div className="m-4 p-5 dark:text-slate-100 text-gray-800 lg:border xs:border-none rounded-lg dark:border-gray-500 space-y-4">
-        <CheckoutForm />
-      </div>
-      <Link to="delivery-time">Delivery</Link>
-      <Link to="payment-method">Payment Method</Link>
+      <CheckoutForm />
     </div>
   );
 };
