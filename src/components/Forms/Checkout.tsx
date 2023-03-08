@@ -1,3 +1,6 @@
+import { useState } from "react";
+import Modal from "react-modal";
+import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
 import FormInput from "../../shared/components/Form/Input";
 import { useForm } from "../../shared/utils/form-hook";
 import {
@@ -5,29 +8,63 @@ import {
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
+  VALIDATOR_REQUIRE_SELECT,
 } from "../../shared/utils/validators";
-import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
+import { getTime } from "../../shared/utils/getDeliveryTime";
+import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 
 type Props = {};
 
+Modal.setAppElement("#root");
+
 const Checkout = (props: Props) => {
+  const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
+  const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
+
+  const openDeliveryModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDeliveryModal(true);
+  };
+  const closeDeliveryModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setDeliveryModal(false);
+  };
+  const openPaymentModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPaymentModal(true);
+  };
+  const closePaymentModal = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPaymentModal(false);
+  };
+
   const { formState, inputHandler } = useForm(
     {
       street: { value: "", isValid: false },
       houseNumber: { value: "", isValid: false },
       postCode: { value: "", isValid: false },
       city: { value: "", isValid: false },
-      company: { value: "", isValid: true },
-      notes: { value: "", isValid: true },
+      company: { value: "", isValid: false },
+      notes: { value: "", isValid: false },
       name: { value: "", isValid: false },
-      email: { value: "", isValid: true },
-      phoneNumber: { value: "", isValid: true },
+      email: { value: "", isValid: false },
+      phoneNumber: { value: "", isValid: false },
+      deliveryTime: { value: getTime()?.initialHour ?? "", isValid: true },
+      paymentMethod: { value: "cash", isValid: true },
     },
     false
   );
+
+  const checkoutHandler = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formState.inputs);
+  };
   return (
     <>
-      <form className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-4">
+      <form
+        onSubmit={checkoutHandler}
+        className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-4"
+      >
         <div className="lg:border xs:border-none rounded-lg dark:border-gray-500">
           <div className="flex flex-col gap-4 border-b py-4">
             <h2 className="px-4 text-2xl font-semibold tracking-wide">
@@ -105,6 +142,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   id="notes"
                   label="Add notes (optional)"
+                  initialValid={true}
                   placeholder="ie: Please don't ring the bell. Baby is sleeping"
                   value={formState.inputs.notes.value}
                   errorText="Enter a valid notes"
@@ -165,46 +203,142 @@ const Checkout = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4">
+        <div
+          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 hover:cursor-pointer"
+          onClick={openDeliveryModal}
+        >
           <div className="flex gap-4 items-center">
             <AiOutlineClockCircle className="text-xl" />
             <div className="flex flex-col">
               <span className="font-semibold">Delivery Time</span>
-              <FormInput
-                element="text"
-                type="text"
-                id="phoneNumber"
-                placeholder="Type your phone number, i.e. +32-X-XXXXXXX"
-                value={formState.inputs.phoneNumber.value}
-                errorText="Enter a valid phoneNumber"
-                validators={[VALIDATOR_MINLENGTH(13), VALIDATOR_MAXLENGTH(14)]}
-                onInputChange={inputHandler}
-                classes="hidden"
-              />
-              <span className="text-sm">19:00</span>
+              <Modal
+                isOpen={showDeliveryModal}
+                onRequestClose={closeDeliveryModal}
+                contentLabel="Example Modal"
+                shouldCloseOnEsc={true}
+                shouldCloseOnOverlayClick={true}
+                onAfterOpen={() => {
+                  document.body.style.overflow = "hidden";
+                }}
+                onAfterClose={() => {
+                  document.body.style.overflow = "unset";
+                }}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.75)",
+                  },
+                  content: {
+                    backgroundColor: "rgb(241 245 249)",
+                    opacity: "1",
+                    height: "fit-content",
+                    width: "50%",
+                    minWidth: "15rem",
+                    margin: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "start",
+                    alignItems: "center",
+                    borderRadius: "1rem",
+                  },
+                }}
+              >
+                <FormInput
+                  element="select"
+                  type="text"
+                  id="deliveryTime"
+                  label="Select time for delivery"
+                  options={getTime()?.deliveryTimes}
+                  initialValid={true}
+                  initialValue={getTime()?.initialHour}
+                  placeholder=""
+                  value={formState.inputs.deliveryTime.value}
+                  errorText=""
+                  validators={[VALIDATOR_REQUIRE_SELECT()]}
+                  onInputChange={inputHandler}
+                />
+
+                <button
+                  className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
+                  onClick={(e) => closeDeliveryModal(e)}
+                >
+                  Ok
+                </button>
+              </Modal>
+
+              <span className="text-sm">
+                {formState.inputs.deliveryTime.value}
+              </span>
             </div>
           </div>
         </div>
-        <div className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4">
+        <div
+          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4"
+          onClick={openPaymentModal}
+        >
           <div className="flex gap-4 items-center">
             <AiFillCreditCard className="text-xl text-orange-500" />
             <div className="flex flex-col">
               <span className="font-semibold">Payment Method</span>
-              <FormInput
-                element="text"
-                type="text"
-                id="phoneNumber"
-                placeholder="Type your phone number, i.e. +32-X-XXXXXXX"
-                value={formState.inputs.phoneNumber.value}
-                errorText="Enter a valid phoneNumber"
-                validators={[VALIDATOR_MINLENGTH(13), VALIDATOR_MAXLENGTH(14)]}
-                onInputChange={inputHandler}
-                classes="hidden"
-              />
-              <span className="text-sm">Credit Card</span>
+              <Modal
+                isOpen={showPaymentModal}
+                onRequestClose={closePaymentModal}
+                contentLabel="Modal"
+                shouldCloseOnEsc={true}
+                shouldCloseOnOverlayClick={true}
+                onAfterOpen={() => {
+                  document.body.style.overflow = "hidden";
+                }}
+                onAfterClose={() => {
+                  document.body.style.overflow = "unset";
+                }}
+                style={{
+                  overlay: {
+                    backgroundColor: "rgba(0, 0, 0, 0.75)",
+                  },
+                  content: {
+                    backgroundColor: "rgb(241 245 249)",
+                    opacity: "1",
+                    height: "fit-content",
+                    width: "50%",
+                    minWidth: "15rem",
+                    margin: "auto",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "start",
+                    alignItems: "center",
+                    borderRadius: "1rem",
+                  },
+                }}
+              >
+                <FormInput
+                  element="select"
+                  type="text"
+                  id="paymentMethod"
+                  label="Select your payment method"
+                  options={getPaymentMethods()}
+                  placeholder=""
+                  value={formState.inputs.paymentMethod.value}
+                  errorText=""
+                  validators={[]}
+                  onInputChange={inputHandler}
+                  initialValid={true}
+                  initialValue="cash"
+                />
+                <button
+                  className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
+                  onClick={(e) => closePaymentModal(e)}
+                >
+                  Ok
+                </button>
+              </Modal>
+
+              <span className="text-sm">
+                {formState.inputs.paymentMethod.value}
+              </span>
             </div>
           </div>
         </div>
+        <button>Submit</button>
       </form>
     </>
   );

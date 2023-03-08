@@ -25,7 +25,7 @@ const Basket = (props: Props) => {
         <div className="h-screen overflow-y-scroll no-scrollbar">
           {cartItems.length > 0 ? (
             cartItems.map((item, idx) => (
-              <div className="border-b space-y-4">
+              <div key={idx} className="border-b space-y-4">
                 <div className="relative items-center gap-2 text-base font-[500]">
                   <span className="absolute top-0 left-0">2</span>
                   <div className="flex justify-between w-full pl-5">
@@ -37,7 +37,6 @@ const Basket = (props: Props) => {
                         ? "no-underline pointer-events-none"
                         : ""
                     }`}
-                      key={idx}
                     >
                       {idx ? idx : ""} Pizza la margherita (medium)
                     </Link>

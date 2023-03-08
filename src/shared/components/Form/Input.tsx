@@ -34,7 +34,7 @@ type GeneralInputProps = {
   classes?: string;
   initialValue?: string;
   initialValid?: boolean;
-  element: "select" | "textarea" | "text";
+  element: "select" | "textarea" | "text" | "radio";
   type?: "text" | "email" | "password" | "url" | "number";
   id: string;
   label?: string;
