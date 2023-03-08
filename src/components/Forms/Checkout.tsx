@@ -12,12 +12,14 @@ import {
 } from "../../shared/utils/validators";
 import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
-
+import { useTheme } from "../../context/themeStore";
+import { BsCheck2Circle } from "react-icons/bs";
 type Props = {};
 
 Modal.setAppElement("#root");
 
 const Checkout = (props: Props) => {
+  const dark = useTheme().dark;
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
 
@@ -49,15 +51,16 @@ const Checkout = (props: Props) => {
       name: { value: "", isValid: false },
       email: { value: "", isValid: false },
       phoneNumber: { value: "", isValid: false },
-      deliveryTime: { value: getTime()?.initialHour ?? "", isValid: true },
-      paymentMethod: { value: "cash", isValid: true },
+      deliveryTime: { value: getTime()?.initialHour!, isValid: true },
+      paymentMethod: { value: "Cash", isValid: true },
     },
     false
   );
 
   const checkoutHandler = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formState.inputs);
+    if (!formState.isValid) return;
+    else console.log(formState.inputs);
   };
   return (
     <>
@@ -129,6 +132,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   id="company"
                   label="Company name (optional)"
+                  initialValid={true}
                   placeholder="Type company name"
                   value={formState.inputs.company.value}
                   errorText="Enter a valid company"
@@ -204,17 +208,19 @@ const Checkout = (props: Props) => {
           </div>
         </div>
         <div
-          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 hover:cursor-pointer"
+          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 hover:cursor-pointer
+          flex justify-between
+          "
           onClick={openDeliveryModal}
         >
           <div className="flex gap-4 items-center">
-            <AiOutlineClockCircle className="text-xl" />
+            <AiOutlineClockCircle className="text-xl text-violet-500" />
             <div className="flex flex-col">
               <span className="font-semibold">Delivery Time</span>
               <Modal
                 isOpen={showDeliveryModal}
                 onRequestClose={closeDeliveryModal}
-                contentLabel="Example Modal"
+                contentLabel="Modal"
                 shouldCloseOnEsc={true}
                 shouldCloseOnOverlayClick={true}
                 onAfterOpen={() => {
@@ -228,7 +234,9 @@ const Checkout = (props: Props) => {
                     backgroundColor: "rgba(0, 0, 0, 0.75)",
                   },
                   content: {
-                    backgroundColor: "rgb(241 245 249)",
+                    backgroundColor: `${
+                      dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
+                    }`,
                     opacity: "1",
                     height: "fit-content",
                     width: "50%",
@@ -239,6 +247,7 @@ const Checkout = (props: Props) => {
                     justifyContent: "start",
                     alignItems: "center",
                     borderRadius: "1rem",
+                    border: "none",
                   },
                 }}
               >
@@ -270,9 +279,14 @@ const Checkout = (props: Props) => {
               </span>
             </div>
           </div>
+          {formState.inputs.deliveryTime.isValid && (
+            <div>
+              <BsCheck2Circle className="text-3xl text-green-600" />
+            </div>
+          )}
         </div>
         <div
-          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4"
+          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 flex justify-between items-center"
           onClick={openPaymentModal}
         >
           <div className="flex gap-4 items-center">
@@ -296,7 +310,9 @@ const Checkout = (props: Props) => {
                     backgroundColor: "rgba(0, 0, 0, 0.75)",
                   },
                   content: {
-                    backgroundColor: "rgb(241 245 249)",
+                    backgroundColor: `${
+                      dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
+                    }`,
                     opacity: "1",
                     height: "fit-content",
                     width: "50%",
@@ -307,6 +323,7 @@ const Checkout = (props: Props) => {
                     justifyContent: "start",
                     alignItems: "center",
                     borderRadius: "1rem",
+                    border: "none",
                   },
                 }}
               >
@@ -322,7 +339,7 @@ const Checkout = (props: Props) => {
                   validators={[]}
                   onInputChange={inputHandler}
                   initialValid={true}
-                  initialValue="cash"
+                  initialValue="Cash"
                 />
                 <button
                   className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
@@ -337,8 +354,26 @@ const Checkout = (props: Props) => {
               </span>
             </div>
           </div>
+          {formState.inputs.paymentMethod.isValid && (
+            <div>
+              <BsCheck2Circle className="text-3xl text-green-600" />
+            </div>
+          )}
         </div>
-        <button>Submit</button>
+        <button
+          className={`${
+            formState.isValid
+              ? "bg-orange-600"
+              : "bg-gray-500 pointer-events-none cursor-not-allowed"
+          }  w-fit py-2 px-10 rounded-full
+      text-lg text-slate-100 font-semibold`}
+          disabled={!formState.isValid}
+        >
+          <span className="items-center flex justify-center gap-2">
+            <span>Order & pay with {formState.inputs.paymentMethod.value}</span>
+            <span className=" tracking-wide">($ 61,00)</span>
+          </span>
+        </button>
       </form>
     </>
   );

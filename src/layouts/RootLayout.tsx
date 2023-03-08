@@ -16,7 +16,7 @@ const RootLayout = (props: Props) => {
   return (
     <main className={`h-screen ${dark ? "dark bg-gray-600" : "bg-slate-100"} `}>
       <MainNavigation />
-      <div className="w-full dark:bg-gray-600 bg-slate-100 dark:text-slate-200 text-gray-700 flex flow-row">
+      <div className="w-full dark:bg-gray-700 bg-slate-100 dark:text-slate-200 text-gray-700 flex flow-row">
         <div className="w-full lg:w-[calc(100vw-21.5rem)] flex justify-center items-center">
           <Home />
         </div>

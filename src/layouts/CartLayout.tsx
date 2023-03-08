@@ -20,7 +20,7 @@ const CartLayout = (props: Props) => {
   return (
     <div
       className={`${
-        dark ? "bg-gray-600" : "bg-slate-100"
+        dark ? "bg-gray-700" : "bg-slate-100"
       } fixed top-0 w-full h-full
         flex justify-center items-center lg:hidden`}
     >

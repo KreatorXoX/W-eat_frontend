@@ -2,6 +2,7 @@ import React, { useReducer, useEffect } from "react";
 import { Validators } from "../../utils/validators";
 import { validate } from "../../utils/validators";
 import { BsExclamationTriangle } from "react-icons/bs";
+import { useTheme } from "../../../context/themeStore";
 type State = {
   value: string;
   isValid: boolean;
@@ -49,6 +50,7 @@ type GeneralInputProps = {
 };
 
 function FormInput(props: GeneralInputProps) {
+  const dark = useTheme().dark;
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: props.initialValue || "",
     isValid: props.initialValid || false,
@@ -124,7 +126,12 @@ function FormInput(props: GeneralInputProps) {
           !inputState.isValid && inputState.isTouched ? "error" : ""
         } relative w-full form--controller`}
       >
-        <label htmlFor={props.id}>{props.label}</label>
+        <label
+          className={`${dark ? "text-white" : "text-gray-700"}`}
+          htmlFor={props.id}
+        >
+          {props.label}
+        </label>
         {component}
         <div className="errorLabel flex items-center">
           {!inputState.isValid && inputState.isTouched && (

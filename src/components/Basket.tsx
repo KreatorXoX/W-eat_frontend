@@ -13,7 +13,7 @@ const Basket = (props: Props) => {
   const cartItems = useCart((state) => state.items);
   return (
     <div
-      className="w-[22rem] px-2 bg-slate-100 dark:bg-gray-600 basket dark:border-l dark:border-l-slate-200/20 border-l-gray-500/20 border-l
+      className="w-[22rem] px-2 bg-slate-100 dark:bg-gray-700 basket dark:border-l dark:border-l-slate-200/20 border-l-gray-500/20 border-l
      "
     >
       <div
@@ -86,7 +86,7 @@ const Basket = (props: Props) => {
             </div>
           )}
         </div>
-        <div className="sticky bottom-0 pb-4 bg-slate-100 dark:bg-gray-600">
+        <div className="sticky bottom-0 pb-4 bg-slate-100 dark:bg-gray-700">
           <div className="flex flex-col space-y-3 pt-4 mb-2">
             <div className="flex flex-row justify-between">
               <span>Subtotal</span>

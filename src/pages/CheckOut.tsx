@@ -10,6 +10,7 @@ const CheckOut = (props: Props) => {
 
   useEffect(() => {
     if (cartItems?.length === 0) navigate("/");
+    // and cartItems.total not equal or less than minimum amount
   }, []);
   return (
     <div className="h-full max-w-2xl lg:max-w-6xl w-full">

@@ -9,8 +9,6 @@ import Error from "./pages/Error";
 import Nutritions from "./pages/Nutritions";
 import Cart from "./pages/Cart";
 import CartLayout from "./layouts/CartLayout";
-import TimePicker from "./components/checkout/TimePicker";
-import PaymentMethod from "./components/checkout/PaymentMethod";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 const router = createBrowserRouter([
@@ -59,16 +57,6 @@ const router = createBrowserRouter([
           { path: "login", element: <Login /> },
           { path: "register", element: <Register /> },
         ],
-      },
-      {
-        path: "delivery-time",
-        element: <ModalLayout />,
-        children: [{ index: true, element: <TimePicker /> }],
-      },
-      {
-        path: "payment-method",
-        element: <ModalLayout />,
-        children: [{ index: true, element: <PaymentMethod /> }],
       },
     ],
   },

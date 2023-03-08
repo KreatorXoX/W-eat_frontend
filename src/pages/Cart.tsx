@@ -23,7 +23,7 @@ const Cart = (props: Props) => {
         <div className="flex flex-col gap-4 overflow-y-scroll h-full ">
           {cartItems?.length > 0 &&
             cartItems.map((item, idx) => (
-              <div className="border-b border-b-gray-500">
+              <div key={idx} className="border-b border-b-gray-500">
                 <div className="relative items-center gap-2 text-base font-[500]">
                   <span className="absolute top-0 left-0">2</span>
                   <div className="flex justify-between pl-5">
@@ -31,7 +31,6 @@ const Cart = (props: Props) => {
                       to="#editProduct"
                       className="break-words
                     hover:no-underline decoration-gray-700 dark:decoration-slate-100 underline underline-offset-2"
-                      key={idx}
                     >
                       {idx ? idx : ""} Pizza la margherita (medium)
                     </Link>
@@ -72,7 +71,7 @@ const Cart = (props: Props) => {
               </div>
             ))}
         </div>
-        <div className="w-full sticky bottom-0 bg-slate-100 dark:bg-gray-600">
+        <div className="w-full sticky bottom-0 bg-slate-100 dark:bg-gray-700">
           <div className="flex flex-col space-y-3 pt-4 mb-2">
             <div className="flex flex-row justify-between">
               <span>Subtotal</span>
