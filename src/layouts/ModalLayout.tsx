@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../context/themeStore";
-import Backdrop from "../shared/components/UI-Elements/Backdrop";
-import { motion } from "framer-motion";
 
 type Props = {};
 
