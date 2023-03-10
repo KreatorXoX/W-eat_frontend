@@ -1,9 +1,14 @@
 import React from "react";
 import MenuItem from "./MenuItem";
-import { useCart } from "../../context/cartStore";
+import { useCartStore } from "../../context/cartStore";
+
 type Props = {};
 
 function MenuItemList({}: Props) {
+  const cartItems = useCartStore((state) => state.cart);
+  const total = useCartStore((state) => state.totalPrice);
+  console.log("items ", cartItems);
+  console.log("total ", total);
   const items = [
     {
       id: "1",

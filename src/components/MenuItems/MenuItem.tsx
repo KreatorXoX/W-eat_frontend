@@ -2,6 +2,7 @@ import { ImInfo } from "react-icons/im";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/cartStore";
+import { useCartStore } from "../../context/cartStore";
 
 function MenuItem({
   id,
@@ -10,7 +11,7 @@ function MenuItem({
   price,
   alergens,
 }: Omit<Item, "category">) {
-  const addItem = useCart((state) => state.addItems);
+  const addToCart = useCartStore((state) => state.addToCart);
   return (
     <div className="w-full mx-auto h-fit border border-gray-400 p-3 rounded-lg flex justify-between items-center lg:text-xl">
       <div>
@@ -33,7 +34,7 @@ function MenuItem({
       </div>
       <button
         className="rounded-full bg-gray-300 dark:bg-gray-500 p-1"
-        onClick={() => addItem(id + "" + title)}
+        onClick={() => addToCart({ id, title, description, alergens, price })}
       >
         <AiOutlinePlus className="text-2xl dark:text-green-500" />
       </button>
