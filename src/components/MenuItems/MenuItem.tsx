@@ -1,42 +1,39 @@
 import { ImInfo } from "react-icons/im";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useCart } from "../../context/cartStore";
 import { useCartStore } from "../../context/cartStore";
 
-function MenuItem({
-  id,
-  title,
-  description,
-  price,
-  alergens,
-}: Omit<Item, "category">) {
+type Props = {
+  item: Item;
+};
+
+function MenuItem({ item }: Props) {
   const addToCart = useCartStore((state) => state.addToCart);
   return (
-    <div className="w-full mx-auto h-fit border border-gray-400 p-3 rounded-lg flex justify-between items-center lg:text-xl">
+    <div className="w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-50 dark:bg-gray-600">
       <div>
         <div className="flex flex-row gap-3 items-center ">
-          <h3 className="font-semibold">{title}</h3>
+          <h3 className="font-semibold">{item.title}</h3>
           <Link
             to="/nutritions"
-            state={{ alergens }}
+            state={{ alergens: item.alergens }}
             className="flex items-center"
           >
             <ImInfo className="inline lg:text-xl" />
           </Link>
         </div>
         <div>
-          <p className="text-gray-400 text-sm italic font-serif">
-            {description}
+          <p className="text-gray-500 dark:text-slate-200 text-sm my-1">
+            {item.description}
           </p>
         </div>
-        <p className="mt-4 font-semibold font-sans">$ {price.toFixed(2)}</p>
+        <p className="mt-4 font-semibold">€ {item.price.toFixed(2)}</p>
       </div>
       <button
-        className="rounded-full bg-gray-300 dark:bg-gray-500 p-1"
-        onClick={() => addToCart({ id, title, description, alergens, price })}
+        className="rounded-full bg-gray-200 dark:bg-gray-500 p-1"
+        onClick={() => addToCart(item)}
       >
-        <AiOutlinePlus className="text-2xl dark:text-green-500" />
+        <AiOutlinePlus className="text-2xl" />
       </button>
     </div>
   );

@@ -26,7 +26,7 @@ const ModalLayout = (props: Props) => {
         <div
           className={`${
             dark ? "bg-gray-600" : "bg-slate-50"
-          }  h-full w-full lg:h-[35rem] lg:w-[40rem] rounded-xl `}
+          }  h-full w-full lg:h-fit lg:py-5 lg:w-[40rem] rounded-xl `}
         >
           <Outlet />
         </div>

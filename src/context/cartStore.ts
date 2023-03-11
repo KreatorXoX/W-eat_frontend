@@ -1,24 +1,16 @@
 import { create } from "zustand";
 
-interface cartState {
-  items: string[];
-  addItems: (item: string) => void;
-}
-
-export const useCart = create<cartState>()((set) => ({
-  items: [],
-  addItems: (item) => set((state) => ({ items: [...state.items, item] })),
-}));
-
 type CartItem = {
   quantity: number;
   totalPrice: number;
-} & Omit<Item, "category">;
+} & Item;
 
 interface CartState {
   cart: CartItem[];
   totalPrice: number;
-  addToCart: (item: Omit<Item, "category">, quantity?: number) => void;
+  addToCart: (item: Item, quantity?: number) => void;
+  removeFromCart: (id: string) => void;
+  clearCart: () => void;
 }
 
 export const useCartStore = create<CartState>()((set, get) => ({
@@ -44,13 +36,43 @@ export const useCartStore = create<CartState>()((set, get) => ({
       set((state) => ({ cart: [...state.cart, newCartItem] }));
     }
 
-    // update itemCount and cartTotal
+    // update the cartTotal
 
     const cartTotal = get().cart.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
     set({ totalPrice: cartTotal });
+  },
+
+  removeFromCart: (id) => {
+    const index = get().cart.findIndex((cartItem) => cartItem.id === id);
+    if (index !== -1) {
+      // item already in cart, update quantity
+      let updatedCartItems = [...get().cart];
+      const itemQuantity = updatedCartItems[index].quantity - 1;
+
+      if (itemQuantity === 0) {
+        updatedCartItems = updatedCartItems.filter(
+          (cartItem) => cartItem.id !== id
+        );
+      } else {
+        updatedCartItems[index].quantity = itemQuantity;
+        updatedCartItems[index].totalPrice -= updatedCartItems[index].price;
+      }
+
+      set({ cart: updatedCartItems });
+
+      // update the cartTotal
+      const cartTotal = get().cart.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      );
+      set({ totalPrice: cartTotal });
+    } else {
+      // item not in cart, add to cart
+      return;
+    }
   },
 
   clearCart: () => {

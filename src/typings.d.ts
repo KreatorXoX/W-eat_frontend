@@ -2,8 +2,9 @@ type Item = {
   id: string;
   title: string;
   description: string;
+  ingridients: string;
   price: number;
-  alergens: string;
+  alergens: string[];
   category: string;
 };
 type GroupedItems = {

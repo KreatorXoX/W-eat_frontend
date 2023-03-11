@@ -14,11 +14,13 @@ import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle } from "react-icons/bs";
+import { useCartStore } from "../../context/cartStore";
 type Props = {};
 
 Modal.setAppElement("#root");
 
 const Checkout = (props: Props) => {
+  const totalPrice = useCartStore((state) => state.totalPrice);
   const dark = useTheme().dark;
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
@@ -66,7 +68,7 @@ const Checkout = (props: Props) => {
     <>
       <form
         onSubmit={checkoutHandler}
-        className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-4"
+        className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-5"
       >
         <div className="lg:border xs:border-none rounded-lg dark:border-gray-500">
           <div className="flex flex-col gap-4 border-b py-4">
@@ -286,7 +288,7 @@ const Checkout = (props: Props) => {
           )}
         </div>
         <div
-          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 flex justify-between items-center"
+          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 flex justify-between items-center hover:cursor-pointer"
           onClick={openPaymentModal}
         >
           <div className="flex gap-4 items-center">
@@ -365,13 +367,13 @@ const Checkout = (props: Props) => {
             formState.isValid
               ? "bg-orange-600"
               : "bg-gray-500 pointer-events-none cursor-not-allowed"
-          }  w-fit py-2 px-10 rounded-full
+          }  w-full sm:w-fit py-1 px-10 rounded-full
       text-lg text-slate-100 font-semibold`}
           disabled={!formState.isValid}
         >
-          <span className="items-center flex justify-center gap-2">
+          <span className="items-center flex flex-col sm:flex-row justify-center gap-2 text-sm sm:text-base">
             <span>Order & pay with {formState.inputs.paymentMethod.value}</span>
-            <span className=" tracking-wide">($ 61,00)</span>
+            <span className=" tracking-wide">(€ {totalPrice.toFixed(2)})</span>
           </span>
         </button>
       </form>

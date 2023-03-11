@@ -1,5 +1,5 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
-import { useCart } from "../context/cartStore";
+import { useCartStore } from "../context/cartStore";
 import { TbPlus, TbMinus, TbPaperBag } from "react-icons/tb";
 
 type Props = {};
@@ -10,10 +10,13 @@ type Props = {};
 const Basket = (props: Props) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const cartItems = useCart((state) => state.items);
+  const cartItems = useCartStore((state) => state.cart);
+  const totalPrice = useCartStore((state) => state.totalPrice);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
   return (
     <div
-      className="w-[22rem] px-2 bg-slate-100 dark:bg-gray-700 basket dark:border-l dark:border-l-slate-200/20 border-l-gray-500/20 border-l
+      className="w-[22rem] px-2 bg-slate-100 dark:bg-gray-700 basket
      "
     >
       <div
@@ -25,9 +28,9 @@ const Basket = (props: Props) => {
         <div className="h-screen overflow-y-scroll no-scrollbar">
           {cartItems.length > 0 ? (
             cartItems.map((item, idx) => (
-              <div key={idx} className="border-b space-y-4">
+              <div key={idx} className="border-b space-y-4 mb-4">
                 <div className="relative items-center gap-2 text-base font-[500]">
-                  <span className="absolute top-0 left-0">2</span>
+                  <span className="absolute top-0 left-0">{item.quantity}</span>
                   <div className="flex justify-between w-full pl-5">
                     <Link
                       to="#editProduct"
@@ -38,15 +41,17 @@ const Basket = (props: Props) => {
                         : ""
                     }`}
                     >
-                      {idx ? idx : ""} Pizza la margherita (medium)
+                      {item.title}
                     </Link>
                     {/* item and price */}
-                    <span className="whitespace-nowrap font-light">€ 8,00</span>
+                    <span className="whitespace-nowrap font-light">
+                      € {item.totalPrice.toFixed(2)}
+                    </span>
                   </div>
                 </div>
                 {/* extra suplements if there are any ?? */}
-                <span className="flex items-center text-xs pl-5 italic font-light">
-                  Parmesan, Sans Suplement, Oeufs
+                <span className="flex items-center text-xs pl-5 italic font-light line-clamp-2">
+                  {item.ingridients}
                 </span>
                 {location?.pathname !== "/checkout" && (
                   <div className="w-full flex justify-between items-center py-2 pl-5">
@@ -55,9 +60,9 @@ const Basket = (props: Props) => {
                     </button>
                     <div className="text-2xl w-20 flex justify-between px-2">
                       <button>
-                        <TbMinus />
+                        <TbMinus onClick={() => removeFromCart(item.id)} />
                       </button>
-                      <button>
+                      <button onClick={() => addToCart(item)}>
                         <TbPlus />
                       </button>
                     </div>
@@ -86,37 +91,43 @@ const Basket = (props: Props) => {
             </div>
           )}
         </div>
-        <div className="sticky bottom-0 pb-4 bg-slate-100 dark:bg-gray-700">
-          <div className="flex flex-col space-y-3 pt-4 mb-2">
-            <div className="flex flex-row justify-between">
-              <span>Subtotal</span>
-              <span>€ 16,00</span>
-            </div>
 
-            <div className="flex flex-row justify-between">
-              <span>Delivery cost</span>
-              <span>Free</span>
-            </div>
+        {cartItems?.length > 0 && (
+          <div className="sticky bottom-0 pb-2 bg-slate-100 dark:bg-gray-700">
+            <div className="flex flex-col space-y-3 pt-4 mb-2">
+              <div className="flex flex-row justify-between">
+                <span>Subtotal</span>
+                <span>€ {totalPrice.toFixed(2)}</span>
+              </div>
 
-            <div className="flex flex-row justify-between font-semibold">
-              <span>Total</span>
-              <span>€ 16,00</span>
+              <div className="flex flex-row justify-between">
+                <span>Delivery cost</span>
+                <span>Free</span>
+              </div>
+
+              <div className="flex flex-row justify-between font-semibold">
+                <span>Total</span>
+                {/* plus the delivery cost */}
+                <span>€ {totalPrice.toFixed(2)}</span>
+              </div>
             </div>
-          </div>
-          {cartItems?.length > 0 && location?.pathname !== "/checkout" && (
-            <button
-              onClick={() => navigate("/checkout")}
-              className="bg-orange-600 rounded-full py-2
+            {cartItems?.length && location?.pathname !== "/checkout" && (
+              <button
+                onClick={() => navigate("/checkout")}
+                className="bg-orange-600 rounded-full py-1 my-2
       text-xl text-slate-100 font-semibold w-full
       "
-            >
-              <p className="flex items-center justify-center space-x-2 text-lg font-bold">
-                <span>Checkout</span>
-                <span className=" tracking-wide">($ 60,00)</span>
-              </p>
-            </button>
-          )}
-        </div>
+              >
+                <p className="flex items-center justify-center space-x-2 text-lg font-bold">
+                  <span>Checkout</span>
+                  <span className=" tracking-wide">
+                    (€ {totalPrice.toFixed(2)})
+                  </span>
+                </p>
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
