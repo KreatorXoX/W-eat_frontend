@@ -2,24 +2,34 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
 import FormInput from "../../shared/components/Form/Input";
-import { useForm } from "../../shared/utils/form-hook";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_REQUIRE,
-  VALIDATOR_REQUIRE_SELECT,
-} from "../../shared/utils/validators";
+
 import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle } from "react-icons/bs";
 import { useCartStore } from "../../context/cartStore";
+import {
+  OrderValidationSchema,
+  orderValidationSchema,
+} from "../../shared/utils/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 type Props = {};
 
 Modal.setAppElement("#root");
 
 const Checkout = (props: Props) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm<OrderValidationSchema>({
+    mode: "onChange",
+    resolver: zodResolver(orderValidationSchema),
+  });
+
   const totalPrice = useCartStore((state) => state.totalPrice);
   const dark = useTheme().dark;
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
@@ -42,28 +52,7 @@ const Checkout = (props: Props) => {
     setPaymentModal(false);
   };
 
-  const { formState, inputHandler } = useForm(
-    {
-      street: { value: "", isValid: false },
-      houseNumber: { value: "", isValid: false },
-      postCode: { value: "", isValid: false },
-      city: { value: "", isValid: false },
-      company: { value: "", isValid: false },
-      notes: { value: "", isValid: false },
-      name: { value: "", isValid: false },
-      email: { value: "", isValid: false },
-      phoneNumber: { value: "", isValid: false },
-      deliveryTime: { value: getTime()?.initialHour!, isValid: true },
-      paymentMethod: { value: "Cash", isValid: true },
-    },
-    false
-  );
-
-  const checkoutHandler = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.isValid) return;
-    else console.log(formState.inputs);
-  };
+  const checkoutHandler = (e: React.FormEvent) => {};
   return (
     <>
       <form
@@ -78,82 +67,63 @@ const Checkout = (props: Props) => {
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
-                  id="street"
+                  half={false}
                   label="Street name"
-                  placeholder="Rond-Point du Meir"
-                  value={formState.inputs.street.value}
-                  errorText="Street name must be at least 3 chars"
-                  validators={[VALIDATOR_MINLENGTH(3)]}
-                  onInputChange={inputHandler}
+                  id="street"
+                  {...register("street")}
+                  error={errors.street?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
+                  half={false}
+                  label="House number"
                   id="houseNumber"
-                  label=" House number"
-                  placeholder="12"
-                  value={formState.inputs.houseNumber.value}
-                  errorText="Please enter your house number"
-                  validators={[VALIDATOR_REQUIRE()]}
-                  onInputChange={inputHandler}
+                  {...register("houseNumber")}
+                  error={errors.houseNumber?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
+                  half={false}
+                  label="Postal code"
                   id="postCode"
-                  label="Post code"
-                  placeholder="1070"
-                  value={formState.inputs.postCode.value}
-                  errorText="Please enter a valid post code"
-                  validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(18)]}
-                  onInputChange={inputHandler}
+                  {...register("postCode")}
+                  error={errors.postCode?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
+                  half={false}
+                  label="City"
                   id="city"
-                  label="City "
-                  placeholder="Anderlecht "
-                  value={formState.inputs.city.value}
-                  errorText="Enter a valid city"
-                  validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(18)]}
-                  onInputChange={inputHandler}
+                  {...register("city")}
+                  error={errors.city?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
+                  half={false}
+                  label="Company (optional)"
                   id="company"
-                  label="Company name (optional)"
-                  initialValid={true}
-                  placeholder="Type company name"
-                  value={formState.inputs.company.value}
-                  errorText="Enter a valid company"
-                  validators={[]}
-                  onInputChange={inputHandler}
+                  {...register("company")}
+                  error={errors.company?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
-                  id="notes"
+                  half={false}
                   label="Add notes (optional)"
-                  initialValid={true}
+                  id="notes"
                   placeholder="ie: Please don't ring the bell. Baby is sleeping"
-                  value={formState.inputs.notes.value}
-                  errorText="Enter a valid notes"
-                  validators={[]}
-                  onInputChange={inputHandler}
+                  {...register("notes")}
+                  error={errors.notes?.message}
                 />
               </div>
             </div>
@@ -166,44 +136,35 @@ const Checkout = (props: Props) => {
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
-                  id="name"
+                  half={false}
                   label="First and last name"
+                  id="fullname"
                   placeholder="Type your full name "
-                  value={formState.inputs.name.value}
-                  errorText="Name cannot be less than 3 words"
-                  validators={[VALIDATOR_MINLENGTH(3)]}
-                  onInputChange={inputHandler}
+                  {...register("fullname")}
+                  error={errors.fullname?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
-                  id="email"
+                  half={false}
                   label="E-mail"
+                  id="email"
                   placeholder="yourmail@email.com"
-                  value={formState.inputs.email.value}
-                  errorText="Enter a valid email"
-                  validators={[VALIDATOR_EMAIL()]}
-                  onInputChange={inputHandler}
+                  {...register("email")}
+                  error={errors.email?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
                 <FormInput
-                  element="text"
                   type="text"
-                  id="phoneNumber"
+                  half={false}
                   label="Phone Number"
+                  id="phoneNumber"
                   placeholder="Type your phone number, i.e. +32-X-XXXXXXX"
-                  value={formState.inputs.phoneNumber.value}
-                  errorText="Enter a valid phoneNumber"
-                  validators={[
-                    VALIDATOR_MINLENGTH(13),
-                    VALIDATOR_MAXLENGTH(14),
-                  ]}
-                  onInputChange={inputHandler}
+                  {...register("phoneNumber")}
+                  error={errors.phoneNumber?.message}
                 />
               </div>
             </div>
@@ -240,10 +201,13 @@ const Checkout = (props: Props) => {
                       dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
-                    height: "fit-content",
-                    width: "50%",
-                    minWidth: "15rem",
+                    height: "inherit",
+
+                    left: "0",
+                    right: "0",
                     margin: "auto",
+                    width: "50%",
+                    minWidth: "20rem",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "start",
@@ -254,18 +218,13 @@ const Checkout = (props: Props) => {
                 }}
               >
                 <FormInput
-                  element="select"
-                  type="text"
+                  type="select"
                   id="deliveryTime"
+                  half={false}
                   label="Select time for delivery"
+                  error={errors.deliveryTime?.message}
                   options={getTime()?.deliveryTimes}
-                  initialValid={true}
-                  initialValue={getTime()?.initialHour}
-                  placeholder=""
-                  value={formState.inputs.deliveryTime.value}
-                  errorText=""
-                  validators={[VALIDATOR_REQUIRE_SELECT()]}
-                  onInputChange={inputHandler}
+                  control={control}
                 />
 
                 <button
@@ -276,12 +235,10 @@ const Checkout = (props: Props) => {
                 </button>
               </Modal>
 
-              <span className="text-sm">
-                {formState.inputs.deliveryTime.value}
-              </span>
+              <span className="text-sm">{getValues().deliveryTime?.label}</span>
             </div>
           </div>
-          {formState.inputs.deliveryTime.isValid && (
+          {getValues().deliveryTime?.value && (
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
             </div>
@@ -316,9 +273,12 @@ const Checkout = (props: Props) => {
                       dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
-                    height: "fit-content",
+                    height: "15rem",
                     width: "50%",
-                    minWidth: "15rem",
+                    minWidth: "20rem",
+
+                    left: "0",
+                    right: "0",
                     margin: "auto",
                     display: "flex",
                     flexDirection: "column",
@@ -330,18 +290,13 @@ const Checkout = (props: Props) => {
                 }}
               >
                 <FormInput
-                  element="select"
-                  type="text"
+                  type="select"
                   id="paymentMethod"
+                  half={false}
                   label="Select your payment method"
+                  error={errors.deliveryTime?.message}
+                  control={control}
                   options={getPaymentMethods()}
-                  placeholder=""
-                  value={formState.inputs.paymentMethod.value}
-                  errorText=""
-                  validators={[]}
-                  onInputChange={inputHandler}
-                  initialValid={true}
-                  initialValue="Cash"
                 />
                 <button
                   className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
@@ -352,27 +307,29 @@ const Checkout = (props: Props) => {
               </Modal>
 
               <span className="text-sm">
-                {formState.inputs.paymentMethod.value}
+                {getValues().paymentMethod?.label}
               </span>
             </div>
           </div>
-          {formState.inputs.paymentMethod.isValid && (
+          {getValues().paymentMethod?.value && (
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
             </div>
           )}
         </div>
         <button
-          className={`${
-            formState.isValid
-              ? "bg-orange-600"
-              : "bg-gray-500 pointer-events-none cursor-not-allowed"
-          }  w-full sm:w-fit py-1 px-10 rounded-full
-      text-lg text-slate-100 font-semibold`}
-          disabled={!formState.isValid}
+          className="
+          
+            
+              bg-orange-600
+             disabled:bg-gray-500 disabled:pointer-events-none disabled:cursor-not-allowed
+            w-full sm:w-fit py-2 px-10 rounded-full
+      text-lg text-slate-100 font-medium
+          "
+          disabled={!isValid}
         >
           <span className="items-center flex flex-col sm:flex-row justify-center gap-2 text-sm sm:text-base">
-            <span>Order & pay with {formState.inputs.paymentMethod.value}</span>
+            <span>Order & pay with {getValues().paymentMethod?.label}</span>
             <span className=" tracking-wide">(€ {totalPrice.toFixed(2)})</span>
           </span>
         </button>

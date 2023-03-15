@@ -27,15 +27,11 @@ export function getTime() {
     hours.push(hourValue);
     minute += 15;
   }
-  const deliveryTimes = hours.map((hour, idx) => {
-    return <option key={idx}>{hour}</option>;
+  const deliveryTimes = hours.map((hour) => {
+    return { value: hour, label: hour };
   });
 
-  deliveryTimes.unshift(
-    <option key="default" defaultValue={initialHour} value={initialHour}>
-      As soon as possible
-    </option>
-  );
+  deliveryTimes.unshift({ value: initialHour, label: "As soon as possible" });
 
   return { deliveryTimes, initialHour };
 }
