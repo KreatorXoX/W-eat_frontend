@@ -13,7 +13,7 @@ import {
   orderValidationSchema,
 } from "../../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 type Props = {};
 
 Modal.setAppElement("#root");
@@ -28,9 +28,20 @@ const Checkout = (props: Props) => {
   } = useForm<OrderValidationSchema>({
     mode: "onChange",
     resolver: zodResolver(orderValidationSchema),
+    defaultValues: {
+      deliveryTime: {
+        value: getTime()?.initialHour,
+        label: "As soon as possible",
+      },
+      paymentMethod: {
+        value: "cash",
+        label: "Cash",
+      },
+    },
   });
 
   const totalPrice = useCartStore((state) => state.totalPrice);
+  const cartItems = useCartStore((state) => state.cart);
   const dark = useTheme().dark;
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
@@ -52,11 +63,14 @@ const Checkout = (props: Props) => {
     setPaymentModal(false);
   };
 
-  const checkoutHandler = (e: React.FormEvent) => {};
+  const checkoutHandler: SubmitHandler<OrderValidationSchema> = (data) => {
+    console.log(data);
+    console.log(cartItems);
+  };
   return (
     <>
       <form
-        onSubmit={checkoutHandler}
+        onSubmit={handleSubmit(checkoutHandler)}
         className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-5"
       >
         <div className="lg:border xs:border-none rounded-lg dark:border-gray-500">

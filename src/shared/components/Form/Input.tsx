@@ -1,6 +1,7 @@
 import React, { forwardRef } from "react";
 import { ChangeHandler, Controller } from "react-hook-form";
 import Select from "react-select";
+import { FiAlertTriangle } from "react-icons/fi";
 import { useTheme } from "../../../context/themeStore";
 import { customStyles } from "../../utils/selectCustomStyles";
 
@@ -70,7 +71,11 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         {props.label}
       </label>
       {component}
-      {props.error && <p className="text-red-400">{props.error}</p>}
+      {props.error && (
+        <p className="text-red-400 flex flex-row items-baseline gap-2 mt-2">
+          <FiAlertTriangle className="inline" /> <span>{props.error}</span>
+        </p>
+      )}
     </div>
   );
 });

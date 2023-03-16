@@ -1,34 +1,38 @@
 import { FormEvent } from "react";
-import { useForm } from "../../shared/utils/form-hook";
-import FormInput from "../../shared/components/Form/Input";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-} from "../../shared/utils/validators";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import FormInput from "../../shared/components/Form/Input";
+
+import {
+  RegisterValidationSchema,
+  registerValidationSchema,
+} from "../../shared/utils/validationSchema";
 type Props = {};
 
 const Register = (props: Props) => {
-  const { formState, inputHandler } = useForm(
-    {
-      name: { value: "", isValid: false },
-      email: { value: "", isValid: false },
-      password: { value: "", isValid: false },
-      confirmPassword: { value: "", isValid: false },
-    },
-    false
-  );
+  const location = useLocation();
+  const newPath = location.pathname?.split("/register")[0];
 
-  const formSubmitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    if (formState.isValid) console.log(formState.inputs);
-    else return;
+  const {
+    register,
+    handleSubmit,
+    control,
+    getValues,
+    formState: { errors, isValid },
+  } = useForm<RegisterValidationSchema>({
+    mode: "onChange",
+    resolver: zodResolver(registerValidationSchema),
+  });
+
+  const registerHandler: SubmitHandler<RegisterValidationSchema> = (data) => {
+    console.log(data);
   };
   return (
     <form
-      onSubmit={formSubmitHandler}
+      onSubmit={handleSubmit(registerHandler)}
       className="p-5 flex flex-col items-center rounded-lg space-y-4 w-full h-full text-gray-800 dark:text-slate-200 "
     >
       <div className="flex items-center gap-10 justify-start w-full border-b border-b-gray-400 pb-2">
@@ -41,54 +45,47 @@ const Register = (props: Props) => {
       <div className="overflow-auto w-full">
         <div className="w-full flex flex-col gap-4">
           <FormInput
-            element="text"
             type="text"
-            id="name"
+            half={false}
             label="Name"
             placeholder="Name"
-            value={formState.inputs.name.value}
-            errorText="Name must be at least 3 chars"
-            validators={[VALIDATOR_MINLENGTH(3)]}
-            onInputChange={inputHandler}
-          />
-          <FormInput
-            element="text"
-            type="email"
-            id="email"
-            label="Email address"
-            placeholder="Email address"
-            value={formState.inputs.email.value}
-            errorText="Please enter a valid e-mail"
-            validators={[VALIDATOR_EMAIL()]}
-            onInputChange={inputHandler}
-          />
-          <FormInput
-            element="text"
-            type="password"
-            id="password"
-            label="Password"
-            placeholder="Password"
-            value={formState.inputs.password.value}
-            errorText="Name must be at least 3 chars"
-            validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(18)]}
-            onInputChange={inputHandler}
+            id="name"
+            {...register("name")}
+            error={errors.name?.message}
           />
 
           <FormInput
-            element="text"
+            type="text"
+            half={false}
+            label="E-mail"
+            id="email"
+            placeholder="yourmail@email.com"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+          <FormInput
             type="password"
-            id="confirmPassword"
+            half={false}
+            label="Password"
+            id="password"
+            placeholder="************"
+            {...register("password")}
+            error={errors.password?.message}
+          />
+
+          <FormInput
+            type="password"
+            half={false}
             label="Confirm Password"
+            id="confirmPassword"
             placeholder="Confirm Password"
-            value={formState.inputs.confirmPassword.value}
-            errorText="Name must be at least 3 chars"
-            validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(18)]}
-            onInputChange={inputHandler}
+            {...register("confirmPassword")}
+            error={errors.confirmPassword?.message}
           />
         </div>
         <div className="mt-5 w-full flex flex-col gap-2">
           <button
-            disabled={!formState.isValid}
+            disabled={!isValid}
             type="submit"
             className="auth--button dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-colors duration-200
          text-slate-100 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-300 dark:disabled:text-gray-500"
@@ -100,7 +97,7 @@ const Register = (props: Props) => {
             terms of use of point collection and privacy statement.
           </p>
           <Link
-            to="/account/login"
+            to={`${newPath}/login`}
             className=" font-medium mt-2 text-base text-center tracking-wide underline hover:no-underline"
           >
             I already have an account

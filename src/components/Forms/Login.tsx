@@ -1,32 +1,36 @@
-import { FormEvent } from "react";
-import { useForm } from "../../shared/utils/form-hook";
-import FormInput from "../../shared/components/Form/Input";
-import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MAXLENGTH,
-  VALIDATOR_MINLENGTH,
-} from "../../shared/utils/validators";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
+
+import {
+  LoginValidationSchema,
+  loginValidationSchema,
+} from "../../shared/utils/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import FormInput from "../../shared/components/Form/Input";
+
 type Props = {};
 
 const Login = (props: Props) => {
-  const { formState, inputHandler } = useForm(
-    {
-      email: { value: "", isValid: false },
-      password: { value: "", isValid: false },
-    },
-    false
-  );
+  const location = useLocation();
+  const newPath = location.pathname?.split("/login")[0];
 
-  const formSubmitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    if (formState.isValid) console.log(formState.inputs);
-    else return;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<LoginValidationSchema>({
+    mode: "onChange",
+    resolver: zodResolver(loginValidationSchema),
+  });
+
+  const loginHandler: SubmitHandler<LoginValidationSchema> = (data) => {
+    console.log(data);
   };
   return (
     <form
-      onSubmit={formSubmitHandler}
+      onSubmit={handleSubmit(loginHandler)}
       className="p-5 flex flex-col items-center rounded-lg space-y-4 w-full h-full text-gray-800 dark:text-slate-200 overflow-auto"
     >
       <div className="flex items-center gap-10 justify-start w-full border-b border-b-gray-400 pb-2">
@@ -38,27 +42,24 @@ const Login = (props: Props) => {
       </div>
       <div className="w-full flex flex-col gap-4">
         <FormInput
-          element="text"
           type="email"
-          id="email"
+          half={false}
           label="Email address"
-          placeholder="Email address"
-          value={formState.inputs.email.value}
-          errorText="Name must be at least 3 chars"
-          validators={[VALIDATOR_EMAIL()]}
-          onInputChange={inputHandler}
+          placeholder="yourmail@email.com"
+          id="email"
+          {...register("email")}
+          error={errors.email?.message}
         />
         <FormInput
-          element="text"
           type="password"
-          id="password"
+          half={false}
           label="Password"
-          placeholder="Password"
-          value={formState.inputs.password.value}
-          errorText="Name must be at least 3 chars"
-          validators={[VALIDATOR_MINLENGTH(3), VALIDATOR_MAXLENGTH(18)]}
-          onInputChange={inputHandler}
+          placeholder="************"
+          id="password"
+          {...register("password")}
+          error={errors.password?.message}
         />
+
         <Link
           to="#forgotpassword"
           className="text-right text-sm text-blue-500 dark:font-medium italic
@@ -70,7 +71,7 @@ const Login = (props: Props) => {
       </div>
 
       <button
-        disabled={!formState.isValid}
+        disabled={!isValid}
         type="submit"
         className="auth--button dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-colors duration-200
          text-slate-100 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-300 dark:disabled:text-gray-500"
@@ -78,7 +79,7 @@ const Login = (props: Props) => {
         Sign in
       </button>
       <Link
-        to="?register=true"
+        to={`${newPath}/register`}
         className="text-base tracking-wide underline hover:no-underline"
       >
         Create account

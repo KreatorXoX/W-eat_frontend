@@ -5,7 +5,7 @@ interface Props {}
 const Login = (props: Props) => {
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      {/* <LoginForm /> */}
+      <LoginForm />
     </div>
   );
 };

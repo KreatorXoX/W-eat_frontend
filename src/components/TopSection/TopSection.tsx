@@ -51,7 +51,7 @@ function TopSection({}: Props) {
           </p>
         </div>
       </div>
-      <div className="mt-4 py-3 px-5 bg-gray-200 dark:bg-gray-500 rounded-full flex flex-row gap-5 justify-center overflow-hidden">
+      <div className="mt-4 py-2 px-5 bg-gray-200 dark:bg-gray-500 rounded-lg flex flex-row gap-5 justify-center overflow-hidden">
         {sectionsArr.map((sec) => (
           <div
             key={sec + Date.now()}
