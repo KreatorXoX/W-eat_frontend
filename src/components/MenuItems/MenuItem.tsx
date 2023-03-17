@@ -1,6 +1,6 @@
 import { ImInfo } from "react-icons/im";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCartStore } from "../../context/cartStore";
 
 type Props = {
@@ -9,8 +9,14 @@ type Props = {
 
 function MenuItem({ item }: Props) {
   const addToCart = useCartStore((state) => state.addToCart);
+  const navigate = useNavigate();
   return (
-    <div className="w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-50 dark:bg-gray-600">
+    <div
+      onClick={() => navigate(`/product/${item.id}`)}
+      className="w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-50 dark:bg-gray-600
+      hover:cursor-pointer
+      "
+    >
       <div>
         <div className="flex flex-row gap-3 items-center ">
           <h3 className="font-semibold">{item.title}</h3>

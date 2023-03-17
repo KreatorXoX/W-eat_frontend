@@ -11,6 +11,7 @@ import Cart from "./pages/Cart";
 import CartLayout from "./layouts/CartLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Product from "./pages/Product";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +25,16 @@ const router = createBrowserRouter([
           { index: true, element: <Account /> },
           { path: "/account/login", element: <Login /> },
           { path: "/account/register", element: <Register /> },
+        ],
+      },
+      {
+        path: "/product/:id",
+        element: <ModalLayout />,
+        children: [
+          {
+            index: true,
+            element: <Product />,
+          },
         ],
       },
       {

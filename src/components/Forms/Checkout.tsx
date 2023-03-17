@@ -216,7 +216,6 @@ const Checkout = (props: Props) => {
                     }`,
                     opacity: "1",
                     height: "inherit",
-
                     left: "0",
                     right: "0",
                     margin: "auto",
