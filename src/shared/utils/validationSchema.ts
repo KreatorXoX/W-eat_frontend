@@ -44,20 +44,6 @@ export const registerValidationSchema = z
     email: z.string().email({ message: "Please prove a valid email" }),
     password: z.string().min(3).max(8),
     confirmPassword: z.string().min(3).max(8),
-    // fruits: z.object(
-    //   { value: z.string() },
-    //   {
-    //     invalid_type_error: "Selection is required !",
-    //     required_error: "Please make a selection",
-    //   }
-    // ),
-    // multiFruits: z
-    //   .object(
-    //     { value: z.string() },
-    //     { required_error: "Please make a selection" }
-    //   )
-    //   .array()
-    //   .nonempty({ message: "Selection is required !" }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -65,3 +51,9 @@ export const registerValidationSchema = z
   });
 
 export type RegisterValidationSchema = z.infer<typeof registerValidationSchema>;
+
+export const selectExtraItem = z.record(
+  z.object({ value: z.string(), label: z.string() }).array().optional()
+);
+
+export type SelectExtraItem = z.infer<typeof selectExtraItem>;

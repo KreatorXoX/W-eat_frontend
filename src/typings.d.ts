@@ -1,7 +1,7 @@
 type ExtraItem = {
   id: string;
   name: string;
-  price: number | null;
+  price: number;
 };
 type Extra = {
   id: string;
@@ -22,4 +22,9 @@ type Item = {
 };
 type GroupedItems = {
   [key: string]: Item[];
+};
+
+type OptionSelect = {
+  value: string;
+  label: string;
 };

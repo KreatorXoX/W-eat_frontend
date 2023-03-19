@@ -1,4 +1,5 @@
 type Props = {};
+
 import MenuItemList from "../components/MenuItems/MenuItemList";
 import TopSection from "../components/TopSection/TopSection";
 

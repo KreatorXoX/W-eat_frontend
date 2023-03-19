@@ -5,11 +5,6 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { useTheme } from "../../../context/themeStore";
 import { customStyles } from "../../utils/selectCustomStyles";
 
-type OptionSelect = {
-  value: string;
-  label: string;
-};
-
 type Props = {
   type: "password" | "text" | "textarea" | "email" | "select";
   placeholder?: string;
@@ -30,23 +25,26 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
   let component =
     props.type === "select" ? (
       <Controller
+        render={({ field: { onChange, onBlur, value, ref } }) => {
+          return (
+            <Select
+              onChange={onChange}
+              isMulti={props.isMulti}
+              onBlur={onBlur}
+              value={value}
+              ref={ref}
+              styles={{
+                ...customStyles,
+              }}
+              isClearable
+              isSearchable
+              hideSelectedOptions={true}
+              options={props.options}
+            />
+          );
+        }}
         name={props.id}
         control={props.control}
-        render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Select
-            onChange={onChange}
-            isMulti={props.isMulti}
-            onBlur={onBlur}
-            value={value}
-            ref={ref}
-            styles={{
-              ...customStyles,
-            }}
-            isClearable
-            isSearchable
-            options={props.options}
-          />
-        )}
       />
     ) : (
       <input

@@ -2,17 +2,93 @@ import { AiOutlineClose } from "react-icons/ai";
 import { ImInfo } from "react-icons/im";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { items } from "../shared/utils/data";
+import FormInput from "../shared/components/Form/Input";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { TbMinus, TbPlus } from "react-icons/tb";
+import { useEffect, useState } from "react";
+import {
+  selectExtraItem,
+  SelectExtraItem,
+} from "../shared/utils/validationSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { formatExtras } from "../shared/utils/getExtrasOptions";
+import { v4 as uuidv4 } from "uuid";
+
 interface Props {}
 
-const Product = (props: Props) => {
-  const navigate = useNavigate();
-  const id = useParams().id;
+const extras = [
+  {
+    name: "Sauces",
+    value: [
+      { value: "21-0.25", label: "ketchup" },
+      { value: "22-0.25", label: "mayo" },
+    ],
+  },
+  {
+    name: "Free Sauces",
+    value: [
+      { value: "26-0", label: "ketchup" },
+      { value: "27-0", label: "mayo" },
+    ],
+  },
+];
 
+const extrasObject = extras.reduce((acc: any, extra) => {
+  acc[extra.name] = extra.value;
+  return acc;
+}, {});
+
+const Product = (props: Props) => {
+  const [quantity, setQuantity] = useState<number>(1);
+  const [extraTotal, setExtraTotal] = useState<number>(0);
+
+  const id = useParams().id;
   const item = items.find((item) => item.id === id);
+
+  const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    resolver: zodResolver(selectExtraItem),
+    defaultValues: {
+      ...extrasObject,
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const addItemHandler: SubmitHandler<any> = (data) => {
+    let extras: { extraName: string; extraValues: OptionSelect[] }[] = [];
+    for (const key in data) {
+      extras.push({ extraName: key, extraValues: data[key] });
+    }
+
+    const newProduct = {
+      cartItemId: uuidv4(),
+      mainProduct: item,
+      quantity,
+      extras,
+      totalPrice: (item!.price + extraTotal) * quantity,
+    };
+
+    console.log(newProduct);
+  };
+
+  useEffect(() => {
+    let extrasTotal = 0;
+    for (const key in getValues()) {
+      const extrasPricesArray = getValues(key)?.map(
+        (item) => item.value.split("-")[1]
+      );
+      extrasPricesArray?.forEach((price) => {
+        extrasTotal += parseFloat(price);
+      });
+    }
+    setExtraTotal(extrasTotal);
+  }, [watch()]);
 
   return (
     <div className="dark:text-slate-200 text-gray-700">
-      <div className="space-y-4 px-4">
+      <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row gap-3 items-center ">
             <h3 className="font-semibold text-2xl">{item?.title}</h3>
@@ -31,22 +107,79 @@ const Product = (props: Props) => {
         <p className="">{item?.ingridients}</p>
         <p className="font-bold text-xl">€ {item?.price.toFixed(2)}</p>
       </div>
-      <div className="bg-gray-200 space-y-4 px-4 overflow-y-scroll">
-        {item?.extras.map((extra) => (
-          <div key={`${extra.id}`}>
-            <h3>{extra.name}</h3>
-            <ol className="list-disc">
-              {extra.extraItems.map((item) => (
-                <li className="ml-4 flex gap-2 items-center p-1" key={item.id}>
-                  <span>{item.name}</span>
-                  <span>
-                    {item.price ? `+ € ${item?.price?.toFixed(2)}` : ""}
-                  </span>
-                </li>
-              ))}
-            </ol>
+      <div className="h-full min-h-[30rem]">
+        <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
+          <div className="bg-gray-200 py-2 pb-10 px-5 ">
+            {item?.extras.map((extra) => {
+              // const options = extra.extraItems.map((item) => {
+              //   return {
+              //     value: `${item.id}-${item.price}`,
+              //     label: `${item.name} ${
+              //       item.price ? `(+ € ${item.price.toFixed(2)})` : ""
+              //     }`,
+              //   };
+              // });
+
+              return (
+                <div key={`${extra.id}`}>
+                  <h3 className="font-medium mt-2">{extra.name}</h3>
+                  <div className="">
+                    <FormInput
+                      type="select"
+                      name={`${extra.name}`}
+                      id={`${extra.name}`}
+                      half={false}
+                      label={""}
+                      error={undefined}
+                      options={formatExtras(item!).get(`${extra.name}`)}
+                      control={control}
+                      isMulti={true}
+                      // defaultVal={[options[0]]}
+                    />
+                  </div>
+                </div>
+              );
+            })}
           </div>
-        ))}
+
+          <div className="w-full flex px-5 gap-4">
+            <div className="flex gap-2 items-center">
+              <button
+                type="button"
+                className="p-2 rounded-full bg-gray-200"
+                onClick={() => {
+                  setQuantity((prev) => {
+                    if (prev === 1) return 1;
+                    return prev - 1;
+                  });
+                }}
+              >
+                <TbMinus />
+              </button>
+              <span>{quantity}</span>
+              <button
+                type="button"
+                className="p-2 rounded-full bg-gray-200"
+                onClick={() => {
+                  setQuantity((prev) => prev + 1);
+                }}
+              >
+                <TbPlus />
+              </button>
+            </div>
+            <button
+              type="submit"
+              className="bg-orange-600 text-slate-50 px-5 py-2 rounded-full w-full"
+            >
+              <span>
+                €{" "}
+                {item?.price
+                  ? ((item.price + extraTotal) * quantity).toFixed(2)
+                  : ""}
+              </span>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -27,11 +27,10 @@ export function getTime() {
     hours.push(hourValue);
     minute += 15;
   }
-  const deliveryTimes = hours.map((hour) => {
-    return { value: hour, label: hour };
-  });
-
-  deliveryTimes.unshift({ value: initialHour, label: "As soon as possible" });
+  const deliveryTimes = [
+    { value: initialHour, label: "As soon as possible" },
+    ...hours.map((hour) => ({ value: hour, label: hour })),
+  ];
 
   return { deliveryTimes, initialHour };
 }

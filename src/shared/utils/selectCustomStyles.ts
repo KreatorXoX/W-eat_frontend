@@ -23,7 +23,7 @@ export const customStyles = {
       ...baseStyles[":hover"],
       backgroundColor: "rgba(96, 165, 250,0.25)",
     },
-    backgroundColor: state.isSelected ? "rgba(96, 165, 250,0.55)" : "white",
+    backgroundColor: "white",
   }),
   singleValue: (baseStyles: any) => ({
     ...baseStyles,

@@ -21,6 +21,7 @@
     "react-select": "^5.7.0",
     "react-simple-star-rating": "^5.1.7",
     "sass": "^1.58.3",
+    "uuid": "^9.0.0",
     "zod": "^3.21.4",
     "zustand": "^4.3.3"
   },
@@ -28,6 +29,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@types/react-modal": "^3.13.1",
+    "@types/uuid": "^9.0.1",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.21",
