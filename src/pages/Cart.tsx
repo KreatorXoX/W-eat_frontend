@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useCartStore } from "../context/cartStore";
+import { useShoppingCart } from "../context/shoppingCartStore";
 import { TbPlus, TbMinus } from "react-icons/tb";
 import { MdClose } from "react-icons/md";
 type Props = {};
 
 const Cart = (props: Props) => {
   const navigate = useNavigate();
-  const cartItems = useCartStore((state) => state.cart);
-  const addToCart = useCartStore((state) => state.addToCart);
-  const removeFromCart = useCartStore((state) => state.removeFromCart);
-  const totalPrice = useCartStore((state) => state.totalPrice);
+  const cartItems = useShoppingCart((state) => state.cart);
+  const addToCart = useShoppingCart((state) => state.addToCart);
+  const removeFromCart = useShoppingCart((state) => state.removeFromCart);
+  const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
   useEffect(() => {
     if (cartItems?.length === 0) navigate("/");
@@ -33,11 +33,11 @@ const Cart = (props: Props) => {
                   <span className="absolute top-0 left-0">{item.quantity}</span>
                   <div className="flex justify-between pl-5">
                     <Link
-                      to="#editProduct"
+                      to={`/edit-product/${item.id}`}
                       className="break-words
                     hover:no-underline decoration-gray-700 dark:decoration-slate-100 underline underline-offset-2"
                     >
-                      {item.title}
+                      {item.mainProduct?.title}
                     </Link>
                     {/* item and price */}
                     <span className="whitespace-nowrap font-light">
@@ -47,7 +47,7 @@ const Cart = (props: Props) => {
                 </div>
                 {/* extra suplements if there are any ?? */}
                 <span className="flex items-center text-xs pl-5 italic font-light">
-                  {item.ingridients}
+                  {item.mainProduct?.ingridients}
                 </span>
 
                 <div className="flex justify-between items-center py-2 pl-5">
@@ -82,7 +82,7 @@ const Cart = (props: Props) => {
           <div className="flex flex-col space-y-3 pt-4 mb-2">
             <div className="flex flex-row justify-between">
               <span>Subtotal</span>
-              <span>€ {totalPrice.toFixed(2)}</span>
+              <span>€ {getCartTotal().toFixed(2)}</span>
             </div>
 
             <div className="flex flex-row justify-between">
@@ -92,20 +92,20 @@ const Cart = (props: Props) => {
 
             <div className="flex flex-row justify-between font-semibold">
               <span>Total</span>
-              <span>€ {totalPrice.toFixed(2)}</span>
+              <span>€ {getCartTotal().toFixed(2)}</span>
             </div>
           </div>
           {cartItems?.length > 0 && location?.pathname !== "/checkout" && (
             <button
               onClick={() => navigate("/checkout")}
               className="bg-orange-600 rounded-full py-2 my-2
-      text-xl text-slate-100 font-semibold w-full mb-3
+      text-lg text-slate-100 font-semibold w-full
       "
             >
-              <p className="flex items-center justify-center space-x-2 text-lg font-bold">
+              <p className="flex items-center justify-center space-x-2 font-bold">
                 <span>Checkout</span>
                 <span className=" tracking-wide">
-                  (€ {totalPrice.toFixed(2)})
+                  (€ {getCartTotal().toFixed(2)})
                 </span>
               </p>
             </button>

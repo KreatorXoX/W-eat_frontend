@@ -16,20 +16,46 @@ import { v4 as uuidv4 } from "uuid";
 import {useShoppingCart} from '../context/shoppingCartStore'
 interface Props {}
 
+const extras = [
+  {
+    name: "Sauces",
+    value: [
+      { value: "21-0.25", label: "ketchup" },
+      { value: "22-0.25", label: "mayo" },
+    ],
+  },
+  {
+    name: "Free Sauces",
+    value: [
+      { value: "26-0", label: "ketchup" },
+      { value: "27-0", label: "mayo" },
+    ],
+  },
+];
 
-const Product = (props: Props) => {
-  const addToCart = useShoppingCart(state=>state.addToCart)
+
+const EditProduct = (props: Props) => {
+  const cartItems = useShoppingCart(state=>state.cart)
+  const replaceItem = useShoppingCart(state=>state.replaceItem)
+
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
 
   const id = useParams().id;
-  const item = items.find((item) => item.id === id);
+  const item = cartItems.find(item=>item.id === id)
+
+  const extrasObject = item?.extras.reduce((acc: any, extra) => {
+    acc[extra.name] = extra.values;
+    return acc;
+  }, {});
 
   const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: zodResolver(selectExtraItem),
-
+    defaultValues: {
+      ...extrasObject,
+    },
   });
 
   const navigate = useNavigate();
@@ -40,16 +66,15 @@ const Product = (props: Props) => {
       extras.push({ name: key, values: data[key] });
     }
 
-    const newProduct = {
-      id: uuidv4(),
-      mainProduct: item,
+    const updatedProduct = {
+      id: item!.id,
+      mainProduct: item?.mainProduct!,
       quantity,
       extras,
-      totalPrice: (item!.price + extraTotal) * quantity,
+      totalPrice: (item!.mainProduct!.price + extraTotal) * quantity,
     };
 
-    addToCart(newProduct)
-    navigate('..')
+    replaceItem(updatedProduct)
   };
 
   useEffect(() => {
@@ -70,10 +95,10 @@ const Product = (props: Props) => {
       <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row gap-3 items-center ">
-            <h3 className="font-semibold text-2xl">{item?.title}</h3>
+            <h3 className="font-semibold text-2xl"> {item!.mainProduct?.title}</h3>
             <Link
               to="/nutritions"
-              state={{ alergens: item?.alergens }}
+              state={{ alergens: item!.mainProduct?.alergens }}
               className="flex items-center"
             >
               <ImInfo className="inline lg:text-xl" />
@@ -83,15 +108,15 @@ const Product = (props: Props) => {
             <AiOutlineClose className="text-2xl cursor-pointer" />
           </Link>
         </div>
-        <p className="">{item?.ingridients}</p>
-        <p className="font-bold text-xl">€ {item?.price.toFixed(2)}</p>
+        <p className="">{item?.mainProduct?.ingridients}</p>
+        <p className="font-bold text-xl">€ {item?.mainProduct?.price.toFixed(2)}</p>
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
           <div className="bg-gray-200 py-2 pb-10 px-5 ">
-            {item?.extras.map((extra) => {
+            {item?.extras.map((extra,idx) => {
               return (
-                <div key={`${extra.id}`}>
+                <div key={`${idx}`}>
                   <h3 className="font-medium mt-2">{extra.name}</h3>
                   <div className="">
                     <FormInput
@@ -101,10 +126,9 @@ const Product = (props: Props) => {
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(item!).get(`${extra.name}`)}
+                      options={formatExtras(item.mainProduct).get(`${extra.name}`)}
                       control={control}
-                      isMulti={true}
-                      
+                      isMulti={true}                      
                     />
                   </div>
                 </div>
@@ -143,8 +167,8 @@ const Product = (props: Props) => {
             >
               <span>
                 €{" "}
-                {item?.price
-                  ? ((item.price + extraTotal) * quantity).toFixed(2)
+                {item?.mainProduct?.price
+                  ? ((item.mainProduct.price + extraTotal) * quantity).toFixed(2)
                   : ""}
               </span>
             </button>
@@ -155,4 +179,4 @@ const Product = (props: Props) => {
   );
 };
 
-export default Product;
+export default EditProduct;

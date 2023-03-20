@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import Basket from "../components/Basket";
 import MainNavigation from "../shared/components/Navigation/MainNavigation";
 import { useTheme } from "../context/themeStore";
-import { useCartStore } from "../context/cartStore";
+import { useShoppingCart } from "../context/shoppingCartStore";
 import Home from "../pages/Home";
 import CartButton from "../components/CartButton";
 import { useLocation } from "react-router-dom";
@@ -10,7 +10,7 @@ type Props = {};
 
 const RootLayout = (props: Props) => {
   const location = useLocation();
-  const cart = useCartStore((state) => state.cart);
+  const cart = useShoppingCart((state) => state.cart);
   const dark = useTheme((state) => state.dark);
 
   return (

@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { useCartStore } from "../context/cartStore";
+import { useShoppingCart } from "../context/shoppingCartStore";
 import CheckoutForm from "../components/Forms/Checkout";
 type Props = {};
 
 const CheckOut = (props: Props) => {
-  const cartItems = useCartStore((state) => state.cart);
+  const cartItems = useShoppingCart((state) => state.cart);
   const navigate = useNavigate();
 
   useEffect(() => {

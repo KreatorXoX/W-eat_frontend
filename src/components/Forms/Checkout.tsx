@@ -7,7 +7,7 @@ import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle } from "react-icons/bs";
-import { useCartStore } from "../../context/cartStore";
+import {useShoppingCart} from '../../context/shoppingCartStore'
 import {
   OrderValidationSchema,
   orderValidationSchema,
@@ -40,8 +40,8 @@ const Checkout = (props: Props) => {
     },
   });
 
-  const totalPrice = useCartStore((state) => state.totalPrice);
-  const cartItems = useCartStore((state) => state.cart);
+  const getCartTotal = useShoppingCart((state) => state.getCartTotal);
+  const cartItems = useShoppingCart((state) => state.cart);
   const dark = useTheme().dark;
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
@@ -343,7 +343,7 @@ const Checkout = (props: Props) => {
         >
           <span className="items-center flex flex-col sm:flex-row justify-center gap-2 text-sm sm:text-base">
             <span>Order & pay with {getValues().paymentMethod?.label}</span>
-            <span className=" tracking-wide">(€ {totalPrice.toFixed(2)})</span>
+            <span className=" tracking-wide">(€ {getCartTotal().toFixed(2)})</span>
           </span>
         </button>
       </form>
