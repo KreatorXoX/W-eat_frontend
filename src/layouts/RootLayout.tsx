@@ -1,16 +1,18 @@
 import { Outlet } from "react-router-dom";
-import Basket from "../components/Basket";
+import Basket from "../components/Basket/Basket";
 import MainNavigation from "../shared/components/Navigation/MainNavigation";
 import { useTheme } from "../context/themeStore";
 import { useShoppingCart } from "../context/shoppingCartStore";
 import Home from "../pages/Home";
-import CartButton from "../components/CartButton";
 import { useLocation } from "react-router-dom";
+import OrangeActionButton from "../shared/components/UI-Elements/OrangeActionButton";
+import { BsFillBasket2Fill } from "react-icons/bs";
 type Props = {};
 
 const RootLayout = (props: Props) => {
   const location = useLocation();
   const cart = useShoppingCart((state) => state.cart);
+  const getCartTotal = useShoppingCart((state) => state.getCartTotal);
   const dark = useTheme((state) => state.dark);
 
   return (
@@ -27,7 +29,15 @@ const RootLayout = (props: Props) => {
       </div>
       {cart?.length > 0 && location.pathname === "/" && (
         <div className="inline-block lg:hidden fixed bottom-0 w-full px-3">
-          <CartButton />
+          <OrangeActionButton
+            whereTo="/cart"
+            price={getCartTotal()}
+            text={
+              <>
+                <BsFillBasket2Fill className="inline" /> Basket
+              </>
+            }
+          />
         </div>
       )}
       <Outlet />

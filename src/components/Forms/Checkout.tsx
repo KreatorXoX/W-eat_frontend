@@ -7,7 +7,7 @@ import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle } from "react-icons/bs";
-import {useShoppingCart} from '../../context/shoppingCartStore'
+import { useShoppingCart } from "../../context/shoppingCartStore";
 import {
   OrderValidationSchema,
   orderValidationSchema,
@@ -19,6 +19,9 @@ type Props = {};
 Modal.setAppElement("#root");
 
 const Checkout = (props: Props) => {
+  const newDate = new Date();
+  const { initialHour, deliveryTimes } = getTime(22, newDate);
+
   const {
     register,
     handleSubmit,
@@ -30,7 +33,7 @@ const Checkout = (props: Props) => {
     resolver: zodResolver(orderValidationSchema),
     defaultValues: {
       deliveryTime: {
-        value: getTime()?.initialHour,
+        value: initialHour,
         label: "As soon as possible",
       },
       paymentMethod: {
@@ -75,7 +78,7 @@ const Checkout = (props: Props) => {
       >
         <div className="lg:border xs:border-none rounded-lg dark:border-gray-500">
           <div className="flex flex-col gap-4 border-b py-4">
-            <h2 className="px-4 text-2xl font-semibold tracking-wide">
+            <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
               Delivery Address
             </h2>
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
@@ -84,6 +87,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="Street name"
+                  placeholder="Type street name"
                   id="street"
                   {...register("street")}
                   error={errors.street?.message}
@@ -94,6 +98,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="House number"
+                  placeholder="Type house number"
                   id="houseNumber"
                   {...register("houseNumber")}
                   error={errors.houseNumber?.message}
@@ -104,6 +109,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="Postal code"
+                  placeholder="Type your postal code"
                   id="postCode"
                   {...register("postCode")}
                   error={errors.postCode?.message}
@@ -114,6 +120,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="City"
+                  placeholder="Type your city"
                   id="city"
                   {...register("city")}
                   error={errors.city?.message}
@@ -124,6 +131,7 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="Company (optional)"
+                  placeholder="Type company name"
                   id="company"
                   {...register("company")}
                   error={errors.company?.message}
@@ -144,7 +152,7 @@ const Checkout = (props: Props) => {
           </div>
 
           <div className="flex flex-col gap-4 border-b py-4">
-            <h2 className="px-4 text-2xl font-semibold tracking-wide">
+            <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
               Personal Details
             </h2>
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
@@ -236,7 +244,7 @@ const Checkout = (props: Props) => {
                   half={false}
                   label="Select time for delivery"
                   error={errors.deliveryTime?.message}
-                  options={getTime()?.deliveryTimes}
+                  options={deliveryTimes}
                   control={control}
                 />
 
@@ -343,7 +351,9 @@ const Checkout = (props: Props) => {
         >
           <span className="items-center flex flex-col sm:flex-row justify-center gap-2 text-sm sm:text-base">
             <span>Order & pay with {getValues().paymentMethod?.label}</span>
-            <span className=" tracking-wide">(€ {getCartTotal().toFixed(2)})</span>
+            <span className=" tracking-wide">
+              (€ {getCartTotal().toFixed(2)})
+            </span>
           </span>
         </button>
       </form>

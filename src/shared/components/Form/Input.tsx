@@ -59,7 +59,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
       />
     );
   return (
-    <div className={`${props.half ? "w-1/2" : "w-full"}`}>
+    <div className={`${props.half ? "w-1/2" : "w-full"} text-sm md:text-base`}>
       <label
         htmlFor={`${props.id}`}
         className={`${
@@ -70,8 +70,11 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
       </label>
       {component}
       {props.error && (
-        <p className="text-red-400 flex flex-row items-baseline gap-2 mt-2">
-          <FiAlertTriangle className="inline" /> <span>{props.error}</span>
+        <p className="text-red-600 flex flex-row items-baseline gap-1 mt-1">
+          <p>
+            <FiAlertTriangle className="inline" />
+          </p>
+          <span>{props.error}</span>
         </p>
       )}
     </div>

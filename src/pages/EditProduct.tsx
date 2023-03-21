@@ -1,7 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { ImInfo } from "react-icons/im";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { items } from "../shared/utils/data";
 import FormInput from "../shared/components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
@@ -12,37 +11,19 @@ import {
 } from "../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatExtras } from "../shared/utils/getExtrasOptions";
-import { v4 as uuidv4 } from "uuid";
-import {useShoppingCart} from '../context/shoppingCartStore'
+import { useShoppingCart } from "../context/shoppingCartStore";
+
 interface Props {}
 
-const extras = [
-  {
-    name: "Sauces",
-    value: [
-      { value: "21-0.25", label: "ketchup" },
-      { value: "22-0.25", label: "mayo" },
-    ],
-  },
-  {
-    name: "Free Sauces",
-    value: [
-      { value: "26-0", label: "ketchup" },
-      { value: "27-0", label: "mayo" },
-    ],
-  },
-];
-
-
 const EditProduct = (props: Props) => {
-  const cartItems = useShoppingCart(state=>state.cart)
-  const replaceItem = useShoppingCart(state=>state.replaceItem)
+  const cartItems = useShoppingCart((state) => state.cart);
+  const replaceItem = useShoppingCart((state) => state.replaceItem);
 
-  const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
 
   const id = useParams().id;
-  const item = cartItems.find(item=>item.id === id)
+  const item = cartItems.find((item) => item.id === id);
+  const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
 
   const extrasObject = item?.extras.reduce((acc: any, extra) => {
     acc[extra.name] = extra.values;
@@ -71,10 +52,11 @@ const EditProduct = (props: Props) => {
       mainProduct: item?.mainProduct!,
       quantity,
       extras,
-      totalPrice: (item!.mainProduct!.price + extraTotal) * quantity,
+      totalPrice: item!.mainProduct!.price + extraTotal,
     };
 
-    replaceItem(updatedProduct)
+    replaceItem(updatedProduct);
+    navigate("..");
   };
 
   useEffect(() => {
@@ -95,7 +77,10 @@ const EditProduct = (props: Props) => {
       <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row gap-3 items-center ">
-            <h3 className="font-semibold text-2xl"> {item!.mainProduct?.title}</h3>
+            <h3 className="font-semibold text-2xl">
+              {" "}
+              {item!.mainProduct?.title}
+            </h3>
             <Link
               to="/nutritions"
               state={{ alergens: item!.mainProduct?.alergens }}
@@ -109,12 +94,14 @@ const EditProduct = (props: Props) => {
           </Link>
         </div>
         <p className="">{item?.mainProduct?.ingridients}</p>
-        <p className="font-bold text-xl">€ {item?.mainProduct?.price.toFixed(2)}</p>
+        <p className="font-bold text-xl">
+          € {item?.mainProduct?.price.toFixed(2)}
+        </p>
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
-          <div className="bg-gray-200 py-2 pb-10 px-5 ">
-            {item?.extras.map((extra,idx) => {
+          <div className="bg-gray-200 dark:bg-gray-600 py-2 pb-10 px-5 ">
+            {item?.extras.map((extra, idx) => {
               return (
                 <div key={`${idx}`}>
                   <h3 className="font-medium mt-2">{extra.name}</h3>
@@ -126,9 +113,11 @@ const EditProduct = (props: Props) => {
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(item.mainProduct).get(`${extra.name}`)}
+                      options={formatExtras(item.mainProduct).get(
+                        `${extra.name}`
+                      )}
                       control={control}
-                      isMulti={true}                      
+                      isMulti={true}
                     />
                   </div>
                 </div>
@@ -140,7 +129,7 @@ const EditProduct = (props: Props) => {
             <div className="flex gap-2 items-center">
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200"
+                className="p-2 rounded-full bg-gray-200  dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => {
                     if (prev === 1) return 1;
@@ -153,7 +142,7 @@ const EditProduct = (props: Props) => {
               <span>{quantity}</span>
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200"
+                className="p-2 rounded-full bg-gray-200  dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => prev + 1);
                 }}
@@ -168,7 +157,9 @@ const EditProduct = (props: Props) => {
               <span>
                 €{" "}
                 {item?.mainProduct?.price
-                  ? ((item.mainProduct.price + extraTotal) * quantity).toFixed(2)
+                  ? ((item.mainProduct.price + extraTotal) * quantity).toFixed(
+                      2
+                    )
                   : ""}
               </span>
             </button>

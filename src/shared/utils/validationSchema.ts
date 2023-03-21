@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const orderValidationSchema = z.object({
-  street: z.string().nonempty(),
+  street: z.string().nonempty({ message: "This field is required" }),
   houseNumber: z.string().nonempty({ message: "This field is required" }),
   postCode: z.string().nonempty({ message: "This field is required" }),
   city: z.string().nonempty({ message: "This field is required" }),

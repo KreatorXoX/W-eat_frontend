@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Basket from "../components/Basket";
+import Basket from "../components/Basket/Basket";
 import MainNavigation from "../shared/components/Navigation/MainNavigation";
 import { useTheme } from "../context/themeStore";
 import CheckOut from "../pages/CheckOut";

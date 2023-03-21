@@ -13,12 +13,11 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatExtras } from "../shared/utils/getExtrasOptions";
 import { v4 as uuidv4 } from "uuid";
-import {useShoppingCart} from '../context/shoppingCartStore'
+import { useShoppingCart } from "../context/shoppingCartStore";
 interface Props {}
 
-
 const Product = (props: Props) => {
-  const addToCart = useShoppingCart(state=>state.addToCart)
+  const addToCart = useShoppingCart((state) => state.addToCart);
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
 
@@ -29,7 +28,6 @@ const Product = (props: Props) => {
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: zodResolver(selectExtraItem),
-
   });
 
   const navigate = useNavigate();
@@ -45,11 +43,11 @@ const Product = (props: Props) => {
       mainProduct: item,
       quantity,
       extras,
-      totalPrice: (item!.price + extraTotal) * quantity,
+      totalPrice: item!.price + extraTotal,
     };
 
-    addToCart(newProduct)
-    navigate('..')
+    addToCart(newProduct);
+    navigate("..");
   };
 
   useEffect(() => {
@@ -88,7 +86,7 @@ const Product = (props: Props) => {
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
-          <div className="bg-gray-200 py-2 pb-10 px-5 ">
+          <div className="bg-gray-200 dark:bg-gray-600 py-2 pb-10 px-5 ">
             {item?.extras.map((extra) => {
               return (
                 <div key={`${extra.id}`}>
@@ -104,7 +102,6 @@ const Product = (props: Props) => {
                       options={formatExtras(item!).get(`${extra.name}`)}
                       control={control}
                       isMulti={true}
-                      
                     />
                   </div>
                 </div>
@@ -116,7 +113,7 @@ const Product = (props: Props) => {
             <div className="flex gap-2 items-center">
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200"
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => {
                     if (prev === 1) return 1;
@@ -129,7 +126,7 @@ const Product = (props: Props) => {
               <span>{quantity}</span>
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200"
+                className="p-2 rounded-full bg-gray-200 dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => prev + 1);
                 }}
