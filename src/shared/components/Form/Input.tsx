@@ -40,6 +40,7 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
               isSearchable
               hideSelectedOptions={true}
               options={props.options}
+              maxMenuHeight={130}
             />
           );
         }}

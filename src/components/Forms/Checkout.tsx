@@ -20,7 +20,7 @@ Modal.setAppElement("#root");
 
 const Checkout = (props: Props) => {
   const newDate = new Date();
-  const { initialHour, deliveryTimes } = getTime(22, newDate);
+  const { initialHour, deliveryTimes } = getTime(23, newDate);
 
   const {
     register,
@@ -223,7 +223,7 @@ const Checkout = (props: Props) => {
                       dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
-                    height: "inherit",
+                    height: "15rem",
                     left: "0",
                     right: "0",
                     margin: "auto",
@@ -294,10 +294,9 @@ const Checkout = (props: Props) => {
                       dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
-                    height: "15rem",
+                    height: "10rem",
                     width: "50%",
                     minWidth: "20rem",
-
                     left: "0",
                     right: "0",
                     margin: "auto",
