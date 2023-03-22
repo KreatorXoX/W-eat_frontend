@@ -18,8 +18,6 @@ const BasketItem = ({ item }: Props) => {
   const addNote = useShoppingCart((state) => state.addNote);
   const removeNote = useShoppingCart((state) => state.removeNote);
 
-  console.log(item.notes);
-  //console.log(note);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
@@ -44,7 +42,7 @@ const BasketItem = ({ item }: Props) => {
           </Link>
           {/* item and price */}
           <span className="whitespace-nowrap font-light">
-            € {item.totalPrice.toFixed(2)}
+            € {(item.totalPrice*item.quantity).toFixed(2)}
           </span>
         </div>
       </div>
@@ -114,7 +112,7 @@ const BasketItem = ({ item }: Props) => {
               <textarea
                 onChange={(e) => setNote(e.target.value)}
                 defaultValue={item.notes}
-                className="outline-none rounded-lg dark:text-black p-1 text-xs"
+                className="outline-none rounded-lg dark:text-black p-1 text-xs bg-gray-200"
               />
               <button
                 className="bg-orange-500 text-slate-50 px-4 py-[0.15em] rounded-lg w-1/3 self-end"

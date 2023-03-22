@@ -74,10 +74,12 @@ const Checkout = (props: Props) => {
     <>
       <form
         onSubmit={handleSubmit(checkoutHandler)}
-        className="m-4 p-5 dark:text-slate-100 text-gray-800  space-y-5"
+        className="m-4 p-5 dark:text-slate-100 text-gray-800 space-y-5
+        
+        "
       >
-        <div className="lg:border xs:border-none rounded-lg dark:border-gray-500">
-          <div className="flex flex-col gap-4 border-b py-4">
+        <div className="lg:border xs:border-none rounded-lg dark:border-gray-600">
+          <div className="flex flex-col gap-4 border-b dark:border-b-gray-600 py-4">
             <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
               Delivery Address
             </h2>
@@ -151,7 +153,7 @@ const Checkout = (props: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 border-b py-4">
+          <div className="flex flex-col gap-4 border-b lg:border-none dark:border-b-gray-600 py-4">
             <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
               Personal Details
             </h2>
@@ -193,7 +195,7 @@ const Checkout = (props: Props) => {
           </div>
         </div>
         <div
-          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 hover:cursor-pointer
+          className="border-b lg:border dark:border-gray-500 p-4 lg:rounded-lg hover:cursor-pointer
           flex justify-between
           "
           onClick={openDeliveryModal}

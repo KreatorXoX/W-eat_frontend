@@ -12,13 +12,11 @@ function MenuItem({ item }: Props) {
   const navigate = useNavigate()
   return (
     <div
-      onClick={() => navigate(`/product/${item?.id}`)}
-      className='w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-50 dark:bg-gray-600
-      hover:cursor-pointer
+      className='w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-100 dark:bg-gray-800
       '
     >
       <div>
-        <div className='flex flex-row gap-3 items-center '>
+        <div className='flex flex-row gap-3 items-center'>
           <h3 className='font-semibold'>{item?.title}</h3>
           <Link
             to='/nutritions'

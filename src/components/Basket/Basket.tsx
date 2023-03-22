@@ -15,7 +15,9 @@ const Basket = (props: Props) => {
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
   return (
-    <div className="w-[22rem] px-4 bg-slate-100 dark:bg-gray-700 basket">
+    <div className="w-[22rem] px-4 bg-slate-100 dark:bg-gray-900 basket
+    dark:border-l dark:border-l-gray-600 border-l-gray-500/20 lg:border-l
+    ">
       <div className="h-screen w-full text-gray-800 dark:text-slate-100 space-y-3 flex flex-col">
         <h2 className="text-center font-bold text-2xl my-5">Basket</h2>
         <div className="h-screen overflow-y-scroll no-scrollbar">

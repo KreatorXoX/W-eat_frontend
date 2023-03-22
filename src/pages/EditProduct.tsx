@@ -100,7 +100,7 @@ const EditProduct = (props: Props) => {
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
-          <div className="bg-gray-200 dark:bg-gray-600 py-2 pb-10 px-5 ">
+          <div className="bg-slate-100 dark:bg-gray-800 py-2 pb-10 px-5 ">
             {item?.extras.map((extra, idx) => {
               return (
                 <div key={`${idx}`}>

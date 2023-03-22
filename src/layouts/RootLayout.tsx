@@ -16,14 +16,14 @@ const RootLayout = (props: Props) => {
   const dark = useTheme((state) => state.dark);
 
   return (
-    <main className={`h-screen ${dark ? "dark bg-gray-600" : "bg-slate-100"} `}>
+    <main className={`h-screen ${dark ? "dark bg-gray-900" : "bg-slate-100"}`}>
       <MainNavigation />
 
-      <div className="w-full dark:bg-gray-700 bg-slate-100 dark:text-slate-200 text-gray-700 flex flow-row pb-10">
-        <div className="w-full lg:w-[calc(100vw-21.5rem)] flex justify-center items-center dark:border-r dark:border-r-slate-200/20 border-r-gray-500/20 lg:border-r">
+      <div className="w-full dark:bg-gray-900 dark:text-slate-200 text-gray-700 flex flow-row pb-10">
+        <div className="w-full lg:w-[calc(100vw-21.5rem)] flex justify-center items-center ">
           <Home />
         </div>
-        <div className="hidden lg:inline-flex lg:w-[20.4rem]">
+        <div className="hidden lg:inline-flex w-[20.5rem]">
           <Basket />
         </div>
       </div>
