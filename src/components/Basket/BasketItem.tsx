@@ -18,7 +18,6 @@ const BasketItem = ({ item }: Props) => {
   const addNote = useShoppingCart((state) => state.addNote);
   const removeNote = useShoppingCart((state) => state.removeNote);
 
-
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
     addNote(item.id, note);
@@ -42,7 +41,7 @@ const BasketItem = ({ item }: Props) => {
           </Link>
           {/* item and price */}
           <span className="whitespace-nowrap font-light">
-            € {(item.totalPrice*item.quantity).toFixed(2)}
+            € {(item.totalPrice * item.quantity).toFixed(2)}
           </span>
         </div>
       </div>
@@ -67,7 +66,7 @@ const BasketItem = ({ item }: Props) => {
               {item.notes && (
                 <div className="w-full">
                   <div className=" bg-orange-300/20 dark:bg-gray-500 font-semibold rounded-md px-2 py-1 flex justify-between items-center w-full">
-                    <p className="text-xs text-gray-500 dark:text-slate-50">
+                    <p className="text-xs text-gray-500 dark:text-slate-50 line-clamp-2">
                       {item.notes}
                     </p>
                     <p>

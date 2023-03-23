@@ -57,3 +57,27 @@ export const selectExtraItem = z.record(
 );
 
 export type SelectExtraItem = z.infer<typeof selectExtraItem>;
+
+export const newAddressValidationSchema = z.object({
+  street: z.string().nonempty({ message: "This field is required" }),
+  houseNumber: z.string().nonempty({ message: "This field is required" }),
+  postCode: z.string().nonempty({ message: "This field is required" }),
+  city: z.string().nonempty({ message: "This field is required" }),
+});
+
+export type NewAddressValidationSchema = z.infer<
+  typeof newAddressValidationSchema
+>;
+
+export const changePasswordSchema = z
+  .object({
+    oldPassword: z.string().min(3).max(8),
+    newPassword: z.string().min(3).max(8),
+    confirmNewPassword: z.string().min(3).max(8),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "New passwords don't match",
+    path: ["confirmNewPassword"],
+  });
+
+export type ChangePasswordSchema = z.infer<typeof changePasswordSchema>;
