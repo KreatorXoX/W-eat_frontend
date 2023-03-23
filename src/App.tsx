@@ -13,6 +13,12 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Product from './pages/Product'
 import EditProduct from './pages/EditProduct'
+import PersonalPage from './pages/PersonalPage'
+import Orders from './pages/Orders'
+
+import Favourites from './pages/Favourites'
+import Addresses from './pages/Addresses'
+import ChangePassword from './pages/ChangePassword'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -25,7 +31,12 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Account /> },
           { path: '/account/login', element: <Login /> },
-          { path: '/account/register', element: <Register /> }
+          { path: '/account/register', element: <Register /> },
+          { path: '/account/personal-info', element: <PersonalPage /> },
+          { path: '/account/orders', element: <Orders /> },
+          { path: '/account/favourites', element: <Favourites /> },
+          { path: '/account/addresses', element: <Addresses /> },
+          { path: '/account/change-password', element: <ChangePassword /> }
         ]
       },
       {

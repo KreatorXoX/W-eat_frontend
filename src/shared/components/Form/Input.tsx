@@ -19,6 +19,7 @@ type Props = {
   onBlur?: ChangeHandler
   ref?: React.Ref<any>
   options?: OptionSelect[]
+  disabled?: boolean
 }
 
 const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
@@ -56,10 +57,12 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
         onChange={props.onChange}
         onBlur={props.onBlur}
         ref={ref}
+        disabled={props.disabled}
         className='w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
         focus:bg-gray-200
         border-gray-400
         placeholder:text-zinc-400/85
+        disabled:text-gray-600 disabled:italic
         '
       />
     )
