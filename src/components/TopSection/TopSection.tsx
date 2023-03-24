@@ -8,7 +8,7 @@ const sectionsArr = ['popular', 'tai', 'beef']
 
 function TopSection({  }: Props) {
   return (
-    <div className='bg-slate-50 dark:bg-gray-800 pb-2 shadow-md'>
+    <div className='px-4 max-w-7xl mx-auto bg-slate-50 dark:bg-gray-800 pb-2 shadow-md'>
       <div className='h-[14rem]'>
         <img
           src='https://res.cloudinary.com/dinhhwb9x/image/upload/v1678532308/restrauntMain_xhssgi.jpg'

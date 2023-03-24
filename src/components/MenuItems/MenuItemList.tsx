@@ -16,7 +16,7 @@ function MenuItemList({  }: Props) {
   )
 
   return (
-    <div>
+<>
       {Object.keys(itemsByCategory).map(category => (
         <div
           id={`${category}`}
@@ -31,7 +31,7 @@ function MenuItemList({  }: Props) {
           ))}
         </div>
       ))}
-    </div>
+    </>  
   )
 }
 

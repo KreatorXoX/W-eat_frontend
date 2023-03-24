@@ -15,16 +15,16 @@ const Basket = (props: Props) => {
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
   return (
-    <div className="w-[22rem] px-4 bg-slate-100 dark:bg-gray-900 basket
+    <div className="h-screen px-4 bg-slate-100 dark:bg-gray-900
     dark:border-l dark:border-l-gray-600 border-l-gray-500/20 lg:border-l
     ">
-      <div className="h-screen w-full text-gray-800 dark:text-slate-100 space-y-3 flex flex-col">
+      <div className="h-full  text-gray-800 dark:text-slate-100 space-y-3 flex flex-col">
         <h2 className="text-center font-bold text-2xl my-5">Basket</h2>
-        <div className="h-screen overflow-y-scroll no-scrollbar">
+        <div className="h-full overflow-y-scroll no-scrollbar">
           {cartProducts.length > 0 ? (
             cartProducts.map((item) => <BasketItem key={item.id} item={item} />)
           ) : (
-            <div className="pt-28 flex flex-col justify-center items-center text-4xl w-full px-4">
+            <div className="pt-28 flex flex-col justify-center items-center text-4xl  px-4">
               <TbPaperBag />
               <p className="text-2xl font-bold mt-5 mb-2">Fill your Bag</p>
               <span className="text-base">Your bag is Empty</span>

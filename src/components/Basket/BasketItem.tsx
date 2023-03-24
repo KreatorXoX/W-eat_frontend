@@ -24,7 +24,7 @@ const BasketItem = ({ item }: Props) => {
     setShowNoteForm(false);
   };
   return (
-    <div className="border-b space-y-4 mb-4 px-5 lg:px-0">
+    <div className="border-b dark:border-b-gray-500 space-y-4 mb-4 px-5 lg:px-0">
       <div className="relative items-center gap-2 text-base font-[500]">
         <span className="absolute top-0 left-0">{item.quantity}</span>
         <div className="flex justify-between w-full pl-5">

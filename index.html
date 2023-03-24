@@ -7,10 +7,10 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
-    <div id="modalPortal"></div>
+    <!-- <div id="modalPortal"></div>
     <div id="drawerPortal"></div>
 
-    <div id="backdropPortal"></div>
+    <div id="backdropPortal"></div> -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
@@ -18,35 +18,35 @@
 
 <script>
   // The debounce function receives our function as a parameter
-  const debounce = (fn) => {
+  const debounce = fn => {
     // This holds the requestAnimationFrame reference, so we can cancel it if we wish
-    let frame;
+    let frame
 
     // The debounce function returns a new function that can receive a variable number of arguments
     return (...params) => {
       // If the frame variable has been defined, clear it now, and queue for next frame
       if (frame) {
-        cancelAnimationFrame(frame);
+        cancelAnimationFrame(frame)
       }
 
       // Queue our function call for the next frame
       frame = requestAnimationFrame(() => {
         // Call our function and pass any params we received
-        fn(...params);
-      });
-    };
-  };
+        fn(...params)
+      })
+    }
+  }
 
   // Reads out the scroll position and stores it in the data attribute
   // so we can use it in our stylesheets
   const storeScroll = () => {
-    if (window.scrollY < 100) document.documentElement.dataset.scroll = 0;
-    else document.documentElement.dataset.scroll = window.scrollY;
-  };
+    if (window.scrollY < 100) document.documentElement.dataset.scroll = 0
+    else document.documentElement.dataset.scroll = window.scrollY
+  }
 
   // Listen for new scroll events, here we debounce our `storeScroll` function
-  document.addEventListener("scroll", debounce(storeScroll));
+  document.addEventListener('scroll', debounce(storeScroll))
 
   // Update scroll position for first time
-  storeScroll();
+  storeScroll()
 </script>

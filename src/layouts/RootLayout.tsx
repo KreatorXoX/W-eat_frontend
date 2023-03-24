@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import { useLocation } from "react-router-dom";
 import OrangeActionButton from "../shared/components/UI-Elements/OrangeActionButton";
 import { BsFillBasket2Fill } from "react-icons/bs";
+
 type Props = {};
 
 const RootLayout = (props: Props) => {
@@ -16,19 +17,19 @@ const RootLayout = (props: Props) => {
   const dark = useTheme((state) => state.dark);
 
   return (
-    <main className={`h-screen ${dark ? "dark bg-gray-900" : "bg-slate-100"}`}>
-      <MainNavigation />
-
-      <div className="w-full dark:bg-gray-900 dark:text-slate-200 text-gray-700 flex flow-row pb-10">
-        <div className="w-full lg:w-[calc(100vw-21.5rem)] flex justify-center items-center ">
-          <Home />
-        </div>
-        <div className="hidden lg:inline-flex w-[20.5rem]">
-          <Basket />
-        </div>
+    <main className={`${dark ? "dark bg-gray-900" : "bg-slate-100"}`} >
+     <MainNavigation />
+      <div className='flex dark:bg-gray-900 dark:text-slate-200 text-gray-700'>
+      <div className='w-screen lg:w-[calc(100vw-20rem)] pt-1 px-2'>
+      <Home/>
       </div>
-      {cart?.length > 0 && location.pathname === "/" && (
-        <div className="inline-block lg:hidden fixed bottom-0 w-full px-3">
+      <aside className='hidden w-0 lg:inline lg:w-[20rem]'>
+        <div className='sticky top-0 rounded-xl w-full'>
+         <Basket/>
+        </div>
+      </aside>
+          {cart?.length > 0 && location.pathname === "/" && (
+            <div className="inline-block lg:hidden fixed bottom-0 w-full px-3">
           <OrangeActionButton
             whereTo="/cart"
             price={getCartTotal()}
@@ -41,6 +42,7 @@ const RootLayout = (props: Props) => {
         </div>
       )}
       <Outlet />
+    </div>
     </main>
   );
 };
