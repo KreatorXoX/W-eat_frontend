@@ -16,6 +16,7 @@ const RootLayout = (props: Props) => {
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
   const dark = useTheme((state) => state.dark);
 
+  console.log('root layout')
   return (
     <main className={`${dark ? "dark bg-gray-900" : "bg-slate-100"}`} >
      <MainNavigation />

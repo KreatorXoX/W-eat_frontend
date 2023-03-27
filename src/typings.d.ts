@@ -30,3 +30,9 @@ type OptionSelect = {
   value: string
   label: string
 }
+
+type Order = {
+  orderId: string
+  orderDate: string
+  price: string
+}

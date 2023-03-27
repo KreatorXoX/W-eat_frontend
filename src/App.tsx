@@ -23,7 +23,11 @@ import EditAddress from './pages/EditAddress'
 import ProductLayout from './layouts/ProductLayout'
 import AdminLayout from './layouts/AdminLayout'
 import AdminDashboard from './admin/pages/AdminDashboard'
-import AdminHome from './admin/pages/AdminHome'
+import AdminCustomers from './admin/pages/AdminCustomers'
+import AdminMenu from './admin/pages/AdminMenu'
+import OrdersLayout from './layouts/OrdersLayout'
+import ActiveOrders from './admin/components/Orders/ActiveOrders'
+import OrderHistory from './admin/components/Orders/OrderHistory'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -111,9 +115,16 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       { index: true, element: <AdminDashboard /> },
-      { path: 'home', element: <AdminHome /> }
-      // { path: 'register', element: <Register /> },
-      // { path: 'personal-info', element: <PersonalPage /> },
+      {
+        path: 'orders',
+        element: <OrdersLayout />,
+        children: [
+          { index: true, element: <ActiveOrders /> },
+          { path: 'order-history', element: <OrderHistory /> }
+        ]
+      },
+      { path: 'customers', element: <AdminCustomers /> },
+      { path: 'menu', element: <AdminMenu /> }
     ]
   }
 ])
