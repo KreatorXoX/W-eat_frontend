@@ -1,244 +1,246 @@
 export const items = [
   {
-    id: "1",
-    title: "Spaghetti carbonara",
+    id: '1',
+    title: 'Spaghetti carbonara',
     description:
-      "Spaghetti pasta that is tossed in a creamy sauce made with eggs, Parmesan cheese, and crispy pancetta or bacon.",
-    ingridients: "Eggs, Parmesan cheese, bacon, black pepper, garlic",
+      'Spaghetti pasta that is tossed in a creamy sauce made with eggs, Parmesan cheese, and crispy pancetta or bacon.',
+    ingridients: 'Eggs, Parmesan cheese, bacon, black pepper, garlic',
     price: 13,
-    alergens: ["Eggs", "Cheese", "Pork"],
+    alergens: ['Eggs', 'Cheese', 'Pork'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "popular",
+    category: 'spaghetti',
+    tag: 'popular'
   },
   {
-    id: "2",
-    title: "Chicken tikka masala",
+    id: '2',
+    title: 'Chicken tikka masala',
     description:
-      "Grilled chicken pieces that are served in a rich and creamy tomato-based curry sauce.",
-    ingridients: "Tomatoes, onion, garlic, ginger",
+      'Grilled chicken pieces that are served in a rich and creamy tomato-based curry sauce.',
+    ingridients: 'Tomatoes, onion, garlic, ginger',
     price: 15,
-    alergens: ["Dairy", "Nuts"],
+    alergens: ['Dairy', 'Nuts'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "popular",
+    category: 'indian',
+    tag: 'popular'
   },
   {
-    id: "3",
-    title: "Pad Thai",
+    id: '3',
+    title: 'Pad Thai',
     description:
-      "Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.",
+      'Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.',
     ingridients:
-      "Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.",
+      'Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.',
     price: 11,
-    alergens: ["Peanuts", "Shellfish", "Soy"],
+    alergens: ['Peanuts', 'Shellfish', 'Soy'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "tai",
+    category: 'tai'
   },
   {
-    id: "4",
-    title: "Beef wellington",
+    id: '4',
+    title: 'Beef wellington',
     description:
-      "Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.",
-    ingridients: "Red wine, onions, carrots, garlic, butter",
+      'Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.',
+    ingridients: 'Red wine, onions, carrots, garlic, butter',
     price: 8,
-    alergens: ["Wheat", "Dairy"],
+    alergens: ['Wheat', 'Dairy'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "beef",
+    category: 'beef'
   },
   {
-    id: "5",
-    title: "Tom Yum Goong",
+    id: '5',
+    title: 'Tom Yum Goong',
     description:
-      "Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.",
+      'Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.',
     ingridients:
-      "Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.",
+      'Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.',
     price: 11,
-    alergens: ["Peanuts", "Shellfish", "Soy"],
+    alergens: ['Peanuts', 'Shellfish', 'Soy'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "tai",
+    category: 'tai'
   },
   {
-    id: "6",
-    title: "Beef bourguignon",
+    id: '6',
+    title: 'Beef bourguignon',
     description:
-      "Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.",
-    ingridients: "Red wine, onions, carrots, garlic, butter",
+      'Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.',
+    ingridients: 'Red wine, onions, carrots, garlic, butter',
     price: 8,
-    alergens: ["Wheat", "Dairy"],
+    alergens: ['Wheat', 'Dairy'],
     extras: [
       {
-        id: "31",
-        name: "Sauces",
+        id: '31',
+        name: 'Sauces',
         paid: true,
         extraItems: [
-          { id: "21", name: "ketchup", price: 0.25 },
-          { id: "22", name: "mayo", price: 0.25 },
-        ],
+          { id: '21', name: 'ketchup', price: 0.25 },
+          { id: '22', name: 'mayo', price: 0.25 }
+        ]
       },
       {
-        id: "32",
-        name: "Drinks",
+        id: '32',
+        name: 'Drinks',
         paid: true,
         extraItems: [
-          { id: "23", name: "cola", price: 1.5 },
-          { id: "24", name: "fanta", price: 1.5 },
-          { id: "25", name: "sprite", price: 1.5 },
-        ],
+          { id: '23', name: 'cola', price: 1.5 },
+          { id: '24', name: 'fanta', price: 1.5 },
+          { id: '25', name: 'sprite', price: 1.5 }
+        ]
       },
       {
-        id: "33",
-        name: "Free Sauces",
+        id: '33',
+        name: 'Free Sauces',
         paid: false,
         extraItems: [
-          { id: "26", name: "ketchup", price: 0 },
-          { id: "27", name: "mayo", price: 0 },
-        ],
-      },
+          { id: '26', name: 'ketchup', price: 0 },
+          { id: '27', name: 'mayo', price: 0 }
+        ]
+      }
     ],
-    category: "beef",
-  },
-];
+    category: 'beef'
+  }
+]

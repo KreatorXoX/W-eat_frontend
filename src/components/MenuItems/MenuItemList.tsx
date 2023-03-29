@@ -8,12 +8,27 @@ function MenuItemList({  }: Props) {
 
 
   const itemsByCategory = items.reduce(
-    (result: GroupedItems, item: Item) => ({
+    (result: any, item: Item) => ({
       ...result,
       [item!.category]: [...(result[item!.category] || []), item]
     }),
     {}
   )
+
+  const popularProducts = items.filter(item=>item.tag === 'popular')
+  console.log(popularProducts)
+  const newGroupedItems = items.reduce(
+    (result: GroupedItems, item: Item) =>{
+      console.log(result)
+     return {
+      ...result,
+    [item!.category]: { products: [...(result[item!.category]?.products || []), item], extras: item?.extras }
+    }
+    },
+    {}
+  )
+
+  
 
   return (
 <>

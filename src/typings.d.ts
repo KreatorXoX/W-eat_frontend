@@ -23,7 +23,10 @@ type Item =
     }
   | undefined
 type GroupedItems = {
-  [key: string]: Item[]
+  [key: string]: {
+    products: Item[]
+    extras: Extra[] | undefined
+  }
 }
 
 type OptionSelect = {
