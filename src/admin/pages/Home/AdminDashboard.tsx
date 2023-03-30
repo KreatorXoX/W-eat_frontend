@@ -1,4 +1,4 @@
-import OrderCard from '../components/Orders/OrderCard'
+import OrderCard from '../../components/Orders/OrderCard'
 
 interface Props {}
 

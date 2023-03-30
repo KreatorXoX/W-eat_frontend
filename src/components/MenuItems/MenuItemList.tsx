@@ -8,8 +8,6 @@ function MenuItemList({}: Props) {
     products.filter((product) => product.tag === "popular")
   );
 
-  console.log(popularProducts);
-
   return (
     <>
       <div

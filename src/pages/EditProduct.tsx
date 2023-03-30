@@ -12,6 +12,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatExtras } from "../shared/utils/getExtrasOptions";
 import { useShoppingCart } from "../context/shoppingCartStore";
+import {menu} from '../shared/utils/data'
+import { getProductById } from "./Product";
 
 interface Props {}
 
@@ -23,12 +25,19 @@ const EditProduct = (props: Props) => {
 
   const id = useParams().id;
   const item = cartItems.find((item) => item.id === id);
+
+  const itemId =item?.mainProduct.id!;
+
+  const orgCatExtras = menu.find(cate => cate.name === getProductById(itemId)?.category)?.extras
+
   const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
 
   const extrasObject = item?.extras.reduce((acc: any, extra) => {
     acc[extra.name] = extra.values;
     return acc;
   }, {});
+
+  
 
   const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
     mode: "onChange",
@@ -101,7 +110,7 @@ const EditProduct = (props: Props) => {
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
           <div className="bg-slate-100 dark:bg-gray-800 py-2 pb-10 px-5 ">
-            {item?.extras.map((extra, idx) => {
+            {orgCatExtras?.map((extra, idx) => {
               return (
                 <div key={`${idx}`}>
                   <h3 className="font-medium mt-2">{extra.name}</h3>
@@ -113,7 +122,7 @@ const EditProduct = (props: Props) => {
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(item.mainProduct).get(
+                      options={formatExtras(orgCatExtras!).get(
                         `${extra.name}`
                       )}
                       control={control}

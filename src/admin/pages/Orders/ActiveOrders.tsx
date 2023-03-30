@@ -1,4 +1,4 @@
-import OrderItem from './OrderItem'
+import OrderItem from '../../components/Orders/OrderItem'
 
 interface Props {}
 

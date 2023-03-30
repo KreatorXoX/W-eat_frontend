@@ -22,12 +22,14 @@ import ChangePassword from './pages/ChangePassword'
 import EditAddress from './pages/EditAddress'
 import ProductLayout from './layouts/ProductLayout'
 import AdminLayout from './layouts/AdminLayout'
-import AdminDashboard from './admin/pages/AdminDashboard'
+import AdminDashboard from './admin/pages/Home/AdminDashboard'
 import AdminCustomers from './admin/pages/AdminCustomers'
 import AdminMenu from './admin/pages/AdminMenu'
 import OrdersLayout from './layouts/OrdersLayout'
-import ActiveOrders from './admin/components/Orders/ActiveOrders'
-import OrderHistory from './admin/components/Orders/OrderHistory'
+import ActiveOrders from './admin/pages/Orders/ActiveOrders'
+import OrderHistory from './admin/pages/Orders/OrderHistory'
+import ProtectedRoute from './shared/utils/ProtectedRoute'
+import AdminRoute from './shared/utils/AdminRoute'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -44,9 +46,14 @@ const router = createBrowserRouter([
           { path: 'personal-info', element: <PersonalPage /> },
           { path: 'orders', element: <Orders /> },
           { path: 'favourites', element: <Favourites /> },
-          { path: 'addresses', element: <Addresses /> },
-          { path: 'edit-address', element: <EditAddress /> },
-          { path: 'change-password', element: <ChangePassword /> }
+          {
+            element: <ProtectedRoute />,
+            children: [
+              { path: 'addresses', element: <Addresses /> },
+              { path: 'edit-address', element: <EditAddress /> },
+              { path: 'change-password', element: <ChangePassword /> }
+            ]
+          }
         ]
       },
       {
@@ -71,7 +78,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/nutritions',
-        element: <ModalLayout />,
+        element: <ProductLayout />,
         children: [
           {
             index: true,
@@ -110,21 +117,26 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/admin',
-    element: <AdminLayout />,
-    errorElement: <Error />,
+    element: <AdminRoute />,
     children: [
-      { index: true, element: <AdminDashboard /> },
       {
-        path: 'orders',
-        element: <OrdersLayout />,
+        path: '/admin',
+        element: <AdminLayout />,
+        errorElement: <Error />,
         children: [
-          { index: true, element: <ActiveOrders /> },
-          { path: 'order-history', element: <OrderHistory /> }
+          { index: true, element: <AdminDashboard /> },
+          {
+            path: 'orders',
+            element: <OrdersLayout />,
+            children: [
+              { index: true, element: <ActiveOrders /> },
+              { path: 'order-history', element: <OrderHistory /> }
+            ]
+          },
+          { path: 'customers', element: <AdminCustomers /> },
+          { path: 'menu', element: <AdminMenu /> }
         ]
-      },
-      { path: 'customers', element: <AdminCustomers /> },
-      { path: 'menu', element: <AdminMenu /> }
+      }
     ]
   }
 ])
