@@ -1,20 +1,20 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink } from "react-router-dom";
 
-type Props = {}
+type Props = {};
 
 const OrdersLayout = (props: Props) => {
   return (
-    <div className='mt-10'>
+    <div className="mt-10">
       <nav>
-        <ul className='flex flex-row justify-center gap-14 text-gray-700 font-semibold'>
+        <ul className="flex flex-row justify-center gap-14 text-gray-700 font-semibold">
           <li>
             <NavLink
-              to='/admin/orders'
+              to="/admin/orders"
               end
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1 decoration-wavy text-purple-600 lg:text-xl'
-                  : 'hover:text-purple-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1 text-orange-600 lg:text-xl "
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Active Orders
@@ -22,11 +22,11 @@ const OrdersLayout = (props: Props) => {
           </li>
           <li>
             <NavLink
-              to='order-history'
+              to="order-history"
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1 decoration-wavy text-purple-600 lg:text-xl'
-                  : 'hover:text-purple-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Order History
@@ -36,7 +36,7 @@ const OrdersLayout = (props: Props) => {
       </nav>
       <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default OrdersLayout
+export default OrdersLayout;
