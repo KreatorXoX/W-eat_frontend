@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
     "@tailwindcss/line-clamp": "^0.4.2",
+    "@tanstack/react-table": "^8.8.4",
     "framer-motion": "^9.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
