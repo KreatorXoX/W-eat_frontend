@@ -7,14 +7,13 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Filter from "./Filter";
-import { OrderHistory } from "./tableData";
-function Table({
-  data,
-  columns,
-}: {
-  data: OrderHistory[];
-  columns: ColumnDef<OrderHistory>[];
-}) {
+
+interface ReactTableProps<T extends object> {
+  data: T[];
+  columns: ColumnDef<T>[];
+}
+
+function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
   const table = useReactTable({
     data,
     columns,
@@ -24,23 +23,33 @@ function Table({
   });
 
   return (
-    <div className="p-2">
-      <div className="h-2" />
-      <table>
-        <thead>
+    <div className="w-full max-w-[60rem] overflow-auto text-xs sm:text-sm">
+      <table className="mt-3 w-full bg-gray-200 rounded-lg shadow-lg text-center table-auto sm:border-separate sm:border-spacing-1">
+        <thead className="bg-gray-800 text-gray-100 sm:text-base">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <th key={header.id} colSpan={header.colSpan}>
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className={`font-bold sm:rounded-lg p-1 tracking-wider ${
+                      /id/i.test(header.id)
+                        ? "sm:w-52"
+                        : /date/i.test(header.id)
+                        ? ""
+                        : "sm:w-20"
+                    }`}
+                  >
                     {header.isPlaceholder ? null : (
                       <div>
                         {flexRender(
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        {header.column.getCanFilter() ? (
-                          <div>
+                        {header.column.getCanFilter() &&
+                        /id/i.test(header.column.id) ? (
+                          <div className="w-full flex justify-center text-xs font-normal">
                             <Filter column={header.column} table={table} />
                           </div>
                         ) : null}
@@ -55,10 +64,19 @@ function Table({
         <tbody>
           {table.getRowModel().rows.map((row) => {
             return (
-              <tr key={row.id}>
+              <tr key={row.id} className="even:bg-slate-100 odd:bg-slate-300">
                 {row.getVisibleCells().map((cell) => {
                   return (
-                    <td key={cell.id}>
+                    <td
+                      key={cell.id}
+                      className={`p-2 text-gray-700 font-medium ${
+                        cell.getValue() === "delivered"
+                          ? "bg-green-200/60 text-green-700 uppercase"
+                          : cell.getValue() === "canceled"
+                          ? "bg-red-200/60 text-red-700 uppercase"
+                          : ""
+                      }`}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -71,8 +89,8 @@ function Table({
           })}
         </tbody>
       </table>
-      <div className="h-2" />
-      <div className="flex items-center gap-2">
+      <div className="mt-4 w-full" />
+      <div className="flex mx-auto w-fit items-center gap-2">
         <button
           className="border rounded p-1"
           onClick={() => table.setPageIndex(0)}

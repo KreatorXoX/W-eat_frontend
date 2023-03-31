@@ -1,10 +1,3 @@
-export type OrderHistory = {
-  orderId: string;
-  orderDate: string;
-  price: number;
-  status: "delivered" | "canceled";
-};
-
 export const orderHistory: OrderHistory[] = [
   {
     orderId: "001",
