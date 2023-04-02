@@ -1,10 +1,11 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   order: Order;
 };
 
 const OrderItem = ({ order }: Props) => {
+  const navigate = useNavigate();
   return (
     <div
       className="flex justify-between px-2 py-1 text-gray-700 text-sm md:text-base hover:cursor-pointer hover:bg-gray-200 transition-colors duration-150
@@ -12,7 +13,7 @@ const OrderItem = ({ order }: Props) => {
     "
     >
       <div
-        onClick={() => console.log("div clicked")}
+        onClick={() => navigate(`/admin/orders/${order.orderId}`)}
         className="flex w-full pr-10 justify-between"
       >
         <div className="flex items-center flex-col justify-center space-y-2">
@@ -32,13 +33,13 @@ const OrderItem = ({ order }: Props) => {
         <h1 className="font-semibold">Actions</h1>
         <div className="flex items-center flex-col md:flex-row justify-center gap-2">
           <button
-            onClick={() => console.log("button clicked")}
+            onClick={() => console.log("order accepted")}
             className="text-xs bg-green-500 p-1 rounded text-slate-100"
           >
             Accept
           </button>
           <button
-            onClick={() => console.log("button clicked")}
+            onClick={() => console.log("order cancelled")}
             className="text-xs bg-red-500 p-1 rounded text-slate-100"
           >
             Cancel

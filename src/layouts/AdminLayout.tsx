@@ -7,12 +7,12 @@ type Props = {};
 
 const AdminLayout = (props: Props) => {
   return (
-    <main className="h-screen flex lg:flex-row flex-col max-w-[120rem] mx-auto">
-      <aside className="w-full lg:w-[15rem] bg-neutral-200 rounded-lg text-left ">
+    <main className="h-screen flex lg:flex-row flex-col mx-auto">
+      <aside className="w-full lg:w-[14rem] bg-neutral-200 rounded-lg text-left ">
         <nav className="sticky top-0 rounded-xl w-full lg:pl-6 lg:mt-10">
           <ul
             className="flex flex-row justify-evenly lg:flex-col overflow-hidden lg:gap-10 py-5
-          font-semibold text-lg text-purple-800 transition-all delay-150 duration-500
+          font-semibold text-lg text-blue-800 transition-all delay-150 duration-500
           "
           >
             <li>
@@ -20,8 +20,8 @@ const AdminLayout = (props: Props) => {
                 to="/admin"
                 className={({ isActive }) =>
                   isActive
-                    ? "underline underline-offset-2 decoration-1 text-purple-600"
-                    : "hover:text-purple-600"
+                    ? "underline underline-offset-2 decoration-1 text-blue-600"
+                    : "hover:text-blue-600"
                 }
                 end
               >
@@ -35,8 +35,8 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "underline underline-offset-2 decoration-1  text-purple-600"
-                    : "hover:text-purple-600"
+                    ? "underline underline-offset-2 decoration-1  text-blue-600"
+                    : "hover:text-blue-600"
                 }
                 to="orders"
               >
@@ -50,8 +50,8 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "underline underline-offset-2 decoration-1  text-purple-600"
-                    : "hover:text-purple-600"
+                    ? "underline underline-offset-2 decoration-1  text-blue-600"
+                    : "hover:text-blue-600"
                 }
                 to="customers"
               >
@@ -65,8 +65,8 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? "underline underline-offset-2 decoration-1  text-purple-600"
-                    : "hover:text-purple-600"
+                    ? "underline underline-offset-2 decoration-1  text-blue-600"
+                    : "hover:text-blue-600"
                 }
                 to="menu"
               >
@@ -79,7 +79,7 @@ const AdminLayout = (props: Props) => {
           </ul>
         </nav>
       </aside>
-      <div className="w-full h-full lg:w-[calc(100vw-15rem)] overflow-auto">
+      <div className="w-full h-full lg:w-[calc(100vw-14rem)] overflow-y-auto">
         <Outlet />
       </div>
     </main>

@@ -2,14 +2,14 @@ import { Outlet, NavLink } from "react-router-dom";
 
 type Props = {};
 
-const OrdersLayout = (props: Props) => {
+const MenuLayout = (props: Props) => {
   return (
     <div className="mt-5 lg:mt-10">
       <nav>
         <ul className="flex flex-row justify-center gap-14 text-gray-700 font-semibold">
           <li>
             <NavLink
-              to="/admin/orders"
+              to="/admin/menu"
               end
               className={({ isActive }) =>
                 isActive
@@ -17,19 +17,43 @@ const OrdersLayout = (props: Props) => {
                   : "hover:text-orange-600 lg:text-xl"
               }
             >
-              Active Orders
+              Categories
             </NavLink>
           </li>
           <li>
             <NavLink
-              to="order-history"
+              to="products"
               className={({ isActive }) =>
                 isActive
                   ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
                   : "hover:text-orange-600 lg:text-xl"
               }
             >
-              Order History
+              Products
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="extra"
+              className={({ isActive }) =>
+                isActive
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
+              }
+            >
+              Extras
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="extra-product"
+              className={({ isActive }) =>
+                isActive
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
+              }
+            >
+              Extra Products
             </NavLink>
           </li>
         </ul>
@@ -39,4 +63,4 @@ const OrdersLayout = (props: Props) => {
   );
 };
 
-export default OrdersLayout;
+export default MenuLayout;

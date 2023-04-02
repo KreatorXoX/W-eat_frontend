@@ -46,3 +46,10 @@ type OrderHistory = {
   price: number;
   status: "delivered" | "canceled";
 };
+
+type Customer = {
+  id: string;
+  name: string;
+  email: string;
+  status: "verified" | "pending" | "suspended";
+};

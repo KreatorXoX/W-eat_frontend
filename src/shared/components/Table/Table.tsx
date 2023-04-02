@@ -39,7 +39,10 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                         : /date/i.test(header.id)
                         ? ""
                         : "sm:w-20"
-                    }`}
+                    }
+                    
+                    ${header.id === "email" ? "hidden sm:table-cell" : ""}
+                    `}
                   >
                     {header.isPlaceholder ? null : (
                       <div>
@@ -75,7 +78,21 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                           : cell.getValue() === "canceled"
                           ? "bg-red-200/60 text-red-700 uppercase"
                           : ""
-                      }`}
+                      }
+                      
+                      ${
+                        cell.getValue() === "verified"
+                          ? "bg-green-200/60 text-green-700 uppercase"
+                          : cell.getValue() === "pending"
+                          ? "bg-yellow-200/60 text-yellow-700 uppercase"
+                          : cell.getValue() === "suspended"
+                          ? "bg-gray-200/60 text-gray-400 uppercase"
+                          : ""
+                      }
+                      ${
+                        cell.column.id === "email" ? "hidden sm:table-cell" : ""
+                      }
+                      `}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

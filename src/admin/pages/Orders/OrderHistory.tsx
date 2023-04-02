@@ -1,8 +1,8 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { orderHistory } from "../../../shared/utils/orderHistory";
+import { orderHistory } from "../../../shared/utils/table/orderHistory";
 import { useMemo } from "react";
 import Table from "../../../shared/components/Table/Table";
-
+import { Link } from "react-router-dom";
 interface Props {}
 
 const OrderHistory = (props: Props) => {
@@ -11,6 +11,14 @@ const OrderHistory = (props: Props) => {
       {
         header: "Id",
         accessorKey: "orderId",
+        cell: ({ row }) => {
+          return (
+            <Link
+              to={`/admin/orders/${row.original.orderId}`}
+              className="text-blue-600 underline hover:no-underline"
+            >{`${row.original.orderId}`}</Link>
+          );
+        },
       },
       {
         header: "Date",

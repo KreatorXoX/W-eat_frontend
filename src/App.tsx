@@ -1,148 +1,184 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import ModalLayout from './layouts/ModalLayout'
-import RootLayout from './layouts/RootLayout'
-import CheckoutLayout from './layouts/CheckoutLayout'
-import Account from './pages/Account'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ModalLayout from "./layouts/ModalLayout";
+import RootLayout from "./layouts/RootLayout";
+import CheckoutLayout from "./layouts/CheckoutLayout";
+import Account from "./pages/Account";
 
-import Error from './pages/Error'
+import Error from "./pages/Error";
 
-import Nutritions from './pages/Nutritions'
-import Cart from './pages/Cart'
-import CartLayout from './layouts/CartLayout'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import Product from './pages/Product'
-import EditProduct from './pages/EditProduct'
-import PersonalPage from './pages/PersonalPage'
-import Orders from './pages/Orders'
+import Nutritions from "./pages/Nutritions";
+import Cart from "./pages/Cart";
+import CartLayout from "./layouts/CartLayout";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Product from "./pages/Product";
+import EditProduct from "./pages/EditProduct";
+import PersonalPage from "./pages/PersonalPage";
+import Orders from "./pages/Orders";
 
-import Favourites from './pages/Favourites'
-import Addresses from './pages/Addresses'
-import ChangePassword from './pages/ChangePassword'
-import EditAddress from './pages/EditAddress'
-import ProductLayout from './layouts/ProductLayout'
-import AdminLayout from './layouts/AdminLayout'
-import AdminDashboard from './admin/pages/Home/AdminDashboard'
-import AdminCustomers from './admin/pages/AdminCustomers'
-import AdminMenu from './admin/pages/AdminMenu'
-import OrdersLayout from './layouts/OrdersLayout'
-import ActiveOrders from './admin/pages/Orders/ActiveOrders'
-import OrderHistory from './admin/pages/Orders/OrderHistory'
-import ProtectedRoute from './shared/utils/ProtectedRoute'
-import AdminRoute from './shared/utils/AdminRoute'
+import Favourites from "./pages/Favourites";
+import Addresses from "./pages/Addresses";
+import ChangePassword from "./pages/ChangePassword";
+import EditAddress from "./pages/EditAddress";
+import ProductLayout from "./layouts/ProductLayout";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboard from "./admin/pages/Home/AdminDashboard";
+import AdminCustomers from "./admin/pages/Customers/Customers";
+import OrdersLayout from "./layouts/OrdersLayout";
+import ActiveOrders from "./admin/pages/Orders/ActiveOrders";
+import OrderHistory from "./admin/pages/Orders/OrderHistory";
+import ProtectedRoute from "./shared/utils/routes/ProtectedRoute";
+import AdminRoute from "./shared/utils/routes/AdminRoute";
+import OrderDetails from "./admin/pages/Orders/OrderDetails";
+import MenuLayout from "./layouts/MenuLayout";
+import MenuCategory from "./admin/pages/Menu/MenuCategory";
+import MenuProduct from "./admin/pages/Menu/MenuProduct";
+import MenuExtra from "./admin/pages/Menu/MenuExtra";
+import MenuExtraItem from "./admin/pages/Menu/MenuExtraProduct";
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <RootLayout />,
     errorElement: <Error />,
     children: [
       {
-        path: '/account',
+        path: "/account",
         element: <ModalLayout />,
         children: [
           { index: true, element: <Account /> },
-          { path: 'login', element: <Login /> },
-          { path: 'register', element: <Register /> },
-          { path: 'personal-info', element: <PersonalPage /> },
-          { path: 'orders', element: <Orders /> },
-          { path: 'favourites', element: <Favourites /> },
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "personal-info", element: <PersonalPage /> },
+          { path: "orders", element: <Orders /> },
+          { path: "favourites", element: <Favourites /> },
           {
             element: <ProtectedRoute />,
             children: [
-              { path: 'addresses', element: <Addresses /> },
-              { path: 'edit-address', element: <EditAddress /> },
-              { path: 'change-password', element: <ChangePassword /> }
-            ]
-          }
-        ]
+              { path: "addresses", element: <Addresses /> },
+              { path: "edit-address", element: <EditAddress /> },
+              { path: "change-password", element: <ChangePassword /> },
+            ],
+          },
+        ],
       },
       {
-        path: '/product/:id',
+        path: "/product/:id",
         element: <ProductLayout />,
         children: [
           {
             index: true,
-            element: <Product />
-          }
-        ]
+            element: <Product />,
+          },
+        ],
       },
       {
-        path: '/edit-product/:id',
+        path: "/edit-product/:id",
         element: <ProductLayout />,
         children: [
           {
             index: true,
-            element: <EditProduct />
-          }
-        ]
+            element: <EditProduct />,
+          },
+        ],
       },
       {
-        path: '/nutritions',
+        path: "/nutritions",
         element: <ProductLayout />,
         children: [
           {
             index: true,
-            element: <Nutritions />
-          }
-        ]
+            element: <Nutritions />,
+          },
+        ],
       },
       {
-        path: '/cart',
+        path: "/cart",
         element: <CartLayout />,
-        children: [{ index: true, element: <Cart /> }]
-      }
-    ]
+        children: [{ index: true, element: <Cart /> }],
+      },
+    ],
   },
 
   {
-    path: '/checkout',
+    path: "/checkout",
     element: <CheckoutLayout />,
     errorElement: <Error />,
     children: [
       {
-        path: 'account',
+        path: "account",
         element: <ModalLayout />,
         children: [
           { index: true, element: <Account /> },
-          { path: 'login', element: <Login /> },
-          { path: 'register', element: <Register /> },
-          { path: 'personal-info', element: <PersonalPage /> },
-          { path: 'orders', element: <Orders /> },
-          { path: 'favourites', element: <Favourites /> },
-          { path: 'addresses', element: <Addresses /> },
-          { path: 'edit-address', element: <EditAddress /> },
-          { path: 'change-password', element: <ChangePassword /> }
-        ]
-      }
-    ]
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "personal-info", element: <PersonalPage /> },
+          { path: "orders", element: <Orders /> },
+          { path: "favourites", element: <Favourites /> },
+          { path: "addresses", element: <Addresses /> },
+          { path: "edit-address", element: <EditAddress /> },
+          { path: "change-password", element: <ChangePassword /> },
+        ],
+      },
+    ],
   },
   {
     element: <AdminRoute />,
     children: [
       {
-        path: '/admin',
+        path: "/admin",
         element: <AdminLayout />,
         errorElement: <Error />,
         children: [
           { index: true, element: <AdminDashboard /> },
           {
-            path: 'orders',
+            path: "orders",
             element: <OrdersLayout />,
             children: [
               { index: true, element: <ActiveOrders /> },
-              { path: 'order-history', element: <OrderHistory /> }
-            ]
+              { path: "order-history", element: <OrderHistory /> },
+              {
+                path: ":id",
+                element: <ModalLayout />,
+                children: [
+                  {
+                    index: true,
+                    element: <OrderDetails />,
+                  },
+                ],
+              },
+            ],
           },
-          { path: 'customers', element: <AdminCustomers /> },
-          { path: 'menu', element: <AdminMenu /> }
-        ]
-      }
-    ]
-  }
-])
+          { path: "customers", element: <AdminCustomers /> },
+          {
+            path: "menu",
+            element: <MenuLayout />,
+            children: [
+              {
+                index: true,
+                element: <MenuCategory />,
+              },
+              {
+                path: "products",
+                element: <MenuProduct />,
+              },
+              {
+                path: "extra",
+                element: <MenuExtra />,
+              },
+              {
+                path: "extra-product",
+                element: <MenuExtraItem />,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]);
 
 function App() {
-  return <RouterProvider router={router} />
+  return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;
