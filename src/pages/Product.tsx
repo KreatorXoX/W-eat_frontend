@@ -19,28 +19,27 @@ interface Props {}
 
 // we can remove this after backend is created
 // and react-query implemented.
-export const getProductById = (id:string)=>{
-  let pro:Item | undefined;
-  for(let category of menu){
-    for(let product of category.products){
-      if(product.id === id)
-      return product
+export const getProductById = (id: string) => {
+  let pro: Item | undefined;
+  for (let category of menu) {
+    for (let product of category.products) {
+      if (product.id === id) return product;
     }
   }
-  return undefined
-}
+  return undefined;
+};
 
 const Product = (props: Props) => {
-
-  
   const addToCart = useShoppingCart((state) => state.addToCart);
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
   const id = useParams().id!;
-  
-  const item = getProductById(id)
-  const CategoryExtras = menu.find(category=>category.name === item?.category)?.extras
-  
+
+  const item = getProductById(id);
+  const CategoryExtras = menu.find(
+    (category) => category.name === item?.category
+  )?.extras;
+
   const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -79,7 +78,7 @@ const Product = (props: Props) => {
       <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row gap-3 items-center ">
-            <h3 className="font-semibold text-2xl">{item?.title}</h3>
+            <h3 className="font-semibold text-2xl">{item?.name}</h3>
             <Link
               to="/nutritions"
               state={{ alergens: item?.alergens }}
@@ -110,7 +109,9 @@ const Product = (props: Props) => {
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(CategoryExtras!).get(`${extra.name}`)}
+                      options={formatExtras(CategoryExtras!).get(
+                        `${extra.name}`
+                      )}
                       control={control}
                       isMulti={true}
                     />

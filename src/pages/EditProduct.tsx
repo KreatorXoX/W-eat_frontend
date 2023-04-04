@@ -12,7 +12,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatExtras } from "../shared/utils/getExtrasOptions";
 import { useShoppingCart } from "../context/shoppingCartStore";
-import {menu} from '../shared/utils/data'
+import { menu } from "../shared/utils/data";
 import { getProductById } from "./Product";
 
 interface Props {}
@@ -26,9 +26,11 @@ const EditProduct = (props: Props) => {
   const id = useParams().id;
   const item = cartItems.find((item) => item.id === id);
 
-  const itemId =item?.mainProduct.id!;
+  const itemId = item?.mainProduct.id!;
 
-  const orgCatExtras = menu.find(cate => cate.name === getProductById(itemId)?.category)?.extras
+  const orgCatExtras = menu.find(
+    (cate) => cate.name === getProductById(itemId)?.category
+  )?.extras;
 
   const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
 
@@ -36,8 +38,6 @@ const EditProduct = (props: Props) => {
     acc[extra.name] = extra.values;
     return acc;
   }, {});
-
-  
 
   const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
     mode: "onChange",
@@ -88,7 +88,7 @@ const EditProduct = (props: Props) => {
           <div className="flex flex-row gap-3 items-center ">
             <h3 className="font-semibold text-2xl">
               {" "}
-              {item!.mainProduct?.title}
+              {item!.mainProduct?.name}
             </h3>
             <Link
               to="/nutritions"
@@ -122,9 +122,7 @@ const EditProduct = (props: Props) => {
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(orgCatExtras!).get(
-                        `${extra.name}`
-                      )}
+                      options={formatExtras(orgCatExtras!).get(`${extra.name}`)}
                       control={control}
                       isMulti={true}
                     />

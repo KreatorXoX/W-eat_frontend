@@ -8,7 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import FormInput from "../../shared/components/Form/Input";
+import Input from "../../shared/components/Form/Input";
 
 type Props = {};
 
@@ -41,7 +41,7 @@ const Login = (props: Props) => {
         <h2 className="font-bold text-2xl ">Sign in</h2>
       </div>
       <div className="w-full flex flex-col gap-4">
-        <FormInput
+        <Input
           type="email"
           half={false}
           label="Email address"
@@ -50,7 +50,7 @@ const Login = (props: Props) => {
           {...register("email")}
           error={errors.email?.message}
         />
-        <FormInput
+        <Input
           type="password"
           half={false}
           label="Password"

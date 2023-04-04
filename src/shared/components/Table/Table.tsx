@@ -42,6 +42,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                     }
                     
                     ${header.id === "email" ? "hidden sm:table-cell" : ""}
+                    ${header.id === "tag" ? "hidden sm:table-cell" : ""}
                     `}
                   >
                     {header.isPlaceholder ? null : (
@@ -50,8 +51,9 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                           header.column.columnDef.header,
                           header.getContext()
                         )}
-                        {header.column.getCanFilter() &&
-                        /id/i.test(header.column.id) ? (
+                        {(header.column.getCanFilter() &&
+                          header.column.id === "id") ||
+                        header.column.id === "name" ? (
                           <div className="w-full flex justify-center text-xs font-normal">
                             <Filter column={header.column} table={table} />
                           </div>
@@ -92,6 +94,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                       ${
                         cell.column.id === "email" ? "hidden sm:table-cell" : ""
                       }
+                      ${cell.column.id === "tag" ? "hidden sm:table-cell" : ""}
                       `}
                     >
                       {flexRender(
@@ -152,7 +155,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="border p-1 rounded w-16"
+            className="border p-1 rounded w-8"
           />
         </span>
         <select

@@ -37,7 +37,7 @@ const BasketItem = ({ item }: Props) => {
                         : ""
                     }`}
           >
-            {item.mainProduct?.title}
+            {item.mainProduct?.name}
           </Link>
           {/* item and price */}
           <span className="whitespace-nowrap font-light">

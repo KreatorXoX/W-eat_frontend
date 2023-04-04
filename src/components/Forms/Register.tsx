@@ -1,10 +1,9 @@
-import { FormEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import FormInput from "../../shared/components/Form/Input";
+import Input from "../../shared/components/Form/Input";
 
 import {
   RegisterValidationSchema,
@@ -19,8 +18,6 @@ const Register = (props: Props) => {
   const {
     register,
     handleSubmit,
-    control,
-    getValues,
     formState: { errors, isValid },
   } = useForm<RegisterValidationSchema>({
     mode: "onChange",
@@ -44,7 +41,7 @@ const Register = (props: Props) => {
       </div>
       <div className="overflow-auto w-full">
         <div className="w-full flex flex-col gap-4">
-          <FormInput
+          <Input
             type="text"
             half={false}
             label="Name"
@@ -54,7 +51,7 @@ const Register = (props: Props) => {
             error={errors.name?.message}
           />
 
-          <FormInput
+          <Input
             type="text"
             half={false}
             label="E-mail"
@@ -63,7 +60,7 @@ const Register = (props: Props) => {
             {...register("email")}
             error={errors.email?.message}
           />
-          <FormInput
+          <Input
             type="password"
             half={false}
             label="Password"
@@ -73,7 +70,7 @@ const Register = (props: Props) => {
             error={errors.password?.message}
           />
 
-          <FormInput
+          <Input
             type="password"
             half={false}
             label="Confirm Password"

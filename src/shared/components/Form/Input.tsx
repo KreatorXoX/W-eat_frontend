@@ -6,7 +6,14 @@ import { useTheme } from "../../../context/themeStore";
 import { customStyles } from "../../utils/selectCustomStyles";
 
 type Props = {
-  type: "password" | "text" | "textarea" | "email" | "select";
+  type:
+    | "password"
+    | "text"
+    | "number"
+    | "textarea"
+    | "email"
+    | "select"
+    | "radio";
   placeholder?: string;
   isMulti?: boolean;
   id: string;
@@ -20,12 +27,71 @@ type Props = {
   ref?: React.Ref<any>;
   options?: OptionSelect[];
   disabled?: boolean;
+  inputVal?: number | string;
 };
 
 const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
   (props, ref) => {
     let component =
-      props.type === "select" ? (
+      props.type === "text" ||
+      props.type === "email" ||
+      props.type === "number" ||
+      props.type === "password" ? (
+        <input
+          type={props.type}
+          id={props.id}
+          placeholder={props.placeholder}
+          min={props.type === "number" ? 0 : undefined}
+          name={props.name}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+          ref={ref}
+          disabled={props.disabled}
+          className="w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
+        focus:bg-gray-200
+        border-gray-400
+        placeholder:text-zinc-400/85
+        disabled:text-gray-600 disabled:italic
+        dark:disabled:bg-gray-400
+        dark:disabled:text-gray-700
+        "
+        />
+      ) : props.type === "textarea" ? (
+        <textarea
+          id={props.id}
+          placeholder={props.placeholder}
+          name={props.name}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+          rows={3}
+          ref={ref}
+          disabled={props.disabled}
+          className="w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
+        focus:bg-gray-200
+        border-gray-400
+        placeholder:text-zinc-400/85
+        disabled:text-gray-600 disabled:italic
+        "
+        />
+      ) : props.type === "radio" ? (
+        <input
+          type="radio"
+          id={props.id}
+          placeholder={props.placeholder}
+          name={props.name}
+          onChange={props.onChange}
+          onBlur={props.onBlur}
+          value={props.inputVal}
+          ref={ref}
+          disabled={props.disabled}
+          className="w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
+        focus:bg-gray-200
+        border-gray-400
+        placeholder:text-zinc-400/85
+        disabled:text-gray-600 disabled:italic
+        "
+        />
+      ) : (
         <Controller
           render={({ field: { onChange, onBlur, value, ref } }) => {
             return (
@@ -49,42 +115,6 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
           name={props.id}
           control={props.control}
         />
-      ) : props.type === "textarea" ? (
-        <textarea
-          id={props.id}
-          placeholder={props.placeholder}
-          name={props.name}
-          onChange={props.onChange}
-          onBlur={props.onBlur}
-          rows={3}
-          ref={ref}
-          disabled={props.disabled}
-          className="w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
-        focus:bg-gray-200
-        border-gray-400
-        placeholder:text-zinc-400/85
-        disabled:text-gray-600 disabled:italic
-        "
-        />
-      ) : (
-        <input
-          type="text"
-          id={props.id}
-          placeholder={props.placeholder}
-          name={props.name}
-          onChange={props.onChange}
-          onBlur={props.onBlur}
-          ref={ref}
-          disabled={props.disabled}
-          className="w-full py-2 px-4 text-gray-900 font-medium rounded-lg outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 focus:border-transparent border 
-        focus:bg-gray-200
-        border-gray-400
-        placeholder:text-zinc-400/85
-        disabled:text-gray-600 disabled:italic
-        dark:disabled:bg-gray-400
-        dark:disabled:text-gray-700
-        "
-        />
       );
     return (
       <div
@@ -101,9 +131,9 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
         {component}
         {props.error && (
           <p className="text-red-600 flex flex-row items-baseline gap-1 mt-1">
-            <p>
+            <span>
               <FiAlertTriangle className="inline" />
-            </p>
+            </span>
             <span>{props.error}</span>
           </p>
         )}

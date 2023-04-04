@@ -1,20 +1,19 @@
-import { Outlet, NavLink } from 'react-router-dom'
+import { Outlet, NavLink } from "react-router-dom";
 
-type Props = {}
+type Props = {};
 
 const MenuLayout = (props: Props) => {
   return (
-    <div className='mt-5 lg:mt-10'>
+    <div className="mt-5 lg:mt-10">
       <nav>
-        <ul className='flex flex-row justify-center justify-evenly text-gray-700 font-semibold max-w-[60rem] mx-auto'>
+        <ul className="flex flex-row justify-evenly text-gray-700 font-semibold max-w-[60rem] mx-auto">
           <li>
             <NavLink
-              to='/admin/menu'
-              end
+              to="categories"
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1 text-orange-600 lg:text-xl '
-                  : 'hover:text-orange-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1 text-orange-600 lg:text-xl "
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Categories
@@ -22,11 +21,11 @@ const MenuLayout = (props: Props) => {
           </li>
           <li>
             <NavLink
-              to='products'
+              to="products"
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl'
-                  : 'hover:text-orange-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Products
@@ -34,11 +33,11 @@ const MenuLayout = (props: Props) => {
           </li>
           <li>
             <NavLink
-              to='extra'
+              to="extra"
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl'
-                  : 'hover:text-orange-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Extras
@@ -46,11 +45,11 @@ const MenuLayout = (props: Props) => {
           </li>
           <li>
             <NavLink
-              to='extra-product'
+              to="extra-product"
               className={({ isActive }) =>
                 isActive
-                  ? 'underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl'
-                  : 'hover:text-orange-600 lg:text-xl'
+                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  : "hover:text-orange-600 lg:text-xl"
               }
             >
               Extra Products
@@ -60,7 +59,7 @@ const MenuLayout = (props: Props) => {
       </nav>
       <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default MenuLayout
+export default MenuLayout;

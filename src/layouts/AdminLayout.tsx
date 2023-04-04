@@ -68,7 +68,7 @@ const AdminLayout = (props: Props) => {
                     ? "underline underline-offset-2 decoration-1  text-blue-600"
                     : "hover:text-blue-600"
                 }
-                to="menu"
+                to="menu/categories"
               >
                 <p className="flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3">
                   <IoRestaurantOutline className="inline text-xl" />

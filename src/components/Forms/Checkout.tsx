@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
-import FormInput from "../../shared/components/Form/Input";
+import Input from "../../shared/components/Form/Input";
 
 import { getTime } from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
@@ -85,7 +85,7 @@ const Checkout = (props: Props) => {
             </h2>
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="Street name"
@@ -96,7 +96,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="House number"
@@ -107,7 +107,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="Postal code"
@@ -118,7 +118,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="City"
@@ -129,7 +129,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="Company (optional)"
@@ -140,7 +140,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="Add notes (optional)"
@@ -159,7 +159,7 @@ const Checkout = (props: Props) => {
             </h2>
             <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="First and last name"
@@ -170,7 +170,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="E-mail"
@@ -181,7 +181,7 @@ const Checkout = (props: Props) => {
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
-                <FormInput
+                <Input
                   type="text"
                   half={false}
                   label="Phone Number"
@@ -240,7 +240,7 @@ const Checkout = (props: Props) => {
                   },
                 }}
               >
-                <FormInput
+                <Input
                   type="select"
                   id="deliveryTime"
                   half={false}
@@ -311,7 +311,7 @@ const Checkout = (props: Props) => {
                   },
                 }}
               >
-                <FormInput
+                <Input
                   type="select"
                   id="paymentMethod"
                   half={false}

@@ -31,10 +31,15 @@ import ProtectedRoute from "./shared/utils/routes/ProtectedRoute";
 import AdminRoute from "./shared/utils/routes/AdminRoute";
 import OrderDetails from "./admin/pages/Orders/OrderDetails";
 import MenuLayout from "./layouts/MenuLayout";
-import MenuCategory from "./admin/pages/Menu/MenuCategory";
-import MenuProduct from "./admin/pages/Menu/MenuProduct";
-import MenuExtra from "./admin/pages/Menu/MenuExtra";
-import MenuExtraItem from "./admin/pages/Menu/MenuExtraProduct";
+import MenuCategory from "./admin/pages/Menu/Category/MenuCategory";
+import MenuProduct from "./admin/pages/Menu/Product/MenuProduct";
+import MenuExtra from "./admin/pages/Menu/Extra/MenuExtra";
+import MenuExtraProduct from "./admin/pages/Menu/ExtraProduct/MenuExtraProduct";
+import NewCategory from "./admin/pages/Menu/Category/NewCategory";
+import NewProduct from "./admin/pages/Menu/Product/NewProduct";
+import NewExtra from "./admin/pages/Menu/Extra/NewExtra";
+import NewExtraProduct from "./admin/pages/Menu/ExtraProduct/NewExtraProduct";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -154,20 +159,37 @@ const router = createBrowserRouter([
             element: <MenuLayout />,
             children: [
               {
-                index: true,
+                path: "categories",
                 element: <MenuCategory />,
               },
               {
+                path: "categories/new",
+                element: <NewCategory />,
+              },
+
+              {
                 path: "products",
                 element: <MenuProduct />,
+              },
+              {
+                path: "products/new",
+                element: <NewProduct />,
               },
               {
                 path: "extra",
                 element: <MenuExtra />,
               },
               {
+                path: "extra/new",
+                element: <NewExtra />,
+              },
+              {
                 path: "extra-product",
-                element: <MenuExtraItem />,
+                element: <MenuExtraProduct />,
+              },
+              {
+                path: "extra-product/new",
+                element: <NewExtraProduct />,
               },
             ],
           },
