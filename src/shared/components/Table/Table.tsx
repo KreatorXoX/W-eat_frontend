@@ -35,7 +35,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                     colSpan={header.colSpan}
                     className={`font-bold sm:rounded-lg p-1 tracking-wider ${
                       /id/i.test(header.id)
-                        ? "sm:w-52"
+                        ? "w-20 sm:w-52"
                         : /date/i.test(header.id)
                         ? ""
                         : "sm:w-20"

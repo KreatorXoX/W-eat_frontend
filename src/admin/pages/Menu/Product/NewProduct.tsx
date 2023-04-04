@@ -11,7 +11,7 @@ const NewProduct = (props: Props) => {
     <div className="w-full mx-auto max-w-[60rem] px-5 mt-10 space-y-5 pb-5">
       <div className="flex justify-between border-b-2 pb-5">
         <h2 className="font-semibold text-xl text-green-800">
-          Add new category
+          Add new product
         </h2>
         <GenericButton
           text="<<"

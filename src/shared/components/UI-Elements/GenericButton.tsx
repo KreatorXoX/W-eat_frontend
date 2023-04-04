@@ -25,7 +25,7 @@ const GenericButton = ({
     <button
       onClick={onClick}
       type={type}
-      className={`p-2 text-sm ${colorVariants[color]}
+      className={`p-2 text-xs md:text-sm ${colorVariants[color]}
       ${classes}`}
     >
       <p>{text}</p>

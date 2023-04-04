@@ -8,7 +8,7 @@ export const orderValidationSchema = z.object({
   company: z.string().optional(),
   notes: z.string().optional(),
   fullname: z.string().nonempty({ message: "This field is required" }),
-  email: z.string().email({ message: "Please prove a valid email" }),
+  email: z.string().email({ message: "Please provide a valid email" }),
   phoneNumber: z
     .string()
     .nonempty({ message: "Provide phone number in the given format" }),
@@ -32,7 +32,7 @@ export const orderValidationSchema = z.object({
 export type OrderValidationSchema = z.infer<typeof orderValidationSchema>;
 
 export const loginValidationSchema = z.object({
-  email: z.string().email({ message: "Please prove a valid email" }),
+  email: z.string().email({ message: "Please provide a valid email" }),
   password: z.string().min(3).max(8),
 });
 
@@ -41,7 +41,7 @@ export type LoginValidationSchema = z.infer<typeof loginValidationSchema>;
 export const registerValidationSchema = z
   .object({
     name: z.string().nonempty(),
-    email: z.string().email({ message: "Please prove a valid email" }),
+    email: z.string().email({ message: "Please provide a valid email" }),
     password: z.string().min(3).max(8),
     confirmPassword: z.string().min(3).max(8),
   })
@@ -91,7 +91,7 @@ export const newCategorySchema = z.object({
 export type NewCategorySchema = z.infer<typeof newCategorySchema>;
 
 const sizeSchema = z.object({
-  size: z.string().nonempty({ message: "Prove a price label" }),
+  size: z.string().nonempty({ message: "Provide a price label" }),
   price: z.number().gt(0),
 });
 
