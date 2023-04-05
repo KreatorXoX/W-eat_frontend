@@ -10,23 +10,29 @@ import {
 
 type Props = {};
 
-const NewProductForm = (props: Props) => {
+const EditProductForm = (props: Props) => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
     getValues,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<NewProductSchema>({
     mode: "onChange",
     resolver: zodResolver(newProductSchema),
     defaultValues: {
-      sizes: [{ size: "Standard", price: 0 }],
+      sizes: [
+        { size: "Standard", price: 8 },
+        { size: "Large", price: 12 },
+      ],
     },
   });
 
-  const createProductHandler: SubmitHandler<NewProductSchema> = (data) => {
+  const editProductHandler: SubmitHandler<NewProductSchema> = (data) => {
+    // submit the form if isDirty else
+    // naivigate to main menu
+    console.log(isDirty);
     console.log(data);
   };
 
@@ -39,7 +45,7 @@ const NewProductForm = (props: Props) => {
     append({ size: "", price: 0 });
   };
   return (
-    <form onSubmit={handleSubmit(createProductHandler)} className="space-y-4">
+    <form onSubmit={handleSubmit(editProductHandler)} className="space-y-4">
       <div className="flex gap-4">
         <Input
           type="text"
@@ -188,4 +194,4 @@ const NewProductForm = (props: Props) => {
   );
 };
 
-export default NewProductForm;
+export default EditProductForm;

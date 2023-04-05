@@ -40,7 +40,7 @@ const MenuExtra = (props: Props) => {
               classes="rounded-lg"
               text="Edit"
               color="yellow"
-              onClick={() => console.log(row.original.id + "edit page")}
+              onClick={() => navigate(`edit/${row.original.id}`)}
             />
 
             <GenericButton

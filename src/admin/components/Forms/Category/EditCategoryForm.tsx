@@ -21,41 +21,36 @@ type Props = {
       value: string;
       label: string;
     }[];
-  } 
+  };
 };
 
-
-
-const EditCategoryForm = ({category}: Props) => {
-  
+const EditCategoryForm = ({ category }: Props) => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors,isDirty },
+    formState: { errors, isDirty },
   } = useForm<NewCategorySchema>({
     mode: "onChange",
     resolver: zodResolver(newCategorySchema),
-    defaultValues: {
-      name: category.name,
-      products: category.products,
-      extras: category.extraItems
-    }
-    
+    defaultValues: async () => {
+      return {
+        name: category.name,
+        products: category.products,
+        extras: category.extraItems,
+      };
+    },
   });
 
   const editCategoryHandler: SubmitHandler<NewCategorySchema> = (data) => {
     // if isDirty then send it to backend otherwise values are the same.
-    console.log(isDirty)
+    console.log(isDirty);
     console.log(data);
   };
- 
+
   return (
-    <form
-      onSubmit={handleSubmit(editCategoryHandler)}
-      className="space-y-4"
-    >
+    <form onSubmit={handleSubmit(editCategoryHandler)} className="space-y-4">
       <Input
         type="text"
         half={false}
@@ -65,30 +60,30 @@ const EditCategoryForm = ({category}: Props) => {
         {...register("name")}
         error={errors.name?.message}
       />
-     
-        <Input
-          type="select"
-          isMulti={true}
-          half={false}
-          label="Category Products"
-          placeholder="ex: Pizza"
-          control={control}
-          id="products"
-          options={category.products}
-          error={errors.products?.message}
-        />
-        <Input
-          type="select"
-          isMulti={true}
-          half={false}
-          label="Category Extras"
-          placeholder="ex: Pizza"
-          id="extras"
-          control={control}
-          options={category.extraItems}
-          error={errors.extras?.message}
-        />
-      
+
+      <Input
+        type="select"
+        isMulti={true}
+        half={false}
+        label="Category Products"
+        placeholder="ex: Pizza"
+        control={control}
+        id="products"
+        options={category.products}
+        error={errors.products?.message}
+      />
+      <Input
+        type="select"
+        isMulti={true}
+        half={false}
+        label="Category Extras"
+        placeholder="ex: Pizza"
+        id="extras"
+        control={control}
+        options={category.extraItems}
+        error={errors.extras?.message}
+      />
+
       <div className="flex gap-4 justify-end">
         <GenericButton
           classes="rounded font-semibold
