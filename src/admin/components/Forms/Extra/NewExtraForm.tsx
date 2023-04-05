@@ -22,6 +22,9 @@ const NewExtraForm = (props: Props) => {
   } = useForm<NewExtraSchema>({
     mode: "onChange",
     resolver: zodResolver(newExtraSchema),
+    defaultValues:{
+      paid:String(false)
+    }
   });
 
   const createExtraHandler: SubmitHandler<NewExtraSchema> = (data) => {
@@ -29,69 +32,72 @@ const NewExtraForm = (props: Props) => {
   };
   return (
     <form onSubmit={handleSubmit(createExtraHandler)} className="space-y-4">
+      <div className="flex gap-4 justify-between items-start">
       <Input
         type="text"
-        half={false}
+        half={true}
         label="Name"
         placeholder="ex: Free Sauces"
         id="name"
         {...register("name")}
         error={errors.name?.message}
       />
-      <div className="flex gap-4 justify-between items-start">
+      <div className="flex flex-col text-center text-gray-700 text-sm md:text-base font-medium w-1/2">
+        <h2>Paid</h2>
+        <div
+          className="flex gap-8 justify-center mt-1 py-[0.4rem]
+              border border-gray-400 rounded
+              "
+        >
+          <label className="flex items-center gap-2">
+            <Input
+              id="paid"
+              label=""
+              half={true}
+              type="radio"
+              {...register("paid" as const)}
+              inputVal={"true"}
+              error={undefined}
+            />
+            True
+          </label>
+
+          <label className="flex items-center gap-2">
+            <Input
+              id="paid"
+              label=""
+              half={true}
+              type="radio"
+              {...register("paid" as const)}
+              inputVal={"false"}
+              error={undefined}
+            />
+            False
+          </label>
+        </div>
+        {errors.paid && (
+          <p className="font-normal text-sm md:text-base text-red-600 flex flex-row items-baseline gap-1 mt-1">
+            {errors.paid.message}
+            <span>
+              <FiAlertTriangle className="inline" />
+            </span>
+            <span>Please pick one</span>
+          </p>
+        )}
+      </div>
+      </div>
         <Input
           type="select"
           isMulti={true}
-          half={true}
+          half={false}
           label="Extra-Products"
           id="extraItems"
           control={control}
           options={[{ value: "ketchup", label: "id-ketchup" }]}
           error={errors.extraItems?.message}
         />
-        <div className="flex flex-col text-center text-gray-700 font-medium w-1/2">
-          <h2>Paid</h2>
-          <div
-            className="flex gap-8 justify-center mt-1 py-[0.4rem]
-              border border-gray-400 rounded
-              "
-          >
-            <label className="flex items-center gap-2">
-              <Input
-                id="paid"
-                label=""
-                half={true}
-                type="radio"
-                {...register("paid" as const)}
-                inputVal="true"
-                error={undefined}
-              />
-              True
-            </label>
-
-            <label className="flex items-center gap-2">
-              <Input
-                id="paid"
-                label=""
-                half={true}
-                type="radio"
-                {...register("paid" as const)}
-                inputVal="false"
-                error={undefined}
-              />
-              False
-            </label>
-          </div>
-          {errors.paid && (
-            <p className="font-normal text-sm md:text-base text-red-600 flex flex-row items-baseline gap-1 mt-1">
-              <span>
-                <FiAlertTriangle className="inline" />
-              </span>
-              <span>Please pick one</span>
-            </p>
-          )}
-        </div>
-      </div>
+     
+      
 
       <div className="flex gap-4 justify-end">
         <GenericButton

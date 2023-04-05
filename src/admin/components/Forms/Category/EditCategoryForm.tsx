@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
@@ -7,31 +8,52 @@ import {
   newCategorySchema,
 } from "../../../../shared/utils/validationSchema";
 import { useNavigate } from "react-router-dom";
-import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
-type Props = {};
 
-const category=formatData()[0]
+type Props = {
+  category: {
+    id: string;
+    name: string;
+    products: {
+      value: string;
+      label: string;
+    }[];
+    extraItems: {
+      value: string;
+      label: string;
+    }[];
+  } 
+};
 
-const NewCategoryForm = (props: Props) => {
 
+
+const EditCategoryForm = ({category}: Props) => {
+  
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors,isDirty },
   } = useForm<NewCategorySchema>({
     mode: "onChange",
     resolver: zodResolver(newCategorySchema),
-
+    defaultValues: {
+      name: category.name,
+      products: category.products,
+      extras: category.extraItems
+    }
+    
   });
 
-  const createNewCategoryHandler: SubmitHandler<NewCategorySchema> = (data) => {
+  const editCategoryHandler: SubmitHandler<NewCategorySchema> = (data) => {
+    // if isDirty then send it to backend otherwise values are the same.
+    console.log(isDirty)
     console.log(data);
   };
+ 
   return (
     <form
-      onSubmit={handleSubmit(createNewCategoryHandler)}
+      onSubmit={handleSubmit(editCategoryHandler)}
       className="space-y-4"
     >
       <Input
@@ -43,7 +65,7 @@ const NewCategoryForm = (props: Props) => {
         {...register("name")}
         error={errors.name?.message}
       />
-      
+     
         <Input
           type="select"
           isMulti={true}
@@ -87,4 +109,4 @@ const NewCategoryForm = (props: Props) => {
   );
 };
 
-export default NewCategoryForm;
+export default EditCategoryForm;
