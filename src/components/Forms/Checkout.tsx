@@ -2,11 +2,10 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
 import Input from "../../shared/components/Form/Input";
-
-import { getTime } from "../../shared/utils/getDeliveryTime";
+import useDeliveryTimes from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
-import { BsCheck2Circle } from "react-icons/bs";
+import { BsCheck2Circle, BsXCircle, BsXSquare } from "react-icons/bs";
 import { useShoppingCart } from "../../context/shoppingCartStore";
 import {
   OrderValidationSchema,
@@ -18,9 +17,9 @@ type Props = {};
 
 Modal.setAppElement("#root");
 
+const newDate = new Date();
 const Checkout = (props: Props) => {
-  const newDate = new Date();
-  const { initialHour, deliveryTimes } = getTime(23, newDate);
+  const { initialHour, deliveryTimes } = useDeliveryTimes('23:00', newDate,'10:00');
 
   const {
     register,
@@ -261,11 +260,14 @@ const Checkout = (props: Props) => {
               <span className="text-sm">{getValues().deliveryTime?.label}</span>
             </div>
           </div>
-          {getValues().deliveryTime?.value && (
+          {getValues().deliveryTime ? 
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
             </div>
-          )}
+            : <div>
+              <BsXCircle className="text-3xl text-red-600" />
+            </div>
+          }
         </div>
         <div
           className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 flex justify-between items-center hover:cursor-pointer"
@@ -296,7 +298,7 @@ const Checkout = (props: Props) => {
                       dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
-                    height: "10rem",
+                    height: "12rem",
                     width: "50%",
                     minWidth: "20rem",
                     left: "0",
@@ -316,7 +318,7 @@ const Checkout = (props: Props) => {
                   id="paymentMethod"
                   half={false}
                   label="Select your payment method"
-                  error={errors.deliveryTime?.message}
+                  error={errors.paymentMethod?.message}
                   control={control}
                   options={getPaymentMethods()}
                 />
@@ -333,11 +335,14 @@ const Checkout = (props: Props) => {
               </span>
             </div>
           </div>
-          {getValues().paymentMethod?.value && (
+          {getValues().paymentMethod?.value ?
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
-            </div>
-          )}
+            </div> : 
+           <div>
+            <BsXCircle className="text-3xl text-red-600" />
+          </div>
+          }
         </div>
         <button
           className="
