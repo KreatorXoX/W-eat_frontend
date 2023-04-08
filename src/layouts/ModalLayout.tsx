@@ -34,7 +34,7 @@ const ModalLayout = (props: Props) => {
           dark ? "bg-gray-800" : "bg-slate-50"
         }  absolute top-0 bottom-0 right-0 left-0 z-20 m-auto
           h-full w-full
-      overflow-auto rounded-xl lg:h-fit lg:w-[40rem] lg:py-5
+      overflow-auto lg:h-fit lg:w-[40rem] lg:rounded-xl lg:py-5
           `}
       >
         <Outlet />

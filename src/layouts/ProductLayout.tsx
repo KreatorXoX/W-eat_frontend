@@ -20,17 +20,15 @@ const ProductLayout = (props: Props) => {
   return (
     <>
       <div
-        className={`${
-          dark ? "bg-gray-800" : "bg-pink-500"
-        }  fixed right-0 top-0 h-full w-full lg:flex
-        lg:items-center lg:justify-center lg:bg-zinc-700/80`}
+        className="fixed right-0 top-0 h-full w-full lg:flex
+        lg:items-center lg:justify-center lg:bg-zinc-700/80"
       >
         <div
           className={`${
             dark ? "bg-gray-800" : "bg-slate-50"
           }  absolute top-0 bottom-0 right-0 left-0 z-20
           m-auto h-full
-      w-full rounded-xl lg:h-fit lg:w-[40rem] lg:py-5
+      w-full lg:h-fit lg:w-[40rem] lg:rounded-xl lg:py-5
           `}
         >
           <Outlet />

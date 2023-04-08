@@ -8,12 +8,12 @@ const sectionsArr = ["popular", "tai", "beef"];
 
 function TopSection({}: Props) {
   return (
-    <div className="mx-auto max-w-7xl bg-slate-50 px-4 pb-2 shadow-md dark:bg-gray-800">
-      <div className="h-[14rem]">
+    <div className="mx-auto max-w-7xl rounded-lg bg-slate-50 pb-2 shadow-md dark:bg-gray-800">
+      <div className="h-[20rem]">
         <img
           src="https://res.cloudinary.com/dinhhwb9x/image/upload/v1678532308/restrauntMain_xhssgi.jpg"
           alt="main"
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full rounded-t-lg object-cover object-center"
         />
       </div>
       <div className="pl-5">
@@ -51,7 +51,7 @@ function TopSection({}: Props) {
           </p>
         </div>
       </div>
-      <div className="mt-4 flex flex-row justify-center gap-5 overflow-hidden rounded-lg bg-gray-200 py-2 px-5 dark:bg-zinc-500">
+      <div className="mx-5 mt-4 flex flex-row justify-center gap-5 overflow-hidden rounded-lg bg-gray-200 py-2 dark:bg-zinc-500">
         {sectionsArr.map((sec) => (
           <div
             key={sec + Date.now()}
