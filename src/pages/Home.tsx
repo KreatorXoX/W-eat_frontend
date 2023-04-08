@@ -1,7 +1,7 @@
-type Props = {}
+type Props = {};
 
-import MenuItemList from '../components/MenuItems/MenuItemList'
-import TopSection from '../components/TopSection/TopSection'
+import MenuItemList from "../components/MenuItems/MenuItemList";
+import TopSection from "../components/TopSection/TopSection";
 
 const Home = (props: Props) => {
   return (
@@ -9,7 +9,7 @@ const Home = (props: Props) => {
       <TopSection />
       <MenuItemList />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -124,7 +124,7 @@ const EditProductForm = (props: Props) => {
         return (
           <div
             key={field.id}
-            className="flex gap-4 justify-center items-start relative"
+            className="relative flex items-start justify-center gap-4"
           >
             <Input
               type="text"
@@ -165,14 +165,14 @@ const EditProductForm = (props: Props) => {
           bg-green-800 text-white rounded-lg w-fit
           "
         />
-        <span className="text-red-600 italic text-sm">
+        <span className="text-sm italic text-red-600">
           {getValues().sizes.length > 0
             ? ""
             : "Please add price to your product"}
         </span>
       </div>
 
-      <div className="flex gap-4 justify-end">
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

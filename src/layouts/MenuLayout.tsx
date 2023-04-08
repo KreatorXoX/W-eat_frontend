@@ -6,13 +6,13 @@ const MenuLayout = (props: Props) => {
   return (
     <div className="mt-5 lg:mt-10">
       <nav>
-        <ul className="flex flex-row justify-evenly text-gray-700 font-semibold max-w-[60rem] mx-auto">
+        <ul className="mx-auto flex max-w-[60rem] flex-row justify-evenly font-semibold text-gray-700">
           <li>
             <NavLink
               to="categories"
               className={({ isActive }) =>
                 isActive
-                  ? "underline underline-offset-2 decoration-1 text-orange-600 lg:text-xl "
+                  ? "text-orange-600 underline decoration-1 underline-offset-2 lg:text-xl "
                   : "hover:text-orange-600 lg:text-xl"
               }
             >
@@ -24,7 +24,7 @@ const MenuLayout = (props: Props) => {
               to="products"
               className={({ isActive }) =>
                 isActive
-                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  ? "text-orange-600 underline decoration-1  underline-offset-2 lg:text-xl"
                   : "hover:text-orange-600 lg:text-xl"
               }
             >
@@ -36,7 +36,7 @@ const MenuLayout = (props: Props) => {
               to="extra"
               className={({ isActive }) =>
                 isActive
-                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  ? "text-orange-600 underline decoration-1  underline-offset-2 lg:text-xl"
                   : "hover:text-orange-600 lg:text-xl"
               }
             >
@@ -48,7 +48,7 @@ const MenuLayout = (props: Props) => {
               to="extra-product"
               className={({ isActive }) =>
                 isActive
-                  ? "underline underline-offset-2 decoration-1  text-orange-600 lg:text-xl"
+                  ? "text-orange-600 underline decoration-1  underline-offset-2 lg:text-xl"
                   : "hover:text-orange-600 lg:text-xl"
               }
             >

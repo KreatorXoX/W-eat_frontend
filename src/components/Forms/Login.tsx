@@ -31,16 +31,16 @@ const Login = (props: Props) => {
   return (
     <form
       onSubmit={handleSubmit(loginHandler)}
-      className="p-5 flex flex-col items-center rounded-lg space-y-4 w-full h-full text-gray-800 dark:text-slate-200 overflow-auto"
+      className="flex h-full w-full flex-col items-center space-y-4 overflow-auto rounded-lg p-5 text-gray-800 dark:text-slate-200"
     >
-      <div className="flex items-center gap-10 justify-start w-full border-b border-b-gray-400 pb-2">
-        <Link to=".." className="text-orange-600 text-3xl font-light">
+      <div className="flex w-full items-center justify-start gap-10 border-b border-b-gray-400 pb-2">
+        <Link to=".." className="text-3xl font-light text-orange-600">
           <RiArrowGoBackLine />
         </Link>
 
-        <h2 className="font-bold text-2xl ">Sign in</h2>
+        <h2 className="text-2xl font-bold ">Sign in</h2>
       </div>
-      <div className="w-full flex flex-col gap-4">
+      <div className="flex w-full flex-col gap-4">
         <Input
           type="email"
           half={false}
@@ -62,8 +62,8 @@ const Login = (props: Props) => {
 
         <Link
           to="#forgotpassword"
-          className="text-right text-sm text-blue-500 dark:font-medium italic
-        hover:underline no-underline
+          className="text-right text-sm italic text-blue-500 no-underline
+        hover:underline dark:font-medium
         "
         >
           Forgot Password?
@@ -73,8 +73,8 @@ const Login = (props: Props) => {
       <button
         disabled={!isValid}
         type="submit"
-        className="auth--button dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 bg-orange-500 hover:bg-orange-600 active:bg-orange-700 transition-colors duration-200
-         text-slate-100 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-300 dark:disabled:text-gray-500"
+        className="auth--button bg-orange-500 text-slate-100 transition-colors duration-200 hover:bg-orange-600 active:bg-orange-700 disabled:bg-gray-300 disabled:text-gray-500
+         dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800 dark:disabled:bg-gray-300 dark:disabled:text-gray-500"
       >
         Sign in
       </button>

@@ -84,7 +84,7 @@ const EditCategoryForm = ({ category }: Props) => {
         error={errors.extras?.message}
       />
 
-      <div className="flex gap-4 justify-end">
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

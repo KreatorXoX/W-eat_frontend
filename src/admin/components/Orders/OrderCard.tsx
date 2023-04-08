@@ -5,16 +5,16 @@ type Props = {
 const OrderCard = ({ name, value }: Props) => {
   return (
     <div
-      className="bg-blue-900 flex flex-col gap-4 justify-evenly items-center text-slate-200 min-h-[20rem]
+      className="flex min-h-[20rem] flex-col items-center justify-evenly gap-4 rounded-xl bg-blue-900
       
-    rounded-xl font-bold
+    font-bold text-slate-200
     "
     >
-      <h2 className="text-3xl flex flex-wrap text-center">{name}</h2>
+      <h2 className="flex flex-wrap text-center text-3xl">{name}</h2>
 
       <div
-        className="rounded-full bg-orange-500 border-none outline-none w-32 h-32 flex items-center justify-center
-      text-2xl font-semibold
+        className="flex h-32 w-32 items-center justify-center rounded-full border-none bg-orange-500 text-2xl
+      font-semibold outline-none
       "
       >
         {value}

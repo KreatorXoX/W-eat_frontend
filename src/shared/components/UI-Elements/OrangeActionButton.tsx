@@ -11,8 +11,8 @@ const OrangeActionButton = ({ whereTo, text, price }: Props) => {
   return (
     <button
       onClick={() => navigate(whereTo)}
-      className="bg-orange-600 rounded-full py-1 my-2
-      text-xl text-slate-100 font-semibold w-full
+      className="my-2 w-full rounded-full bg-orange-600
+      py-1 text-xl font-semibold text-slate-100
       "
     >
       <p className="flex items-center justify-center space-x-2 text-lg font-bold">

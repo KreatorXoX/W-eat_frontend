@@ -34,7 +34,7 @@ const EditExtraProductForm = (props: Props) => {
       onSubmit={handleSubmit(createExtraProductHandler)}
       className="space-y-4"
     >
-      <div className="flex gap-4 justify-between items-start">
+      <div className="flex items-start justify-between gap-4">
         <Input
           type="text"
           half={false}
@@ -63,7 +63,7 @@ const EditExtraProductForm = (props: Props) => {
         error={errors.allergens?.message}
       />
 
-      <div className="flex gap-4 justify-end">
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

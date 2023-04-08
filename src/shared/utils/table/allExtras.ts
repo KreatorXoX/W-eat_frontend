@@ -1,98 +1,98 @@
 export const extraCategories: Extra[] = [
   {
-    id: '3001',
-    name: 'Free Sauces',
+    id: "3001",
+    name: "Free Sauces",
     paid: false,
-    extraItems: []
+    extraItems: [],
   },
   {
-    id: '3002',
-    name: 'Drinks',
+    id: "3002",
+    name: "Drinks",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3003',
-    name: 'Gluten-Free Options',
+    id: "3003",
+    name: "Gluten-Free Options",
     paid: false,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3004',
-    name: 'Vegetarian Options',
+    id: "3004",
+    name: "Vegetarian Options",
     paid: false,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3005',
-    name: 'Vegan Options',
+    id: "3005",
+    name: "Vegan Options",
     paid: false,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3006',
-    name: 'Desserts',
+    id: "3006",
+    name: "Desserts",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3007',
-    name: 'Appetizers',
+    id: "3007",
+    name: "Appetizers",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3008',
-    name: 'Burgers',
+    id: "3008",
+    name: "Burgers",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3009',
-    name: 'Fries',
+    id: "3009",
+    name: "Fries",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3010',
-    name: 'Salads',
+    id: "3010",
+    name: "Salads",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3011',
-    name: 'Sandwiches',
+    id: "3011",
+    name: "Sandwiches",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3012',
-    name: 'Gluten-Free Drinks',
+    id: "3012",
+    name: "Gluten-Free Drinks",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3013',
-    name: 'Hot Beverages',
+    id: "3013",
+    name: "Hot Beverages",
     paid: true,
-    extraItems: []
+    extraItems: [],
   },
 
   {
-    id: '3014',
-    name: 'Cold Beverages',
+    id: "3014",
+    name: "Cold Beverages",
     paid: true,
-    extraItems: []
-  }
-]
+    extraItems: [],
+  },
+];

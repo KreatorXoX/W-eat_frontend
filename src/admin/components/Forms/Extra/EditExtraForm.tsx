@@ -34,7 +34,7 @@ const EditExtraForm = (props: Props) => {
   };
   return (
     <form onSubmit={handleSubmit(editExtraHandler)} className="space-y-4">
-      <div className="flex gap-4 justify-between items-start">
+      <div className="flex items-start justify-between gap-4">
         <Input
           type="text"
           half={true}
@@ -44,11 +44,11 @@ const EditExtraForm = (props: Props) => {
           {...register("name")}
           error={errors.name?.message}
         />
-        <div className="flex flex-col text-center text-gray-700 text-sm md:text-base font-medium w-1/2">
+        <div className="flex w-1/2 flex-col text-center text-sm font-medium text-gray-700 md:text-base">
           <h2>Paid</h2>
           <div
-            className="flex gap-8 justify-center mt-1 py-[0.4rem]
-              border border-gray-400 rounded
+            className="mt-1 flex justify-center gap-8 rounded
+              border border-gray-400 py-[0.4rem]
               "
           >
             <label className="flex items-center gap-2">
@@ -78,7 +78,7 @@ const EditExtraForm = (props: Props) => {
             </label>
           </div>
           {errors.paid && (
-            <p className="font-normal text-sm md:text-base text-red-600 flex flex-row items-baseline gap-1 mt-1">
+            <p className="mt-1 flex flex-row items-baseline gap-1 text-sm font-normal text-red-600 md:text-base">
               {errors.paid.message}
               <span>
                 <FiAlertTriangle className="inline" />
@@ -99,7 +99,7 @@ const EditExtraForm = (props: Props) => {
         error={errors.extraItems?.message}
       />
 
-      <div className="flex gap-4 justify-end">
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

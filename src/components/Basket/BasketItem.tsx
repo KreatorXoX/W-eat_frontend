@@ -24,16 +24,16 @@ const BasketItem = ({ item }: Props) => {
     setShowNoteForm(false);
   };
   return (
-    <div className="border-b dark:border-b-gray-500 space-y-4 mb-4 px-5 lg:px-0">
+    <div className="mb-4 space-y-4 border-b px-5 dark:border-b-gray-500 lg:px-0">
       <div className="relative items-center gap-2 text-base font-[500]">
         <span className="absolute top-0 left-0">{item.quantity}</span>
-        <div className="flex justify-between w-full pl-5">
+        <div className="flex w-full justify-between pl-5">
           <Link
             to={`/edit-product/${item.id}`}
             className={`break-words
-                    hover:no-underline decoration-gray-700 dark:decoration-slate-100 underline underline-offset-2 ${
+                    underline decoration-gray-700 underline-offset-2 hover:no-underline dark:decoration-slate-100 ${
                       location.pathname === "/checkout"
-                        ? "no-underline pointer-events-none"
+                        ? "pointer-events-none no-underline"
                         : ""
                     }`}
           >
@@ -46,11 +46,11 @@ const BasketItem = ({ item }: Props) => {
         </div>
       </div>
       {/* extra suplements if there are any ?? */}
-      <span className="flex items-center text-xs pl-5 italic font-light line-clamp-2">
+      <span className="flex items-center pl-5 text-xs font-light italic line-clamp-2">
         {item.mainProduct?.ingridients}
       </span>
       {location?.pathname !== "/checkout" && (
-        <div className="w-full flex flex-col justify-between gap-4 items-start py-2 pl-5 lg:flex-row lg:items-center">
+        <div className="flex w-full flex-col items-start justify-between gap-4 py-2 pl-5 lg:flex-row lg:items-center">
           {!showNoteForm && (
             <>
               {!item.notes && (
@@ -65,13 +65,13 @@ const BasketItem = ({ item }: Props) => {
               {/* show this if there is note */}
               {item.notes && (
                 <div className="w-full">
-                  <div className=" bg-orange-300/20 dark:bg-gray-500 font-semibold rounded-md px-2 py-1 flex justify-between items-center w-full">
-                    <p className="text-xs text-gray-500 dark:text-slate-50 line-clamp-2">
+                  <div className=" flex w-full items-center justify-between rounded-md bg-orange-300/20 px-2 py-1 font-semibold dark:bg-gray-500">
+                    <p className="text-xs text-gray-500 line-clamp-2 dark:text-slate-50">
                       {item.notes}
                     </p>
                     <p>
                       <AiOutlineCloseCircle
-                        className="text-red-500 text-xl hover:cursor-pointer"
+                        className="text-xl text-red-500 hover:cursor-pointer"
                         onClick={() => removeNote(item.id)}
                       />
                     </p>
@@ -80,7 +80,7 @@ const BasketItem = ({ item }: Props) => {
                     <div>
                       <button
                         onClick={() => setShowNoteForm(true)}
-                        className="text-sm underline hover:no-underline py-2"
+                        className="py-2 text-sm underline hover:no-underline"
                       >
                         Edit note
                       </button>
@@ -89,7 +89,7 @@ const BasketItem = ({ item }: Props) => {
                 </div>
               )}
 
-              <div className="w-20 flex px-2 gap-2 text-base">
+              <div className="flex w-20 gap-2 px-2 text-base">
                 <button className="rounded-full bg-gray-200 p-1 hover:bg-gray-300 dark:text-black">
                   <TbMinus onClick={() => removeFromCart(item.id)} />
                 </button>
@@ -106,15 +106,15 @@ const BasketItem = ({ item }: Props) => {
           {showNoteForm && (
             <form
               onSubmit={submitHandler}
-              className="flex flex-col gap-2 w-full"
+              className="flex w-full flex-col gap-2"
             >
               <textarea
                 onChange={(e) => setNote(e.target.value)}
                 defaultValue={item.notes}
-                className="outline-none rounded-lg dark:text-black p-1 text-xs bg-gray-200"
+                className="rounded-lg bg-gray-200 p-1 text-xs outline-none dark:text-black"
               />
               <button
-                className="bg-orange-500 text-slate-50 px-4 py-[0.15em] rounded-lg w-1/3 self-end"
+                className="w-1/3 self-end rounded-lg bg-orange-500 px-4 py-[0.15em] text-slate-50"
                 type="submit"
               >
                 Save

@@ -39,8 +39,8 @@ const OrderHistory = (props: Props) => {
     []
   );
   return (
-    <div className="h-full flex flex-col justify-center items-center sm:px-10">
-      <h2 className="mt-10 font-semibold text-2xl text-green-800">
+    <div className="flex h-full flex-col items-center justify-center sm:px-10">
+      <h2 className="mt-10 text-2xl font-semibold text-green-800">
         Order History
       </h2>
       <Table

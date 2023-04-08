@@ -6,8 +6,8 @@ type Props = {
 
 const BasketFooter = ({ cartTotal }: Props) => {
   return (
-    <div className="sticky bottom-0 pb-2 bg-slate-100 dark:bg-gray-900">
-      <div className="flex flex-col space-y-3 pt-4 mb-2">
+    <div className="sticky bottom-0 bg-slate-100 pb-2 dark:bg-gray-900">
+      <div className="mb-2 flex flex-col space-y-3 pt-4">
         <div className="flex flex-row justify-between">
           <span>Subtotal</span>
           <span>€ {cartTotal.toFixed(2)}</span>

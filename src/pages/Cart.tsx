@@ -17,15 +17,15 @@ const Cart = (props: Props) => {
   }, [cartItems.length]);
 
   return (
-    <div className="h-screen w-full px-4 text-gray-800 dark:text-slate-100 z-20">
-      <div className="w-full flex flex-col h-full">
-        <div className="w-full flex justify-between items-center mb-5">
-          <h2 className="w-full text-left font-bold text-xl my-5">Basket</h2>
+    <div className="z-20 h-screen w-full px-4 text-gray-800 dark:text-slate-100">
+      <div className="flex h-full w-full flex-col">
+        <div className="mb-5 flex w-full items-center justify-between">
+          <h2 className="my-5 w-full text-left text-xl font-bold">Basket</h2>
           <Link to=".." className="text-3xl">
             <MdClose />
           </Link>
         </div>
-        <div className="flex flex-col gap-4 overflow-y-scroll h-full ">
+        <div className="flex h-full flex-col gap-4 overflow-y-scroll ">
           {cartItems?.length > 0 &&
             cartItems.map((item) => <BasketItem key={item.id} item={item} />)}
         </div>

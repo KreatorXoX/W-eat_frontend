@@ -1,28 +1,28 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from "react-router-dom";
 
-import GenericButton from '../../../../shared/components/UI-Elements/GenericButton'
-import EditCategoryForm from '../../../components/Forms/Category/EditCategoryForm'
-import { formatData } from '../../../../shared/utils/formatingDAta/formatData'
+import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+import EditCategoryForm from "../../../components/Forms/Category/EditCategoryForm";
+import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
 
-type Props = {}
+type Props = {};
 
 const EditCategory = (props: Props) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const id = useParams().id
+  const id = useParams().id;
 
-  const category = formatData().find(cat => cat.id === id)
+  const category = formatData().find((cat) => cat.id === id);
   if (!category) {
-    return <h2>no Cat</h2>
+    return <h2>no Cat</h2>;
   }
   return (
-    <div className='w-full mx-auto max-w-[60rem] px-5 mt-10 space-y-5'>
-      <div className='flex justify-between border-b-2 pb-5'>
-        <h2 className='font-semibold text-xl text-green-800'>Edit category</h2>
+    <div className="mx-auto mt-10 w-full max-w-[60rem] space-y-5 px-5">
+      <div className="flex justify-between border-b-2 pb-5">
+        <h2 className="text-xl font-semibold text-green-800">Edit category</h2>
         <GenericButton
-          text='<<'
-          color='blue'
-          classes='rounded-full w-10 h-10 text-slate-50 font-semibold text-xl flex items-center justify-center'
+          text="<<"
+          color="blue"
+          classes="rounded-full w-10 h-10 text-slate-50 font-semibold text-xl flex items-center justify-center"
           onClick={() => navigate(-1)}
         />
       </div>
@@ -30,7 +30,7 @@ const EditCategory = (props: Props) => {
         <EditCategoryForm category={category!} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default EditCategory
+export default EditCategory;

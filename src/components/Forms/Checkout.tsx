@@ -19,7 +19,11 @@ Modal.setAppElement("#root");
 
 const newDate = new Date();
 const Checkout = (props: Props) => {
-  const { initialHour, deliveryTimes } = useDeliveryTimes('23:00', newDate,'10:00');
+  const { initialHour, deliveryTimes } = useDeliveryTimes(
+    "23:00",
+    newDate,
+    "10:00"
+  );
 
   const {
     register,
@@ -73,16 +77,16 @@ const Checkout = (props: Props) => {
     <>
       <form
         onSubmit={handleSubmit(checkoutHandler)}
-        className="m-4 p-5 dark:text-slate-100 text-gray-800 space-y-5
+        className="m-4 space-y-5 p-5 text-gray-800 dark:text-slate-100
         
         "
       >
-        <div className="lg:border xs:border-none rounded-lg dark:border-gray-600">
-          <div className="flex flex-col gap-4 border-b dark:border-b-gray-600 py-4">
-            <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
+        <div className="xs:border-none rounded-lg dark:border-gray-600 lg:border">
+          <div className="flex flex-col gap-4 border-b py-4 dark:border-b-gray-600">
+            <h2 className="text-xl font-semibold tracking-wide lg:px-4 lg:text-2xl">
               Delivery Address
             </h2>
-            <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
+            <div className="grid grid-cols-2 gap-2 p-0 lg:gap-5 lg:p-4">
               <div className="col-span-2 lg:col-span-1">
                 <Input
                   type="text"
@@ -152,11 +156,11 @@ const Checkout = (props: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4 border-b lg:border-none dark:border-b-gray-600 py-4">
-            <h2 className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-wide">
+          <div className="flex flex-col gap-4 border-b py-4 dark:border-b-gray-600 lg:border-none">
+            <h2 className="text-xl font-semibold tracking-wide lg:px-4 lg:text-2xl">
               Personal Details
             </h2>
-            <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
+            <div className="grid grid-cols-2 gap-2 p-0 lg:gap-5 lg:p-4">
               <div className="col-span-2 lg:col-span-1">
                 <Input
                   type="text"
@@ -194,12 +198,12 @@ const Checkout = (props: Props) => {
           </div>
         </div>
         <div
-          className="border-b lg:border dark:border-gray-500 p-4 lg:rounded-lg hover:cursor-pointer
-          flex justify-between
+          className="flex justify-between border-b p-4 hover:cursor-pointer dark:border-gray-500
+          lg:rounded-lg lg:border
           "
           onClick={openDeliveryModal}
         >
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <AiOutlineClockCircle className="text-xl text-violet-500" />
             <div className="flex flex-col">
               <span className="font-semibold">Delivery Time</span>
@@ -250,7 +254,7 @@ const Checkout = (props: Props) => {
                 />
 
                 <button
-                  className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
+                  className="mt-4 w-fit rounded-lg bg-green-600 px-5 text-slate-100"
                   onClick={(e) => closeDeliveryModal(e)}
                 >
                   Ok
@@ -260,20 +264,21 @@ const Checkout = (props: Props) => {
               <span className="text-sm">{getValues().deliveryTime?.label}</span>
             </div>
           </div>
-          {getValues().deliveryTime ? 
+          {getValues().deliveryTime ? (
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
             </div>
-            : <div>
+          ) : (
+            <div>
               <BsXCircle className="text-3xl text-red-600" />
             </div>
-          }
+          )}
         </div>
         <div
-          className="lg:border xs:border-none rounded-lg dark:border-gray-500 p-4 flex justify-between items-center hover:cursor-pointer"
+          className="xs:border-none flex items-center justify-between rounded-lg p-4 hover:cursor-pointer dark:border-gray-500 lg:border"
           onClick={openPaymentModal}
         >
-          <div className="flex gap-4 items-center">
+          <div className="flex items-center gap-4">
             <AiFillCreditCard className="text-xl text-orange-500" />
             <div className="flex flex-col">
               <span className="font-semibold">Payment Method</span>
@@ -323,7 +328,7 @@ const Checkout = (props: Props) => {
                   options={getPaymentMethods()}
                 />
                 <button
-                  className="w-fit mt-4 px-5 rounded-lg bg-green-600 text-slate-100"
+                  className="mt-4 w-fit rounded-lg bg-green-600 px-5 text-slate-100"
                   onClick={(e) => closePaymentModal(e)}
                 >
                   Ok
@@ -335,27 +340,28 @@ const Checkout = (props: Props) => {
               </span>
             </div>
           </div>
-          {getValues().paymentMethod?.value ?
+          {getValues().paymentMethod?.value ? (
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
-            </div> : 
-           <div>
-            <BsXCircle className="text-3xl text-red-600" />
-          </div>
-          }
+            </div>
+          ) : (
+            <div>
+              <BsXCircle className="text-3xl text-red-600" />
+            </div>
+          )}
         </div>
         <button
           className="
           
             
-              bg-orange-600
-             disabled:bg-gray-500 disabled:pointer-events-none disabled:cursor-not-allowed
-            w-full sm:w-fit py-2 px-10 rounded-full
-      text-lg text-slate-100 font-medium
+              w-full
+             rounded-full bg-orange-600 py-2
+            px-10 text-lg font-medium text-slate-100 disabled:pointer-events-none
+      disabled:cursor-not-allowed disabled:bg-gray-500 sm:w-fit
           "
           disabled={!isValid}
         >
-          <span className="items-center flex flex-col sm:flex-row justify-center gap-2 text-sm sm:text-base">
+          <span className="flex flex-col items-center justify-center gap-2 text-sm sm:flex-row sm:text-base">
             <span>Order & pay with {getValues().paymentMethod?.label}</span>
             <span className=" tracking-wide">
               (€ {getCartTotal().toFixed(2)})

@@ -66,8 +66,8 @@ const MenuProduct = (props: Props) => {
     []
   );
   return (
-    <div className="h-full flex flex-col items-center sm:px-10 py-5">
-      <div className="w-full max-w-[60rem] flex justify-end items-center py-5">
+    <div className="flex h-full flex-col items-center py-5 sm:px-10">
+      <div className="flex w-full max-w-[60rem] items-center justify-end py-5">
         <GenericButton
           classes="rounded-lg"
           onClick={() => navigate("new")}

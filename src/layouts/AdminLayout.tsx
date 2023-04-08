@@ -1,32 +1,32 @@
-import { Outlet, NavLink } from 'react-router-dom'
-import { GoHome } from 'react-icons/go'
-import { FiSettings, FiUsers } from 'react-icons/fi'
-import { IoRestaurantOutline } from 'react-icons/io5'
-import { MdDeliveryDining, MdSettingsApplications } from 'react-icons/md'
-type Props = {}
+import { Outlet, NavLink } from "react-router-dom";
+import { GoHome } from "react-icons/go";
+import { FiSettings, FiUsers } from "react-icons/fi";
+import { IoRestaurantOutline } from "react-icons/io5";
+import { MdDeliveryDining, MdSettingsApplications } from "react-icons/md";
+type Props = {};
 
 const AdminLayout = (props: Props) => {
   return (
-    <main className='h-screen flex lg:flex-row flex-col mx-auto'>
-      <aside className='w-full lg:w-[14rem] bg-neutral-200 rounded-lg text-left '>
-        <nav className='sticky top-0 rounded-xl w-full lg:pl-6 lg:mt-10'>
+    <main className="mx-auto flex h-screen flex-col lg:flex-row">
+      <aside className="w-full rounded-lg bg-neutral-200 text-left lg:w-[14rem] ">
+        <nav className="sticky top-0 w-full rounded-xl lg:mt-10 lg:pl-6">
           <ul
-            className='flex flex-row justify-evenly lg:flex-col overflow-hidden lg:gap-10 py-5
-          font-semibold text-lg text-blue-800 transition-all delay-150 duration-500
-          '
+            className="flex flex-row justify-evenly overflow-hidden py-5 text-lg font-semibold
+          text-blue-800 transition-all delay-150 duration-500 lg:flex-col lg:gap-10
+          "
           >
             <li>
               <NavLink
-                to='/admin'
+                to="/admin"
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-2 decoration-1 text-blue-600'
-                    : 'hover:text-blue-600'
+                    ? "text-blue-600 underline decoration-1 underline-offset-2"
+                    : "hover:text-blue-600"
                 }
                 end
               >
-                <p className='flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3'>
-                  <GoHome className='inline text-xl' />
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <GoHome className="inline text-xl" />
                   <span>Home</span>
                 </p>
               </NavLink>
@@ -35,13 +35,13 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-2 decoration-1  text-blue-600'
-                    : 'hover:text-blue-600'
+                    ? "text-blue-600 underline decoration-1  underline-offset-2"
+                    : "hover:text-blue-600"
                 }
-                to='orders'
+                to="orders"
               >
-                <p className='flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3'>
-                  <MdDeliveryDining className='inline text-xl' />
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <MdDeliveryDining className="inline text-xl" />
                   <span>Orders</span>
                 </p>
               </NavLink>
@@ -50,13 +50,13 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-2 decoration-1  text-blue-600'
-                    : 'hover:text-blue-600'
+                    ? "text-blue-600 underline decoration-1  underline-offset-2"
+                    : "hover:text-blue-600"
                 }
-                to='customers'
+                to="customers"
               >
-                <p className='flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3'>
-                  <FiUsers className='inline text-xl' />
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <FiUsers className="inline text-xl" />
                   <span>Customers</span>
                 </p>
               </NavLink>
@@ -65,13 +65,13 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-2 decoration-1  text-blue-600'
-                    : 'hover:text-blue-600'
+                    ? "text-blue-600 underline decoration-1  underline-offset-2"
+                    : "hover:text-blue-600"
                 }
-                to='menu/categories'
+                to="menu/categories"
               >
-                <p className='flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3'>
-                  <IoRestaurantOutline className='inline text-xl' />
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <IoRestaurantOutline className="inline text-xl" />
                   <span>Menu</span>
                 </p>
               </NavLink>
@@ -80,13 +80,13 @@ const AdminLayout = (props: Props) => {
               <NavLink
                 className={({ isActive }) =>
                   isActive
-                    ? 'underline underline-offset-2 decoration-1  text-blue-600'
-                    : 'hover:text-blue-600'
+                    ? "text-blue-600 underline decoration-1  underline-offset-2"
+                    : "hover:text-blue-600"
                 }
-                to='restaurant-settings'
+                to="restaurant-settings"
               >
-                <p className='flex flex-col text-sm lg:text-lg lg:flex-row items-center lg:gap-3'>
-                  <FiSettings className='inline text-xl' />
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <FiSettings className="inline text-xl" />
                   <span>Settings</span>
                 </p>
               </NavLink>
@@ -94,11 +94,11 @@ const AdminLayout = (props: Props) => {
           </ul>
         </nav>
       </aside>
-      <div className='w-full h-full lg:w-[calc(100vw-14rem)] overflow-y-auto'>
+      <div className="h-full w-full overflow-y-auto lg:w-[calc(100vw-14rem)]">
         <Outlet />
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;

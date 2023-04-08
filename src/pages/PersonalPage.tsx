@@ -19,16 +19,16 @@ const PersonalPage = (props: Props) => {
     },
   });
   return (
-    <div className="text-gray-800 px-5">
-      <div className="mt-5 lg:mt-0 flex gap-10 items-center">
-        <Link to=".." className="text-orange-600 text-3xl font-light">
+    <div className="px-5 text-gray-800">
+      <div className="mt-5 flex items-center gap-10 lg:mt-0">
+        <Link to=".." className="text-3xl font-light text-orange-600">
           <RiArrowGoBackLine />
         </Link>
-        <h2 className="font-semibold text-xl dark:text-slate-200">
+        <h2 className="text-xl font-semibold dark:text-slate-200">
           Personal information
         </h2>
       </div>
-      <form className="space-y-5 mt-8 mb-5">
+      <form className="mt-8 mb-5 space-y-5">
         <Input
           id="name"
           type="text"
@@ -39,8 +39,8 @@ const PersonalPage = (props: Props) => {
           error={undefined}
         />
         {watch("name") !== "Gorkem" && (
-          <div className="w-full flex justify-center my-2">
-            <button className="w-1/2 bg-orange-500 text-slate-100 py-1 rounded-lg hover:bg-orange-600 duration-150">
+          <div className="my-2 flex w-full justify-center">
+            <button className="w-1/2 rounded-lg bg-orange-500 py-1 text-slate-100 duration-150 hover:bg-orange-600">
               Update Name
             </button>
           </div>

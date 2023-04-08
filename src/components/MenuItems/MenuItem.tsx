@@ -10,11 +10,11 @@ function MenuItem({ item }: Props) {
   const navigate = useNavigate();
   return (
     <div
-      className="w-full mx-auto h-fit border border-gray-300 dark:border-gray-600 p-3 rounded-lg flex justify-between gap-4 items-center lg:text-lg bg-slate-100 dark:bg-gray-800
+      className="mx-auto flex h-fit w-full items-center justify-between gap-4 rounded-lg border border-gray-300 bg-slate-100 p-3 dark:border-gray-600 dark:bg-gray-800 lg:text-lg
       "
     >
       <div>
-        <div className="flex flex-row gap-3 items-center">
+        <div className="flex flex-row items-center gap-3">
           <h3 className="font-semibold">{item?.name}</h3>
           <Link
             to="/nutritions"
@@ -25,14 +25,14 @@ function MenuItem({ item }: Props) {
           </Link>
         </div>
         <div>
-          <p className="text-gray-500 dark:text-slate-200 text-sm my-1">
+          <p className="my-1 text-sm text-gray-500 dark:text-slate-200">
             {item?.description}
           </p>
         </div>
         <p className="mt-4 font-semibold">€ {item?.price.toFixed(2)}</p>
       </div>
       <button
-        className="rounded-full bg-gray-200 dark:bg-gray-500 p-1"
+        className="rounded-full bg-gray-200 p-1 dark:bg-gray-500"
         onClick={() => navigate(`/product/${item?.id}`)}
       >
         <AiOutlinePlus className="text-2xl" />

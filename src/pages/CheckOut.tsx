@@ -13,10 +13,12 @@ const CheckOut = (props: Props) => {
     // and cartItems.total not equal or less than minimum amount
   }, []);
   return (
-    <div className="h-full max-w-2xl lg:max-w-6xl w-full
-    dark:bg-gray-900 mx-auto
-    ">
-      <div className="hidden lg:inline-block m-5">
+    <div
+      className="mx-auto h-full w-full max-w-2xl
+    dark:bg-gray-900 lg:max-w-6xl
+    "
+    >
+      <div className="m-5 hidden lg:inline-block">
         <h1 className="text-2xl font-bold tracking-wide">CheckOut</h1>
         <span className="text-sm tracking-widest">Restraunt Name</span>
       </div>

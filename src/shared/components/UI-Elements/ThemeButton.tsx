@@ -9,7 +9,7 @@ const ThemeButton = () => {
     <button
       onClick={toggler}
       className="
-  p-2 rounded-full border border-blue-400 
+  rounded-full border border-blue-400 p-2 
   "
     >
       {!dark ? (

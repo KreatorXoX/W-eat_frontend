@@ -26,17 +26,17 @@ const ChangePassword = (props: Props) => {
   };
   const navigate = useNavigate();
   return (
-    <div className="text-gray-800 px-5 dark:text-slate-200">
-      <div className="mt-5 lg:mt-0 flex gap-10 items-center">
+    <div className="px-5 text-gray-800 dark:text-slate-200">
+      <div className="mt-5 flex items-center gap-10 lg:mt-0">
         <span
-          className="underline hover:no-underline hover:cursor-pointer
-          text-orange-600 text-3xl font-light"
+          className="text-3xl font-light text-orange-600
+          underline hover:cursor-pointer hover:no-underline"
           onClick={() => navigate(-1)}
         >
           <RiArrowGoBackLine />
         </span>
 
-        <h2 className="font-semibold text-xl">Change Password</h2>
+        <h2 className="text-xl font-semibold">Change Password</h2>
       </div>
       <form
         onSubmit={handleSubmit(changePasswordHandler)}
@@ -53,7 +53,7 @@ const ChangePassword = (props: Props) => {
         />
         <Link
           to="forgot-password"
-          className="self-end text-sm text-blue-500 underline mt-2 hover:no-underline"
+          className="mt-2 self-end text-sm text-blue-500 underline hover:no-underline"
         >
           forgot password ?
         </Link>
@@ -80,7 +80,7 @@ const ChangePassword = (props: Props) => {
         </div>
         <button
           disabled
-          className="disabled:bg-gray-500 bg-orange-500 mt-4 py-2 w-full  rounded-lg text-slate-100 text-lg"
+          className="mt-4 w-full rounded-lg bg-orange-500 py-2  text-lg text-slate-100 disabled:bg-gray-500"
         >
           Change password
         </button>

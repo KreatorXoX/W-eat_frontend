@@ -8,9 +8,9 @@ const NewProduct = (props: Props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full mx-auto max-w-[60rem] px-5 mt-10 space-y-5 pb-5">
+    <div className="mx-auto mt-10 w-full max-w-[60rem] space-y-5 px-5 pb-5">
       <div className="flex justify-between border-b-2 pb-5">
-        <h2 className="font-semibold text-xl text-green-800">
+        <h2 className="text-xl font-semibold text-green-800">
           Add new product
         </h2>
         <GenericButton

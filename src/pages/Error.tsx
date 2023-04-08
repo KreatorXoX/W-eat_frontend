@@ -4,9 +4,9 @@ type Props = {};
 
 const Error = (props: Props) => {
   return (
-    <div className="flex flex-col h-screen bg-gray-400">
+    <div className="flex h-screen flex-col bg-gray-400">
       <MainNavigation />
-      <div className="w-full h-full flex justify-center items-center">
+      <div className="flex h-full w-full items-center justify-center">
         <img
           src="https://res.cloudinary.com/dinhhwb9x/image/upload/v1676444865/errorPage_a8o8mk.jpg"
           alt="error page"

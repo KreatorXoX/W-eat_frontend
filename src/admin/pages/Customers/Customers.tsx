@@ -62,8 +62,8 @@ const Customers = (props: Props) => {
     []
   );
   return (
-    <div className="h-full flex flex-col items-center sm:px-10 py-5">
-      <h2 className="font-semibold text-2xl text-green-800">Customers</h2>
+    <div className="flex h-full flex-col items-center py-5 sm:px-10">
+      <h2 className="text-2xl font-semibold text-green-800">Customers</h2>
       <Table
         {...{
           data: customerList,

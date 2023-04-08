@@ -82,11 +82,11 @@ const EditProduct = (props: Props) => {
   }, [watch()]);
 
   return (
-    <div className="dark:text-slate-200 text-gray-700">
+    <div className="text-gray-700 dark:text-slate-200">
       <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
-          <div className="flex flex-row gap-3 items-center ">
-            <h3 className="font-semibold text-2xl">
+          <div className="flex flex-row items-center gap-3 ">
+            <h3 className="text-2xl font-semibold">
               {" "}
               {item!.mainProduct?.name}
             </h3>
@@ -99,21 +99,21 @@ const EditProduct = (props: Props) => {
             </Link>
           </div>
           <Link to="..">
-            <AiOutlineClose className="text-2xl cursor-pointer" />
+            <AiOutlineClose className="cursor-pointer text-2xl" />
           </Link>
         </div>
         <p className="">{item?.mainProduct?.ingridients}</p>
-        <p className="font-bold text-xl">
+        <p className="text-xl font-bold">
           € {item?.mainProduct?.price.toFixed(2)}
         </p>
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
-          <div className="bg-slate-100 dark:bg-gray-800 py-2 pb-10 px-5 ">
+          <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
             {orgCatExtras?.map((extra, idx) => {
               return (
                 <div key={`${idx}`}>
-                  <h3 className="font-medium mt-2">{extra.name}</h3>
+                  <h3 className="mt-2 font-medium">{extra.name}</h3>
                   <div className="">
                     <FormInput
                       type="select"
@@ -132,11 +132,11 @@ const EditProduct = (props: Props) => {
             })}
           </div>
 
-          <div className="w-full flex px-5 gap-4">
-            <div className="flex gap-2 items-center">
+          <div className="flex w-full gap-4 px-5">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200  dark:bg-gray-500 dark:text-white"
+                className="rounded-full bg-gray-200 p-2  dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => {
                     if (prev === 1) return 1;
@@ -149,7 +149,7 @@ const EditProduct = (props: Props) => {
               <span>{quantity}</span>
               <button
                 type="button"
-                className="p-2 rounded-full bg-gray-200  dark:bg-gray-500 dark:text-white"
+                className="rounded-full bg-gray-200 p-2  dark:bg-gray-500 dark:text-white"
                 onClick={() => {
                   setQuantity((prev) => prev + 1);
                 }}
@@ -159,7 +159,7 @@ const EditProduct = (props: Props) => {
             </div>
             <button
               type="submit"
-              className="bg-orange-600 text-slate-50 px-5 py-2 rounded-full w-full"
+              className="w-full rounded-full bg-orange-600 px-5 py-2 text-slate-50"
             >
               <span>
                 €{" "}

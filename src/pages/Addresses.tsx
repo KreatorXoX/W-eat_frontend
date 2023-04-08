@@ -9,70 +9,70 @@ const Addresses = (props: Props) => {
   const [work, setWork] = useState<string>("");
   const [other, setOther] = useState<string>("");
   return (
-    <div className="text-gray-800 px-5 dark:text-slate-200">
-      <div className="mt-5 lg:mt-0 flex gap-10 items-center">
-        <Link to=".." className="text-orange-600 text-3xl font-light">
+    <div className="px-5 text-gray-800 dark:text-slate-200">
+      <div className="mt-5 flex items-center gap-10 lg:mt-0">
+        <Link to=".." className="text-3xl font-light text-orange-600">
           <RiArrowGoBackLine />
         </Link>
-        <h2 className="font-semibold text-xl">Addresses</h2>
+        <h2 className="text-xl font-semibold">Addresses</h2>
       </div>
-      <div className="flex flex-col mt-10 gap-4">
-        <div className="border p-4 rounded-lg">
-          <h3 className=" font-medium tracking-wider mb-2">Home</h3>
+      <div className="mt-10 flex flex-col gap-4">
+        <div className="rounded-lg border p-4">
+          <h3 className=" mb-2 font-medium tracking-wider">Home</h3>
           <textarea
             value={home || "Not assigned anything"}
             rows={3}
             disabled
             readOnly
-            className="w-full bg-gray-100 rounded-lg px-2 py-2 outline-none
-            text-gray-700
+            className="w-full rounded-lg bg-gray-100 px-2 py-2 text-gray-700
+            outline-none
             "
           ></textarea>
 
           <Link
             to="/account/edit-address"
             state={{ type: "home" }}
-            className="bg-orange-500 text-slate-100 px-4 py-[0.15rem] rounded-lg"
+            className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
           >
             Add / Edit
           </Link>
         </div>
-        <div className="border p-4 rounded-lg">
-          <h3 className=" font-medium tracking-wider mb-2">Work</h3>
+        <div className="rounded-lg border p-4">
+          <h3 className=" mb-2 font-medium tracking-wider">Work</h3>
           <textarea
             value={work || "Not assigned anything"}
             rows={3}
             disabled
             readOnly
-            className="w-full bg-gray-100 rounded-lg px-2 py-2 outline-none
-            text-gray-700
+            className="w-full rounded-lg bg-gray-100 px-2 py-2 text-gray-700
+            outline-none
             "
           ></textarea>
 
           <Link
-            className="bg-orange-500 text-slate-100 px-4 py-[0.15rem] rounded-lg"
+            className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
             to="/account/edit-address"
             state={{ type: "work" }}
           >
             Edit
           </Link>
         </div>
-        <div className="border p-4 rounded-lg">
-          <h3 className=" font-medium tracking-wider mb-2">Other</h3>
+        <div className="rounded-lg border p-4">
+          <h3 className=" mb-2 font-medium tracking-wider">Other</h3>
           <textarea
             value={other || "Not assigned anything"}
             rows={3}
             disabled
             readOnly
-            className="w-full bg-gray-100 rounded-lg px-2 py-2 outline-none
-            text-gray-700
+            className="w-full rounded-lg bg-gray-100 px-2 py-2 text-gray-700
+            outline-none
             "
           ></textarea>
 
           <Link
             to="/account/edit-address"
             state={{ type: "other" }}
-            className="bg-orange-500 text-slate-100 px-4 py-[0.15rem] rounded-lg"
+            className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
           >
             Edit
           </Link>

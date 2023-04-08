@@ -31,28 +31,28 @@ const EditAddress = (props: Props) => {
   };
   return (
     <>
-      <div className="text-gray-800 px-5 dark:text-slate-200 pl-5 mt-5 lg:mt-0 flex gap-10 items-center">
-        <Link to=".." className="text-orange-600 text-3xl font-light">
+      <div className="mt-5 flex items-center gap-10 px-5 pl-5 text-gray-800 dark:text-slate-200 lg:mt-0">
+        <Link to=".." className="text-3xl font-light text-orange-600">
           <RiArrowGoBackLine />
         </Link>
-        <h2 className="font-semibold text-xl">Update Address</h2>
+        <h2 className="text-xl font-semibold">Update Address</h2>
       </div>
       <form
         onSubmit={handleSubmit(editAddressHandler)}
-        className="m-4 py-5 dark:text-slate-100 text-gray-800 space-y-5 flex flex-col
+        className="m-4 flex flex-col space-y-5 py-5 text-gray-800 dark:text-slate-100
         
         "
       >
         <div>
-          <div className="flex flex-col gap-4 border-b dark:border-b-gray-600 py-4">
+          <div className="flex flex-col gap-4 border-b py-4 dark:border-b-gray-600">
             <h2
-              className="lg:px-4 text-xl lg:text-2xl font-semibold tracking-widest
-            text-blue-300 font-sans text-center
+              className="text-center font-sans text-xl font-semibold tracking-widest
+            text-blue-300 lg:px-4 lg:text-2xl
             "
             >
               {addressType.toUpperCase()}
             </h2>
-            <div className="grid grid-cols-2 p-0 lg:p-4 gap-2 lg:gap-5">
+            <div className="grid grid-cols-2 gap-2 p-0 lg:gap-5 lg:p-4">
               <div className="col-span-2 lg:col-span-1">
                 <Input
                   type="text"
@@ -103,10 +103,10 @@ const EditAddress = (props: Props) => {
 
         <button
           className="  
-              bg-orange-600
-             disabled:bg-gray-500 disabled:pointer-events-none disabled:cursor-not-allowed
-            w-full py-2 px-10 rounded-xl
-      text-lg text-slate-100 font-medium
+              w-full
+             rounded-xl bg-orange-600 py-2
+            px-10 text-lg font-medium text-slate-100
+      disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-500
           "
           disabled={!isValid}
         >

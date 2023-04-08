@@ -4,29 +4,29 @@ import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 import {
   newRestaurantSchema,
-  NewRestaurantSchema
+  NewRestaurantSchema,
 } from "../../../../shared/utils/validationSchema";
 import { useNavigate } from "react-router-dom";
 import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
 type Props = {};
 
-const category=formatData()[0]
+const category = formatData()[0];
 
 const NewRestaurantForm = (props: Props) => {
-
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    
+
     formState: { errors },
   } = useForm<NewRestaurantSchema>({
     mode: "onChange",
     resolver: zodResolver(newRestaurantSchema),
-
   });
 
-  const createNewCategoryHandler: SubmitHandler<NewRestaurantSchema> = (data) => {
+  const createNewCategoryHandler: SubmitHandler<NewRestaurantSchema> = (
+    data
+  ) => {
     console.log(data);
   };
   return (
@@ -34,25 +34,25 @@ const NewRestaurantForm = (props: Props) => {
       onSubmit={handleSubmit(createNewCategoryHandler)}
       className="space-y-4"
     >
-    <div className='flex gap-4 flex-col md:flex-row'>
-      <Input
-        type="text"
-        half={false}
-        label="Restaurant Name"
-        placeholder="ex: Big Papa's"
-        id="name"
-        {...register("name")}
-        error={errors.name?.message}
-      />
-      <Input
-        type="text"
-        half={false}
-        label="Phone Number"
-        placeholder="Type your Phone Number"
-        id="phoneNumber"
-        {...register("phoneNumber")}
-        error={errors.phoneNumber?.message}
-      />
+      <div className="flex flex-col gap-4 md:flex-row">
+        <Input
+          type="text"
+          half={false}
+          label="Restaurant Name"
+          placeholder="ex: Big Papa's"
+          id="name"
+          {...register("name")}
+          error={errors.name?.message}
+        />
+        <Input
+          type="text"
+          half={false}
+          label="Phone Number"
+          placeholder="Type your Phone Number"
+          id="phoneNumber"
+          {...register("phoneNumber")}
+          error={errors.phoneNumber?.message}
+        />
       </div>
       <Input
         type="textarea"
@@ -62,7 +62,7 @@ const NewRestaurantForm = (props: Props) => {
         id="address"
         {...register("address")}
         error={errors.address?.message}
-      />      
+      />
       <Input
         type="text"
         half={false}
@@ -72,7 +72,7 @@ const NewRestaurantForm = (props: Props) => {
         {...register("email")}
         error={errors.email?.message}
       />
-      
+
       <Input
         type="text"
         half={false}
@@ -82,49 +82,48 @@ const NewRestaurantForm = (props: Props) => {
         {...register("backgroundImage")}
         error={errors.backgroundImage?.message}
       />
-      <div className='flex gap-4 flex-col md:flex-row'>
-      <Input
-        type="text"
-        half={false}
-        label="Opening"
-        placeholder="ex: 09:00"
-        id="openingTime"
-        {...register("openingTime")}
-        error={errors.openingTime?.message}
+      <div className="flex flex-col gap-4 md:flex-row">
+        <Input
+          type="text"
+          half={false}
+          label="Opening"
+          placeholder="ex: 09:00"
+          id="openingTime"
+          {...register("openingTime")}
+          error={errors.openingTime?.message}
         />
-      
-      <Input
-        type="text"
-        half={false}
-        label="Closing"
+
+        <Input
+          type="text"
+          half={false}
+          label="Closing"
           placeholder="ex: 22:00"
-        id="closingTime"
-        {...register("closingTime")}
-        error={errors.closingTime?.message}
+          id="closingTime"
+          {...register("closingTime")}
+          error={errors.closingTime?.message}
         />
-      
-        </div>
-      <div className='flex gap-4 flex-col md:flex-row'>
-      {/* min amount will be used as restriction of the order when its not reached */}
-      <Input
-        type="number"
-        half={false}
-        label="Minimum Amount of Purchase"
-        placeholder="ex: 20"
-        id="minDeliveryAmount"
-        {...register("minDeliveryAmount")}
-        error={errors.minDeliveryAmount?.message}
-      />
-      
-      <Input
-        type="number"
-        half={false}
-        label="Delivery Cost"
-        placeholder="ex: 5"
-        id="deliveryCost"
-        {...register("deliveryCost")}
-        error={errors.deliveryCost?.message}
-      />
+      </div>
+      <div className="flex flex-col gap-4 md:flex-row">
+        {/* min amount will be used as restriction of the order when its not reached */}
+        <Input
+          type="number"
+          half={false}
+          label="Minimum Amount of Purchase"
+          placeholder="ex: 20"
+          id="minDeliveryAmount"
+          {...register("minDeliveryAmount")}
+          error={errors.minDeliveryAmount?.message}
+        />
+
+        <Input
+          type="number"
+          half={false}
+          label="Delivery Cost"
+          placeholder="ex: 5"
+          id="deliveryCost"
+          {...register("deliveryCost")}
+          error={errors.deliveryCost?.message}
+        />
       </div>
       <Input
         type="text"
@@ -135,10 +134,8 @@ const NewRestaurantForm = (props: Props) => {
         {...register("averageDeliveryTime")}
         error={errors.averageDeliveryTime?.message}
       />
-      
-       
-      
-      <div className="flex gap-4 justify-end">
+
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

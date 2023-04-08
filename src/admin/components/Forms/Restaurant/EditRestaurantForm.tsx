@@ -3,27 +3,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
-import {  
+import {
   NewRestaurantSchema,
   newRestaurantSchema,
 } from "../../../../shared/utils/validationSchema";
 import { useNavigate } from "react-router-dom";
 import { isDirty } from "zod";
 
+type Props = {};
 
-type Props = {}
-
-const EditRestaurantForm = ({  }: Props) => {
+const EditRestaurantForm = ({}: Props) => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    
+
     formState: { errors },
   } = useForm<NewRestaurantSchema>({
     mode: "onChange",
     resolver: zodResolver(newRestaurantSchema),
-
   });
 
   const editCategoryHandler: SubmitHandler<NewRestaurantSchema> = (data) => {
@@ -31,14 +29,10 @@ const EditRestaurantForm = ({  }: Props) => {
     console.log(isDirty);
     console.log(data);
   };
- 
 
   return (
-    <form
-      onSubmit={handleSubmit(editCategoryHandler)}
-      className="space-y-4"
-    >
-      <div className='flex gap-4 flex-col md:flex-row'>
+    <form onSubmit={handleSubmit(editCategoryHandler)} className="space-y-4">
+      <div className="flex flex-col gap-4 md:flex-row">
         <Input
           type="text"
           half={false}
@@ -86,7 +80,7 @@ const EditRestaurantForm = ({  }: Props) => {
         {...register("backgroundImage")}
         error={errors.backgroundImage?.message}
       />
-      <div className='flex gap-4 flex-col md:flex-row'>
+      <div className="flex flex-col gap-4 md:flex-row">
         <Input
           type="text"
           half={false}
@@ -106,9 +100,8 @@ const EditRestaurantForm = ({  }: Props) => {
           {...register("closingTime")}
           error={errors.closingTime?.message}
         />
-
       </div>
-      <div className='flex gap-4 flex-col md:flex-row'>
+      <div className="flex flex-col gap-4 md:flex-row">
         {/* min amount will be used as restriction of the order when its not reached */}
         <Input
           type="number"
@@ -140,9 +133,7 @@ const EditRestaurantForm = ({  }: Props) => {
         error={errors.averageDeliveryTime?.message}
       />
 
-
-
-      <div className="flex gap-4 justify-end">
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20

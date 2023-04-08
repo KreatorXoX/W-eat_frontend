@@ -12,9 +12,9 @@ function MenuItemList({}: Props) {
     <>
       <div
         id="popular"
-        className="p-5 w-full max-w-4xl mx-auto flex flex-col gap-5"
+        className="mx-auto flex w-full max-w-4xl flex-col gap-5 p-5"
       >
-        <h2 className="font-bold text-base lg:text-lg uppercase pt-2">
+        <h2 className="pt-2 text-base font-bold uppercase lg:text-lg">
           Popular
         </h2>
         {popularProducts.map((product) => (
@@ -26,9 +26,9 @@ function MenuItemList({}: Props) {
         <div
           id={`${category.name}`}
           key={category.id}
-          className="p-5 w-full max-w-4xl mx-auto flex flex-col gap-5"
+          className="mx-auto flex w-full max-w-4xl flex-col gap-5 p-5"
         >
-          <h2 className="font-bold text-base lg:text-lg uppercase pt-2">
+          <h2 className="pt-2 text-base font-bold uppercase lg:text-lg">
             {category.name}
           </h2>
           {category.products.map((item: Item) => (

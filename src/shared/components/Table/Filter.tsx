@@ -13,8 +13,8 @@ function Filter({
 
   const columnFilterValue = column.getFilterValue();
 
-  return typeof firstValue === "number" ? //     placeholder={`Min`} //     } //       ]) //         old?.[1], //         e.target.value, //       column.setFilterValue((old: [number, number]) => [ //     onChange={(e) => //     value={(columnFilterValue as [number, number])?.[0] ?? ""} //     type="number" //   <input // <div className="flex space-x-2 text-gray-700">
-  //     className="w-24 border shadow rounded"
+  return typeof firstValue ===
+    "number" ? //     className="w-24 border shadow rounded" //     placeholder={`Min`} //     } //       ]) //         old?.[1], //         e.target.value, //       column.setFilterValue((old: [number, number]) => [ //     onChange={(e) => //     value={(columnFilterValue as [number, number])?.[0] ?? ""} //     type="number" //   <input // <div className="flex space-x-2 text-gray-700">
   //   />
   //   <input
   //     type="number"
@@ -35,7 +35,7 @@ function Filter({
       value={(columnFilterValue ?? "") as string}
       onChange={(e) => column.setFilterValue(e.target.value)}
       placeholder={`Search...`}
-      className="w-full boroder-none outline-none p-1 rounded text-gray-700"
+      className="boroder-none w-full rounded p-1 text-gray-700 outline-none"
     />
   );
 }

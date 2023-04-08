@@ -1,90 +1,90 @@
 export const categories: Category[] = [
   {
-    id: '11001',
-    name: 'Pizza',
+    id: "11001",
+    name: "Pizza",
     products: [],
-    extras: []
+    extras: [],
   },
   {
-    id: '11002',
-    name: 'Burger',
+    id: "11002",
+    name: "Burger",
     products: [],
-    extras: []
-  },
-
-  {
-    id: '11003',
-    name: 'Taco',
-    products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11004',
-    name: 'Sushi',
+    id: "11003",
+    name: "Taco",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11005',
-    name: 'Pasta',
+    id: "11004",
+    name: "Sushi",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11006',
-    name: 'Salad',
+    id: "11005",
+    name: "Pasta",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11007',
-    name: 'Sandwich',
+    id: "11006",
+    name: "Salad",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11008',
-    name: 'Soup',
+    id: "11007",
+    name: "Sandwich",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11009',
-    name: 'Steak',
+    id: "11008",
+    name: "Soup",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11010',
-    name: 'Seafood',
+    id: "11009",
+    name: "Steak",
     products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11011',
-    name: 'BBQ',
+    id: "11010",
+    name: "Seafood",
     products: [],
-    extras: []
-  },
-  {
-    id: '11012',
-    name: 'Dim Sum',
-    products: [],
-    extras: []
+    extras: [],
   },
 
   {
-    id: '11013',
-    name: 'Curry',
+    id: "11011",
+    name: "BBQ",
     products: [],
-    extras: []
-  }
-]
+    extras: [],
+  },
+  {
+    id: "11012",
+    name: "Dim Sum",
+    products: [],
+    extras: [],
+  },
+
+  {
+    id: "11013",
+    name: "Curry",
+    products: [],
+    extras: [],
+  },
+];

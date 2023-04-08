@@ -10,10 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
 type Props = {};
 
-const category=formatData()[0]
+const category = formatData()[0];
 
 const NewCategoryForm = (props: Props) => {
-
   const navigate = useNavigate();
   const {
     register,
@@ -23,7 +22,6 @@ const NewCategoryForm = (props: Props) => {
   } = useForm<NewCategorySchema>({
     mode: "onChange",
     resolver: zodResolver(newCategorySchema),
-
   });
 
   const createNewCategoryHandler: SubmitHandler<NewCategorySchema> = (data) => {
@@ -43,31 +41,31 @@ const NewCategoryForm = (props: Props) => {
         {...register("name")}
         error={errors.name?.message}
       />
-      
-        <Input
-          type="select"
-          isMulti={true}
-          half={false}
-          label="Category Products"
-          placeholder="ex: Pizza"
-          control={control}
-          id="products"
-          options={category.products}
-          error={errors.products?.message}
-        />
-        <Input
-          type="select"
-          isMulti={true}
-          half={false}
-          label="Category Extras"
-          placeholder="ex: Pizza"
-          id="extras"
-          control={control}
-          options={category.extraItems}
-          error={errors.extras?.message}
-        />
-      
-      <div className="flex gap-4 justify-end">
+
+      <Input
+        type="select"
+        isMulti={true}
+        half={false}
+        label="Category Products"
+        placeholder="ex: Pizza"
+        control={control}
+        id="products"
+        options={category.products}
+        error={errors.products?.message}
+      />
+      <Input
+        type="select"
+        isMulti={true}
+        half={false}
+        label="Category Extras"
+        placeholder="ex: Pizza"
+        id="extras"
+        control={control}
+        options={category.extraItems}
+        error={errors.extras?.message}
+      />
+
+      <div className="flex justify-end gap-4">
         <GenericButton
           classes="rounded font-semibold
               w-20
