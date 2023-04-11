@@ -3,7 +3,7 @@ import { ImInfo } from "react-icons/im";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { menu } from "../shared/utils/data";
 import FormInput from "../shared/components/Form/Input";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, get, useFieldArray } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import {
@@ -33,6 +33,7 @@ const Product = (props: Props) => {
   const addToCart = useShoppingCart((state) => state.addToCart);
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
+  const [itemPrice, setItemPrice] = useState<number>(0);
   const id = useParams().id!;
 
   const item = getProductById(id);
@@ -40,37 +41,63 @@ const Product = (props: Props) => {
     (category) => category.name === item?.category
   )?.extras;
 
+  const allSizes = item?.sizes.map((size) => {
+    return {
+      label: size.size,
+      value: size.price,
+    };
+  });
+
   const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: zodResolver(selectExtraItem),
+    defaultValues: {
+      size: { value: item?.sizes[0].price, label: item?.sizes[0].size },
+    },
   });
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "extras",
+  });
+
   const navigate = useNavigate();
   const addItemHandler: SubmitHandler<any> = (data) => {
     let extras: { name: string; values: OptionSelect[] }[] = [];
     for (const key in data) {
       extras.push({ name: key, values: data[key] });
     }
+
+    const productPrice = getValues("size").value;
     const newProduct = {
       id: uuidv4(),
       mainProduct: item!,
       quantity,
       extras,
-      totalPrice: item!.price + extraTotal,
+      totalPrice: +productPrice + extraTotal,
     };
     addToCart(newProduct);
     navigate("..");
   };
   useEffect(() => {
     let extrasTotal = 0;
+    let itemPrice = 0;
     for (const key in getValues()) {
+      if (key === "size") {
+        console.log(getValues());
+        // itemPrice = getValues("sizes")!.value as number;
+        continue;
+      }
       const extrasPricesArray = getValues(key)?.map(
-        (item) => item.value.split("-")[1]
+        (item) => (item.value as string).split("-")[1]
       );
       extrasPricesArray?.forEach((price) => {
         extrasTotal += parseFloat(price);
       });
     }
+    // console.log(getValues("sizes"));
+    setItemPrice(itemPrice);
     setExtraTotal(extrasTotal);
   }, [watch()]);
   return (
@@ -91,17 +118,35 @@ const Product = (props: Props) => {
             <AiOutlineClose className="cursor-pointer text-2xl" />
           </Link>
         </div>
-        <p className="">{item?.ingridients}</p>
-        <p className="text-xl font-bold">€ {item?.price.toFixed(2)}</p>
+        <p>{item?.ingridients}</p>
+        <p className="text-xl font-bold">€ {item?.sizes[0].price.toFixed(2)}</p>
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
           <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
+            {item?.sizes.length! > 1 && (
+              <div>
+                <h3 className="mt-2 font-medium">Sizes</h3>
+                <div>
+                  <FormInput
+                    type="select"
+                    name="size"
+                    id="size"
+                    half={false}
+                    label={""}
+                    error={undefined}
+                    options={allSizes}
+                    control={control}
+                  />
+                </div>
+              </div>
+            )}
+
             {CategoryExtras?.map((extra) => {
               return (
                 <div key={`${extra.id}`}>
                   <h3 className="mt-2 font-medium">{extra.name}</h3>
-                  <div className="">
+                  <div>
                     <FormInput
                       type="select"
                       name={`${extra.name}`}
@@ -151,8 +196,8 @@ const Product = (props: Props) => {
             >
               <span>
                 €{" "}
-                {item?.price
-                  ? ((item.price + extraTotal) * quantity).toFixed(2)
+                {itemPrice
+                  ? ((itemPrice + extraTotal) * quantity).toFixed(2)
                   : ""}
               </span>
             </button>

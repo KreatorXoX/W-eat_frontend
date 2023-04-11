@@ -52,9 +52,15 @@ export const registerValidationSchema = z
 
 export type RegisterValidationSchema = z.infer<typeof registerValidationSchema>;
 
-export const selectExtraItem = z.record(
-  z.object({ value: z.string(), label: z.string() }).array().optional()
-);
+const optionSelect = z.object({
+  value: z.string().or(z.number()),
+  label: z.string(),
+});
+
+export const selectExtraItem = z.object({
+  extras: z.array(optionSelect).optional(),
+  size: optionSelect,
+});
 
 export type SelectExtraItem = z.infer<typeof selectExtraItem>;
 
@@ -81,11 +87,6 @@ export const changePasswordSchema = z
   });
 
 export type ChangePasswordSchema = z.infer<typeof changePasswordSchema>;
-
-const optionSelect = z.object({
-  value: z.string(),
-  label: z.string(),
-});
 
 export const newCategorySchema = z.object({
   name: z.string().min(3).max(8),

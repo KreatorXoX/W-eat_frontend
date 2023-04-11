@@ -29,7 +29,9 @@ function MenuItem({ item }: Props) {
             {item?.description}
           </p>
         </div>
-        <p className="mt-4 font-semibold">€ {item?.price.toFixed(2)}</p>
+        <p className="mt-4 font-semibold">
+          € {item?.sizes[0].price.toFixed(2)}
+        </p>
       </div>
       <button
         className="rounded-full bg-gray-200 p-1 dark:bg-gray-500"

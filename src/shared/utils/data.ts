@@ -9,7 +9,7 @@ export const menu: Menu = [
         description:
           "Spaghetti pasta that is tossed in a creamy sauce made with eggs, Parmesan cheese, and crispy pancetta or bacon.",
         ingridients: "Eggs, Parmesan cheese, bacon, black pepper, garlic",
-        price: 11,
+        sizes: [{ size: "standard", price: 11 }],
         alergens: ["Eggs", "Cheese", "Pork"],
         category: "italian",
         tag: "popular",
@@ -21,7 +21,7 @@ export const menu: Menu = [
           "Spaghetti pasta that is tossed in a creamy sauce made with eggs, Parmesan cheese, and crispy pancetta, with the addition of German mustard.",
         ingridients:
           "Eggs, Parmesan cheese, bacon or pancetta, black pepper, garlic, German mustard",
-        price: 11,
+        sizes: [{ size: "standard", price: 11 }],
         alergens: ["Eggs", "Cheese", "Pork"],
         category: "italian",
       },
@@ -67,7 +67,10 @@ export const menu: Menu = [
         description:
           "Grilled chicken pieces that are served in a rich and creamy tomato-based curry sauce.",
         ingridients: "Tomatoes, onion, garlic, ginger",
-        price: 15,
+        sizes: [
+          { size: "standard", price: 11 },
+          { size: "medium", price: 14 },
+        ],
         alergens: ["Dairy", "Nuts"],
         category: "indian",
         tag: "popular",
@@ -115,7 +118,7 @@ export const menu: Menu = [
           "Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.",
         ingridients:
           "Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.",
-        price: 11,
+        sizes: [{ size: "standard", price: 11 }],
         alergens: ["Peanuts", "Shellfish", "Soy"],
         category: "tai",
       },
@@ -126,7 +129,7 @@ export const menu: Menu = [
           "Rice noodles that are stir-fried with shrimp, tofu, bean sprouts, scallions, and peanuts.",
         ingridients:
           "Shrimp, tofu, bean sprouts, scallions, peanuts, tamarind sauce, lime wedges.",
-        price: 11,
+        sizes: [{ size: "standard", price: 11 }],
         alergens: ["Peanuts", "Shellfish", "Soy"],
         category: "tai",
       },
@@ -173,7 +176,11 @@ export const menu: Menu = [
         description:
           "Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.",
         ingridients: "Red wine, onions, carrots, garlic, butter",
-        price: 8,
+        sizes: [
+          { size: "standard", price: 11 },
+          { size: "medium", price: 14 },
+          { size: "large", price: 16 },
+        ],
         alergens: ["Wheat", "Dairy"],
         category: "beef",
       },
@@ -183,7 +190,11 @@ export const menu: Menu = [
         description:
           "Beef chuck that is braised in red wine and beef broth with onions, carrots, and herbs such as thyme and bay leaves.",
         ingridients: "Red wine, onions, carrots, garlic, butter",
-        price: 8,
+        sizes: [
+          { size: "standard", price: 11 },
+          { size: "medium", price: 14 },
+          { size: "large", price: 16 },
+        ],
         alergens: ["Wheat", "Dairy"],
         category: "beef",
       },

@@ -10,12 +10,16 @@ type Extra = {
   extraItems: ExtraItem[];
 };
 
+type Price = {
+  size: string;
+  price: number;
+};
 type Item = {
   id: string;
   name: string;
   description: string;
   ingridients: string;
-  price: number;
+  sizes: Price[];
   alergens: string[];
   category: string;
   tag?: string;
@@ -30,7 +34,7 @@ type Category = {
 type Menu = Category[];
 
 type OptionSelect = {
-  value: string;
+  value: string | number;
   label: string;
 };
 
