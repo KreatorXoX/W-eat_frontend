@@ -22,10 +22,18 @@ const EditProduct = (props: Props) => {
   const replaceItem = useShoppingCart((state) => state.replaceItem);
 
   const [extraTotal, setExtraTotal] = useState<number>(0);
+  const [itemPrice, setItemPrice] = useState<number>(0);
 
   const id = useParams().id;
   const item = cartItems.find((item) => item.id === id);
-
+  const priceIdx = item?.mainProduct.sizes.findIndex(prod=>prod.size === item.size)
+  
+  const allSizes = item?.mainProduct.sizes.map((size) => {
+    return {
+      label: size.size,
+      value: size.price,
+    };
+  });
   const itemId = item?.mainProduct.id!;
 
   const orgCatExtras = menu.find(
@@ -33,35 +41,41 @@ const EditProduct = (props: Props) => {
   )?.extras;
 
   const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
-
+  
   const extrasObject = item?.extras.reduce((acc: any, extra) => {
     acc[extra.name] = extra.values;
     return acc;
-  }, {});
+  }, {}) ;
+  
 
   const { handleSubmit, control, watch, getValues } = useForm<CreateProductSchema>({
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: zodResolver(createProductSchema),
     defaultValues: {
-      ...extrasObject,
+      extras:extrasObject.extras,
+      size: { value: item?.mainProduct.sizes[priceIdx!].price, label: item?.mainProduct.sizes[priceIdx!].size }
     },
   });
 
   const navigate = useNavigate();
 
-  const addItemHandler: SubmitHandler<any> = (data) => {
+  const updateItemHandler: SubmitHandler<any> = (data) => {
     let extras: { name: string; values: OptionSelect[] }[] = [];
     for (const key in data) {
       extras.push({ name: key, values: data[key] });
     }
 
+
+    const productPrice = getValues("size").value;
+    console.log(productPrice)
     const updatedProduct = {
       id: item!.id,
       mainProduct: item?.mainProduct!,
       quantity,
       extras,
-      totalPrice: item!.mainProduct!.price + extraTotal,
+      size: getValues('size.label'),
+      totalPrice: +productPrice + extraTotal,
     };
 
     replaceItem(updatedProduct);
@@ -70,12 +84,33 @@ const EditProduct = (props: Props) => {
 
   useEffect(() => {
     let extrasTotal = 0;
+    
     for (const key in getValues()) {
-      const extrasPricesArray = getValues(key)?.map(
-        (item) => item.value.split("-")[1]
-      );
+
+      if (key === "size") {
+        setItemPrice(+getValues('size.value'))
+        continue;
+      }
+      let extrasPricesArray: number[] = []
+
+      const extras = getValues('extras')
+
+       
+      for (const extraKey in extras) {
+        
+        if (extras.hasOwnProperty(extraKey)) {
+          const extraArray = extras[extraKey]!;
+
+          for (const extra in extraArray) {
+            const price = parseFloat(extraArray[extra].value.split('-')[1])
+     
+     
+            extrasPricesArray.push(price);
+          }
+        }
+      }
       extrasPricesArray?.forEach((price) => {
-        extrasTotal += parseFloat(price);
+        extrasTotal += price;
       });
     }
     setExtraTotal(extrasTotal);
@@ -104,21 +139,43 @@ const EditProduct = (props: Props) => {
         </div>
         <p className="">{item?.mainProduct?.ingridients}</p>
         <p className="text-xl font-bold">
-          € {item?.mainProduct?.price.toFixed(2)}
+          € {itemPrice.toFixed(2)}
+          {/* {item?.mainProduct?.sizes[priceIdx!].price.toFixed(2)} */}
+          {/* might make it more simple */}
         </p>
       </div>
       <div className="h-full min-h-[30rem]">
-        <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
+        <form onSubmit={handleSubmit(updateItemHandler)} className="space-y-4">
           <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
-            {orgCatExtras?.map((extra, idx) => {
+                 <>
+            {item?.mainProduct.sizes.length! > 1 && (
+              <div>
+                <h3 className="mt-2 font-medium">Sizes</h3>
+                <div>
+                  <FormInput
+                    type="select"
+                    name="size"
+                    id="size"
+                    half={false}
+                    label={""}
+                    error={undefined}
+                    options={allSizes}
+                    control={control}
+                    isClearable={false}
+                  />
+                </div>
+              </div>
+              )}</>
+              <>
+            {orgCatExtras?.map((extra) => {
               return (
-                <div key={`${idx}`}>
+                <div key={`${extra.id}`}>
                   <h3 className="mt-2 font-medium">{extra.name}</h3>
                   <div className="">
                     <FormInput
                       type="select"
-                      name={`${extra.name}`}
-                      id={`${extra.name}`}
+                      name={`extras.${extra.name}`}
+                      id={`extras.${extra.name}`}
                       half={false}
                       label={""}
                       error={undefined}
@@ -130,7 +187,8 @@ const EditProduct = (props: Props) => {
                 </div>
               );
             })}
-          </div>
+            </>
+            </div>
 
           <div className="flex w-full gap-4 px-5">
             <div className="flex items-center gap-2">
@@ -163,8 +221,8 @@ const EditProduct = (props: Props) => {
             >
               <span>
                 €{" "}
-                {item?.mainProduct?.price
-                  ? ((item.mainProduct.price + extraTotal) * quantity).toFixed(
+                {itemPrice
+                  ? ((itemPrice + extraTotal)*quantity).toFixed(
                       2
                     )
                   : ""}

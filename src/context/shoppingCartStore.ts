@@ -1,23 +1,24 @@
-import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 export type CartItem = {
-  id: string;
-  mainProduct: Item;
-  extras: { name: string; values: OptionSelect[] }[];
-  quantity: number;
-  totalPrice: number;
-  notes?: string;
-};
+  id: string
+  mainProduct: Item
+  extras: { name: string; values: OptionSelect[] }[]
+  size: string
+  quantity: number
+  totalPrice: number
+  notes?: string
+}
 
 interface CartState {
-  cart: CartItem[];
-  addToCart: (cartItem: CartItem) => void;
-  removeFromCart: (id: string) => void;
-  replaceItem: (newItem: CartItem) => void;
-  getCartTotal: () => number;
-  clearCart: () => void;
-  addNote: (id: string, note: string) => void;
-  removeNote: (id: string) => void;
+  cart: CartItem[]
+  addToCart: (cartItem: CartItem) => void
+  removeFromCart: (id: string) => void
+  replaceItem: (newItem: CartItem) => void
+  getCartTotal: () => number
+  clearCart: () => void
+  addNote: (id: string, note: string) => void
+  removeNote: (id: string) => void
 }
 
 export const useShoppingCart = create<CartState>()(
@@ -25,94 +26,94 @@ export const useShoppingCart = create<CartState>()(
     (set, get) => ({
       cart: [],
       totalPrice: 0,
-      addToCart: (newCartItem) => {
+      addToCart: newCartItem => {
         const index = get().cart.findIndex(
-          (cartItem) => cartItem.id === newCartItem.id
-        );
+          cartItem => cartItem.id === newCartItem.id
+        )
         if (index !== -1) {
           // item already in cart, update the items quantity total price and extras
           // just in case they are changed.
-          const updatedCartItems = [...get().cart];
-          updatedCartItems[index].quantity += 1;
+          const updatedCartItems = [...get().cart]
+          updatedCartItems[index].quantity += 1
 
-          set({ cart: updatedCartItems });
+          set({ cart: updatedCartItems })
         } else {
           // item not in cart, add to cart
-          set((state) => ({ cart: [...state.cart, newCartItem] }));
+          set(state => ({ cart: [...state.cart, newCartItem] }))
         }
       },
 
-      removeFromCart: (id) => {
-        const index = get().cart.findIndex((cartItem) => cartItem.id === id);
+      removeFromCart: id => {
+        const index = get().cart.findIndex(cartItem => cartItem.id === id)
         if (index !== -1) {
           // item already in cart, update quantity
-          let updatedCartItems = [...get().cart];
-          const itemQuantity = updatedCartItems[index].quantity - 1;
+          let updatedCartItems = [...get().cart]
+          const itemQuantity = updatedCartItems[index].quantity - 1
 
           if (itemQuantity === 0) {
             updatedCartItems = updatedCartItems.filter(
-              (cartItem) => cartItem.id !== id
-            );
+              cartItem => cartItem.id !== id
+            )
           } else {
-            updatedCartItems[index].quantity = itemQuantity;
+            updatedCartItems[index].quantity = itemQuantity
             //  updatedCartItems[index].totalPrice -= updatedCartItems[index].totalPrice
           }
 
-          set({ cart: updatedCartItems });
+          set({ cart: updatedCartItems })
         }
       },
-      replaceItem: (newItem) => {
+      replaceItem: newItem => {
         const index = get().cart.findIndex(
-          (cartItem) => cartItem.id === newItem.id
-        );
+          cartItem => cartItem.id === newItem.id
+        )
 
-        if (index === -1) return;
+        if (index === -1) return
 
         // get the notes if there are any
-        const updatedCartItems = [...get().cart];
-        const notes = updatedCartItems[index].notes;
+        const updatedCartItems = [...get().cart]
+        const notes = updatedCartItems[index].notes
 
-        if (notes) newItem.notes = notes;
+        if (notes) newItem.notes = notes
 
-        updatedCartItems[index] = newItem;
+        updatedCartItems[index] = newItem
 
-        set({ cart: updatedCartItems });
+        set({ cart: updatedCartItems })
       },
       getCartTotal: () => {
         // get the cartTotal
         const cartTotal = get().cart.reduce(
           (total, cartItem) => total + cartItem.totalPrice * cartItem.quantity,
           0
-        );
-        return cartTotal;
+        )
+        return cartTotal
       },
 
       clearCart: () => {
-        set({ cart: [] });
+        set({ cart: [] })
       },
       addNote: (id, note) => {
-        const index = get().cart.findIndex((cartItem) => cartItem.id === id);
+        const index = get().cart.findIndex(cartItem => cartItem.id === id)
         if (index !== -1) {
-          let updatedCartItems = [...get().cart];
+          let updatedCartItems = [...get().cart]
 
-          updatedCartItems[index].notes = note;
+          updatedCartItems[index].notes = note
 
-          console.log(updatedCartItems[index]);
+          console.log(updatedCartItems[index])
 
-          set({ cart: updatedCartItems });
+          set({ cart: updatedCartItems })
         }
       },
-      removeNote: (id) => {
-        const index = get().cart.findIndex((cartItem) => cartItem.id === id);
+      removeNote: id => {
+        const index = get().cart.findIndex(cartItem => cartItem.id === id)
         if (index !== -1) {
-          let updatedCartItems = [...get().cart];
+          let updatedCartItems = [...get().cart]
 
-          updatedCartItems[index].notes = undefined;
+          updatedCartItems[index].notes = undefined
 
-          set({ cart: updatedCartItems });
+          set({ cart: updatedCartItems })
         }
-      },
+      }
     }),
-    { name: "cart-storage", storage: createJSONStorage(() => sessionStorage) }
+    { name: 'cart-storage', storage: createJSONStorage(() => sessionStorage) }
   )
-);
+)

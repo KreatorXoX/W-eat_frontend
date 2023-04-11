@@ -61,6 +61,7 @@ const Product = (props: Props) => {
   const addItemHandler: SubmitHandler<any> = (data) => {
     let extras: { name: string; values: OptionSelect[] }[] = [];
     for (const key in data) {
+      if(key === 'size') continue;
       extras.push({ name: key, values: data[key] });
     }
 
@@ -68,6 +69,7 @@ const Product = (props: Props) => {
     const newProduct = {
       id: uuidv4(),
       mainProduct: item!,
+      size:getValues('size.label'),
       quantity,
       extras,
       totalPrice: +productPrice + extraTotal,
@@ -77,11 +79,10 @@ const Product = (props: Props) => {
   };
   useEffect(() => {
     let extrasTotal = 0;
-    let itemPrice = 0;
+   
     for (const key in getValues()) {
       
-      if (key === "size") {
-        // itemPrice = getValues("sizes")!.value as number;
+      if (key === "size") {   
         continue;
       }
       let extrasPricesArray:number[] = []
