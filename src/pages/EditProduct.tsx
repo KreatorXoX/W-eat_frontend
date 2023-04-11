@@ -6,8 +6,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import {
-  selectExtraItem,
-  SelectExtraItem,
+  createProductSchema,
+  CreateProductSchema,
 } from "../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatExtras } from "../shared/utils/getExtrasOptions";
@@ -39,10 +39,10 @@ const EditProduct = (props: Props) => {
     return acc;
   }, {});
 
-  const { handleSubmit, control, watch, getValues } = useForm<SelectExtraItem>({
+  const { handleSubmit, control, watch, getValues } = useForm<CreateProductSchema>({
     mode: "onChange",
     reValidateMode: "onChange",
-    resolver: zodResolver(selectExtraItem),
+    resolver: zodResolver(createProductSchema),
     defaultValues: {
       ...extrasObject,
     },
