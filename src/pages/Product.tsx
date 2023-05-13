@@ -33,7 +33,7 @@ const Product = (props: Props) => {
   const addToCart = useShoppingCart((state) => state.addToCart);
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
-  
+
   const id = useParams().id!;
 
   const item = getProductById(id);
@@ -48,62 +48,79 @@ const Product = (props: Props) => {
     };
   });
 
-  const { handleSubmit, control, watch, getValues } = useForm<CreateProductSchema>({
-    mode: "onChange",
-    reValidateMode: "onChange",
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
-      size: { value: item?.sizes[0].price, label: item?.sizes[0].size },
-    },
-  });
+  const { handleSubmit, control, watch, getValues } =
+    useForm<CreateProductSchema>({
+      mode: "onChange",
+      reValidateMode: "onChange",
+      resolver: zodResolver(createProductSchema),
+      defaultValues: {
+        extras: undefined,
+        size: { value: item?.sizes[0].price, label: item?.sizes[0].size },
+      },
+    });
 
   const navigate = useNavigate();
-  const addItemHandler: SubmitHandler<any> = (data) => {
-    let extras: { name: string; values: OptionSelect[] }[] = [];
-    for (const key in data) {
-      if(key === 'size') continue;
-      extras.push({ name: key, values: data[key] });
-    }
+  const addItemHandler: SubmitHandler<CreateProductSchema> = (data) => {
+    let extras: { name: string; values: OptionSelect[] | undefined }[] = [];
 
+    for (const key in data) {
+      console.log("data is :", data);
+      console.log("key is :", key);
+      if (key === "size") continue;
+
+      if (key === "extras") {
+        const extrasObject = data[key];
+        for (let extraName in extrasObject) {
+          console.log("forloop item", extrasObject[extraName]);
+          extras!.push({ name: extraName, values: extrasObject[extraName] });
+        }
+      }
+    }
+    console.log(extras);
     const productPrice = getValues("size").value;
     const newProduct = {
       id: uuidv4(),
       mainProduct: item!,
-      size:getValues('size.label'),
+      size: getValues("size.label"),
       quantity,
-      extras,
+      extras: extras!.map((extra) => {
+        return {
+          name: extra.name,
+          values: extra.values,
+        };
+      }),
       totalPrice: +productPrice + extraTotal,
     };
+    console.log("new createdProduct is ", newProduct);
     addToCart(newProduct);
     navigate("..");
   };
   useEffect(() => {
     let extrasTotal = 0;
-   
+
     for (const key in getValues()) {
-      
-      if (key === "size") {   
+      if (key === "size") {
         continue;
       }
-      let extrasPricesArray:number[] = []
+      let extrasPricesArray: number[] = [];
 
-      const extras = getValues('extras')
-      
+      const extras = getValues("extras");
+
       for (const extraKey in extras) {
         if (extras.hasOwnProperty(extraKey)) {
           const extraArray = extras[extraKey]!;
-          
+
           for (const extra in extraArray) {
-            const price = parseFloat(extraArray[extra].value.split('-')[1])
+            const price = parseFloat(extraArray[extra].value.split("-")[1]);
             extrasPricesArray.push(price);
           }
         }
       }
       extrasPricesArray?.forEach((price) => {
         extrasTotal += price;
-      });      
+      });
     }
-    
+
     setExtraTotal(extrasTotal);
   }, [watch()]);
   return (
@@ -130,54 +147,50 @@ const Product = (props: Props) => {
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
           <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
-          <>
-            {item?.sizes.length! > 1 && (
-              <div>
-                <h3 className="mt-2 font-medium">Sizes</h3>
+            <>
+              {item?.sizes.length! > 1 && (
                 <div>
-                  <FormInput
-                    type="select"
-                    name="size"
-                    id="size"
-                    half={false}
-                    label={""}
-                    error={undefined}
-                    options={allSizes}
-                    control={control}
-                    isClearable={false}
-                  />
+                  <h3 className="mt-2 font-medium">Sizes</h3>
+                  <div>
+                    <FormInput
+                      type="select"
+                      name="size"
+                      id="size"
+                      half={false}
+                      label={""}
+                      error={undefined}
+                      options={allSizes}
+                      control={control}
+                      isClearable={false}
+                    />
+                  </div>
                 </div>
-              </div>
-              )}</>
-              <>
-            
-             
-                { CategoryExtras?.map((extra) => {
-                  return (
-                    <div key={`${extra.id}`}>
-                      <h3 className="mt-2 font-medium">{extra.name}</h3>
-                      <div>
-                        <FormInput
-                          type="select"
-                          name={`extras.${extra.name}`}
-                          id={`extras.${extra.name}`}
-                          half={false}
-                          label={""}
-                          error={undefined}
-                          options={formatExtras(CategoryExtras!).get(
-                            `${extra.name}`
-                          )}
-                          control={control}
-                          isMulti={true}
-                        />
-                      </div>
-                    </div>
-                  )
-                })}
-             
-            
+              )}
             </>
-            
+            <>
+              {CategoryExtras?.map((extra) => {
+                return (
+                  <div key={`${extra.id}`}>
+                    <h3 className="mt-2 font-medium">{extra.name}</h3>
+                    <div>
+                      <FormInput
+                        type="select"
+                        name={`extras.${extra.name}`}
+                        id={`extras.${extra.name}`}
+                        half={false}
+                        label={""}
+                        error={undefined}
+                        options={formatExtras(CategoryExtras!).get(
+                          `${extra.name}`
+                        )}
+                        control={control}
+                        isMulti={true}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </>
           </div>
           <div className="flex w-full gap-4 px-5">
             <div className="flex items-center gap-2">
@@ -210,8 +223,11 @@ const Product = (props: Props) => {
             >
               <span>
                 €{" "}
-                {getValues('size.value') 
-                  ? ((+getValues('size.value') + extraTotal) * quantity).toFixed(2)
+                {getValues("size.value")
+                  ? (
+                      (+getValues("size.value") + extraTotal) *
+                      quantity
+                    ).toFixed(2)
                   : ""}
               </span>
             </button>

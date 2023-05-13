@@ -57,3 +57,12 @@ type Customer = {
   email: string;
   status: "verified" | "pending" | "suspended";
 };
+type CartItem = {
+  id: string;
+  mainProduct: Item;
+  extras?: { name: string; values: OptionSelect[] | undefined }[];
+  size: string;
+  quantity: number;
+  totalPrice: number;
+  notes?: string;
+};

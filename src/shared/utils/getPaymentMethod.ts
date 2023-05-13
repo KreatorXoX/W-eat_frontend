@@ -1,7 +1,7 @@
 export function getPaymentMethods() {
   const options = [
-    { value: "cash", label: "Cash" },
-    { value: "creditCard", label: "Credit Card" },
+    { value: "pay at door", label: "Cash" },
+    { value: "card", label: "Credit Card" },
   ];
   return options;
 }

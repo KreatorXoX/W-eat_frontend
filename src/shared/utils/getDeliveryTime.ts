@@ -60,7 +60,6 @@ const useDeliveryTimes = (
   openingTime?: string
 ): GetTimeReturnType => {
   const [deliveryTimes, setDeliveryTimes] = useState<OptionSelect[]>([]);
-  const [initialHour, setInitialHour] = useState("");
 
   useEffect(() => {
     let hours = [];
@@ -83,11 +82,6 @@ const useDeliveryTimes = (
     }
 
     let hourValue = "";
-    setInitialHour(
-      `${hour}:${
-        date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-      }`
-    );
 
     while (hour < closingHour) {
       if (minute === 60) {
@@ -100,12 +94,12 @@ const useDeliveryTimes = (
     }
 
     setDeliveryTimes([
-      { value: initialHour, label: "As soon as possible" },
+      { value: "asap", label: "As soon as possible" },
       ...hours,
     ]);
   }, [closingTime, openingTime, date]);
 
-  return { deliveryTimes, initialHour };
+  return { deliveryTimes, initialHour: "asap" };
 };
 
 export default useDeliveryTimes;

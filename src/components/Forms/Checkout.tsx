@@ -1,3 +1,4 @@
+import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
@@ -5,7 +6,7 @@ import Input from "../../shared/components/Form/Input";
 import useDeliveryTimes from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
-import { BsCheck2Circle, BsXCircle, BsXSquare } from "react-icons/bs";
+import { BsCheck2Circle, BsClockHistory, BsXCircle } from "react-icons/bs";
 import { useShoppingCart } from "../../context/shoppingCartStore";
 import {
   OrderValidationSchema,
@@ -13,12 +14,26 @@ import {
 } from "../../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+
 type Props = {};
 
 Modal.setAppElement("#root");
 
 const newDate = new Date();
 const Checkout = (props: Props) => {
+  const { mutate: checkout, data: response } = useMutation({
+    mutationFn: (order: any) => {
+      return axios.post("http://localhost:1337/api/orders", order);
+    },
+  });
+  const { mutate: stripeCheckout } = useMutation({
+    mutationFn: (order: any) => {
+      return axios.post("http://localhost:1337/api/orders/checkout", order);
+    },
+  });
+
   const { initialHour, deliveryTimes } = useDeliveryTimes(
     "23:00",
     newDate,
@@ -69,9 +84,59 @@ const Checkout = (props: Props) => {
     setPaymentModal(false);
   };
 
-  const checkoutHandler: SubmitHandler<OrderValidationSchema> = (data) => {
-    console.log(data);
-    console.log(cartItems);
+  const checkoutHandler: SubmitHandler<OrderValidationSchema> = async (
+    data
+  ) => {
+    const address = [
+      data.city,
+      data.houseNumber,
+      data.street,
+      data.postCode,
+    ].join(",");
+
+    const newOrder = {
+      orderItems: cartItems.map((item) => {
+        console.log("new order item : ", item);
+
+        return {
+          product: item.mainProduct.id,
+          extras:
+            item.extras &&
+            item.extras
+              .map((extra) =>
+                extra.values!.length > 0
+                  ? extra.values!.map((extra) => extra.value)
+                  : extra.values
+              )
+              .flat(),
+          size: item.size,
+          quantity: item.quantity,
+          note: item.notes,
+        };
+      }),
+      user: "userId",
+      fullName: data.fullname,
+      email: data.email,
+      address: address,
+      placeOrderTime: data.deliveryTime,
+      paymentMethod: data.paymentMethod.value,
+    };
+
+    const paymentMethod = getValues().paymentMethod.value || null;
+    console.log("payment method is ", paymentMethod);
+    if (!paymentMethod || paymentMethod === "pay at door") {
+      checkout(data);
+      return;
+    }
+
+    try {
+      const stripePromise = loadStripe(import.meta.env.VITE_SOME_KEY as string);
+      const stripe = await stripePromise;
+      stripeCheckout(data);
+      await stripe?.redirectToCheckout(response?.data.stripeSession.id);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
