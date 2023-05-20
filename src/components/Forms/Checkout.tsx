@@ -20,15 +20,15 @@ import axios from "axios";
 type Props = {};
 
 Modal.setAppElement("#root");
-
 const newDate = new Date();
+
 const Checkout = (props: Props) => {
-  const { mutate: checkout, data: response } = useMutation({
+  const { mutateAsync: placeOrder, data: orderApiResponse } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders", order);
     },
   });
-  const { mutate: stripeCheckout } = useMutation({
+  const { mutateAsync: payOrder, data: orderStripeResponse } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders/checkout", order);
     },
@@ -55,7 +55,7 @@ const Checkout = (props: Props) => {
         label: "As soon as possible",
       },
       paymentMethod: {
-        value: "cash",
+        value: "pay at door",
         label: "Cash",
       },
     },
@@ -105,8 +105,8 @@ const Checkout = (props: Props) => {
             item.extras
               .map((extra) =>
                 extra.values!.length > 0
-                  ? extra.values!.map((extra) => extra.value)
-                  : extra.values
+                  ? (extra.values!.map((extra) => extra.value) as string[])
+                  : undefined
               )
               .flat(),
           size: item.size,
@@ -118,26 +118,59 @@ const Checkout = (props: Props) => {
       fullName: data.fullname,
       email: data.email,
       address: address,
-      placeOrderTime: data.deliveryTime,
+      phoneNumber: data.phoneNumber,
+      placeOrderTime: data.deliveryTime.value,
       paymentMethod: data.paymentMethod.value,
     };
 
     const paymentMethod = getValues().paymentMethod.value || null;
     console.log("payment method is ", paymentMethod);
     if (!paymentMethod || paymentMethod === "pay at door") {
-      checkout(data);
+      placeOrder(newOrder);
       return;
     }
 
     try {
-      const stripePromise = loadStripe(import.meta.env.VITE_SOME_KEY as string);
+      const dummyOrderForStripe = {
+        orderItems: [
+          {
+            product: "6457bccd5f9fc5531d4dc1e7",
+            extras: [
+              "64510167c5d5e0d5f17df934",
+              "645101bec5d5e0d5f17df936",
+              "645103b1b9da791b582087ef",
+            ],
+            quantity: 2,
+            size: "medium",
+          },
+          {
+            product: "6457c06ef8e63890e289ec80",
+            extras: ["645101bec5d5e0d5f17df936"],
+            quantity: 1,
+            size: "large",
+          },
+        ],
+        user: "6457bf7ecd929252ce16d4f9",
+        fullName: "taaas",
+        email: "tas@ast.co",
+        address: "tasd ,tass ,tdd ,tz",
+        phoneNumber: "32131422323",
+        placeOrderTime: "asap",
+        paymentMethod: "pay at door",
+      };
+      const stripePromise = loadStripe(
+        import.meta.env.VITE_STRIPE_PUBLIC_KEY as string
+      );
+
       const stripe = await stripePromise;
-      stripeCheckout(data);
-      await stripe?.redirectToCheckout(response?.data.stripeSession.id);
+      await payOrder(dummyOrderForStripe);
+      console.log(orderStripeResponse?.data.stripeSession.id);
+      await stripe?.redirectToCheckout(orderApiResponse?.data.stripeSession.id);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <>
       <form

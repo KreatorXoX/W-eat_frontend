@@ -64,19 +64,15 @@ const Product = (props: Props) => {
     let extras: { name: string; values: OptionSelect[] | undefined }[] = [];
 
     for (const key in data) {
-      console.log("data is :", data);
-      console.log("key is :", key);
       if (key === "size") continue;
 
       if (key === "extras") {
         const extrasObject = data[key];
         for (let extraName in extrasObject) {
-          console.log("forloop item", extrasObject[extraName]);
           extras!.push({ name: extraName, values: extrasObject[extraName] });
         }
       }
     }
-    console.log(extras);
     const productPrice = getValues("size").value;
     const newProduct = {
       id: uuidv4(),
@@ -91,7 +87,7 @@ const Product = (props: Props) => {
       }),
       totalPrice: +productPrice + extraTotal,
     };
-    console.log("new createdProduct is ", newProduct);
+
     addToCart(newProduct);
     navigate("..");
   };

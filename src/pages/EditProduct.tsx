@@ -26,8 +26,10 @@ const EditProduct = (props: Props) => {
 
   const id = useParams().id;
   const item = cartItems.find((item) => item.id === id);
-  const priceIdx = item?.mainProduct.sizes.findIndex(prod=>prod.size === item.size)
-  
+  const priceIdx = item?.mainProduct.sizes.findIndex(
+    (prod) => prod.size === item.size
+  );
+
   const allSizes = item?.mainProduct.sizes.map((size) => {
     return {
       label: size.size,
@@ -41,40 +43,55 @@ const EditProduct = (props: Props) => {
   )?.extras;
 
   const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
-  
-  const extrasObject = item?.extras.reduce((acc: any, extra) => {
+
+  const extrasObject = item?.extras?.reduce((acc: any, extra) => {
     acc[extra.name] = extra.values;
     return acc;
-  }, {}) ;
-  
+  }, {});
 
-  const { handleSubmit, control, watch, getValues } = useForm<CreateProductSchema>({
-    mode: "onChange",
-    reValidateMode: "onChange",
-    resolver: zodResolver(createProductSchema),
-    defaultValues: {
-      extras:extrasObject.extras,
-      size: { value: item?.mainProduct.sizes[priceIdx!].price, label: item?.mainProduct.sizes[priceIdx!].size }
-    },
-  });
+  const { handleSubmit, control, watch, getValues } =
+    useForm<CreateProductSchema>({
+      mode: "onChange",
+      reValidateMode: "onChange",
+      resolver: zodResolver(createProductSchema),
+      defaultValues: {
+        extras: extrasObject,
+
+        size: {
+          value: item?.mainProduct.sizes[priceIdx!].price,
+          label: item?.mainProduct.sizes[priceIdx!].size,
+        },
+      },
+    });
 
   const navigate = useNavigate();
 
   const updateItemHandler: SubmitHandler<any> = (data) => {
-    let extras: { name: string; values: OptionSelect[] }[] = [];
+    let extras: { name: string; values: OptionSelect[] | undefined }[] = [];
+
     for (const key in data) {
-      extras.push({ name: key, values: data[key] });
+      if (key === "size") continue;
+
+      if (key === "extras") {
+        const extrasObject = data[key];
+        for (let extraName in extrasObject) {
+          extras!.push({ name: extraName, values: extrasObject[extraName] });
+        }
+      }
     }
-
-
     const productPrice = getValues("size").value;
-    console.log(productPrice)
+
     const updatedProduct = {
       id: item!.id,
       mainProduct: item?.mainProduct!,
       quantity,
-      extras,
-      size: getValues('size.label'),
+      extras: extras!.map((extra) => {
+        return {
+          name: extra.name,
+          values: extra.values,
+        };
+      }),
+      size: getValues("size.label"),
       totalPrice: +productPrice + extraTotal,
     };
 
@@ -84,27 +101,23 @@ const EditProduct = (props: Props) => {
 
   useEffect(() => {
     let extrasTotal = 0;
-    
-    for (const key in getValues()) {
 
+    for (const key in getValues()) {
       if (key === "size") {
-        setItemPrice(+getValues('size.value'))
+        setItemPrice(+getValues("size.value"));
         continue;
       }
-      let extrasPricesArray: number[] = []
+      let extrasPricesArray: number[] = [];
 
-      const extras = getValues('extras')
+      const extras = getValues("extras");
 
-       
       for (const extraKey in extras) {
-        
         if (extras.hasOwnProperty(extraKey)) {
           const extraArray = extras[extraKey]!;
 
           for (const extra in extraArray) {
-            const price = parseFloat(extraArray[extra].value.split('-')[1])
-     
-     
+            const price = parseFloat(extraArray[extra].value?.split("-")[1]);
+
             extrasPricesArray.push(price);
           }
         }
@@ -147,48 +160,51 @@ const EditProduct = (props: Props) => {
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(updateItemHandler)} className="space-y-4">
           <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
-                 <>
-            {item?.mainProduct.sizes.length! > 1 && (
-              <div>
-                <h3 className="mt-2 font-medium">Sizes</h3>
+            <>
+              {item?.mainProduct.sizes.length! > 1 && (
                 <div>
-                  <FormInput
-                    type="select"
-                    name="size"
-                    id="size"
-                    half={false}
-                    label={""}
-                    error={undefined}
-                    options={allSizes}
-                    control={control}
-                    isClearable={false}
-                  />
-                </div>
-              </div>
-              )}</>
-              <>
-            {orgCatExtras?.map((extra) => {
-              return (
-                <div key={`${extra.id}`}>
-                  <h3 className="mt-2 font-medium">{extra.name}</h3>
-                  <div className="">
+                  <h3 className="mt-2 font-medium">Sizes</h3>
+                  <div>
                     <FormInput
                       type="select"
-                      name={`extras.${extra.name}`}
-                      id={`extras.${extra.name}`}
+                      name="size"
+                      id="size"
                       half={false}
                       label={""}
                       error={undefined}
-                      options={formatExtras(orgCatExtras!).get(`${extra.name}`)}
+                      options={allSizes}
                       control={control}
-                      isMulti={true}
+                      isClearable={false}
                     />
                   </div>
                 </div>
-              );
-            })}
+              )}
             </>
-            </div>
+            <>
+              {orgCatExtras?.map((extra) => {
+                return (
+                  <div key={`${extra.id}`}>
+                    <h3 className="mt-2 font-medium">{extra.name}</h3>
+                    <div className="">
+                      <FormInput
+                        type="select"
+                        name={`extras.${extra.name}`}
+                        id={`extras.${extra.name}`}
+                        half={false}
+                        label={""}
+                        error={undefined}
+                        options={formatExtras(orgCatExtras!).get(
+                          `${extra.name}`
+                        )}
+                        control={control}
+                        isMulti={true}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </>
+          </div>
 
           <div className="flex w-full gap-4 px-5">
             <div className="flex items-center gap-2">
@@ -222,9 +238,7 @@ const EditProduct = (props: Props) => {
               <span>
                 €{" "}
                 {itemPrice
-                  ? ((itemPrice + extraTotal)*quantity).toFixed(
-                      2
-                    )
+                  ? ((itemPrice + extraTotal) * quantity).toFixed(2)
                   : ""}
               </span>
             </button>
