@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useStripeStore } from "../../context/stripeStore";
 
 type Props = {};
 
@@ -22,6 +23,8 @@ Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
+  const setSession = useStripeStore((state) => state.setSession);
+  const setOrder = useStripeStore((state) => state.setOrder);
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
   const cartItems = useShoppingCart((state) => state.cart);
@@ -29,18 +32,19 @@ const Checkout = (props: Props) => {
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
 
-  const { mutateAsync: placeOrder, data: orderApiResponse } = useMutation({
+  const { mutateAsync: placeOrder } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders", order);
     },
   });
-  const { mutateAsync: payOrder, data: orderStripeResponse } = useMutation({
+  const { mutateAsync: payOrder } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders/checkout", order);
     },
     onSuccess: (response) => {
       const url = response.data.url;
-      console.log(orderStripeResponse);
+      const sessionId = response.data.sessionId;
+      setSession(sessionId);
       window.location.href = url;
     },
     onError: () => {
@@ -166,7 +170,7 @@ const Checkout = (props: Props) => {
         placeOrderTime: "asap",
         paymentMethod: "pay at door",
       };
-
+      setOrder(dummyOrderForStripe);
       await payOrder(dummyOrderForStripe);
     } catch (error) {
       console.log(error);
