@@ -46,6 +46,7 @@ import EditExtraProduct from "./admin/pages/Menu/ExtraProduct/EditExtraProduct";
 import Restaurant from "./admin/pages/Settings/Restaurant";
 import EditRestaurant from "./admin/pages/Settings/EditRestaurant";
 import NewRestaurant from "./admin/pages/Settings/NewRestaurant";
+import Payment from "./pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -132,6 +133,11 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/payment",
+    element: <ModalLayout />,
+    children: [{ index: true, element: <Payment /> }],
   },
   {
     element: <AdminRoute />,

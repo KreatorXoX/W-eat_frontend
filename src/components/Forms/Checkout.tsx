@@ -1,4 +1,3 @@
-import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
@@ -6,7 +5,7 @@ import Input from "../../shared/components/Form/Input";
 import useDeliveryTimes from "../../shared/utils/getDeliveryTime";
 import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
-import { BsCheck2Circle, BsClockHistory, BsXCircle } from "react-icons/bs";
+import { BsCheck2Circle, BsXCircle } from "react-icons/bs";
 import { useShoppingCart } from "../../context/shoppingCartStore";
 import {
   OrderValidationSchema,
@@ -23,6 +22,13 @@ Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
+  const getCartTotal = useShoppingCart((state) => state.getCartTotal);
+
+  const cartItems = useShoppingCart((state) => state.cart);
+  const dark = useTheme().dark;
+  const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
+  const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
+
   const { mutateAsync: placeOrder, data: orderApiResponse } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders", order);
@@ -31,6 +37,14 @@ const Checkout = (props: Props) => {
   const { mutateAsync: payOrder, data: orderStripeResponse } = useMutation({
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders/checkout", order);
+    },
+    onSuccess: (response) => {
+      const url = response.data.url;
+      console.log(orderStripeResponse);
+      window.location.href = url;
+    },
+    onError: () => {
+      console.log("error occured in stripe payment");
     },
   });
 
@@ -60,12 +74,6 @@ const Checkout = (props: Props) => {
       },
     },
   });
-
-  const getCartTotal = useShoppingCart((state) => state.getCartTotal);
-  const cartItems = useShoppingCart((state) => state.cart);
-  const dark = useTheme().dark;
-  const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
-  const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
 
   const openDeliveryModal = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -158,14 +166,8 @@ const Checkout = (props: Props) => {
         placeOrderTime: "asap",
         paymentMethod: "pay at door",
       };
-      const stripePromise = loadStripe(
-        import.meta.env.VITE_STRIPE_PUBLIC_KEY as string
-      );
 
-      const stripe = await stripePromise;
       await payOrder(dummyOrderForStripe);
-      console.log(orderStripeResponse?.data.stripeSession.id);
-      await stripe?.redirectToCheckout(orderApiResponse?.data.stripeSession.id);
     } catch (error) {
       console.log(error);
     }
