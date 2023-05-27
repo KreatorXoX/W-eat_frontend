@@ -3,9 +3,10 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface StripeState {
   sessionId: string | null;
-  order: any;
-  setSession: (id: string) => void;
-  setOrder: (order: any) => void;
+  orderId: string;
+
+  setSession: (sessionId: string | null, orderId: string) => void;
+
   clearSession: () => void;
 }
 
@@ -13,14 +14,13 @@ export const useStripeStore = create<StripeState>()(
   persist(
     (set) => ({
       sessionId: null,
-      order: null,
-      setSession: (id) => {
-        set({ sessionId: id });
+      orderId: "",
+
+      setSession: (sId, oId) => {
+        set({ sessionId: sId, orderId: oId });
       },
-      setOrder: (newOrder) => {
-        set({ order: newOrder });
-      },
-      clearSession: () => set({ sessionId: null, order: null }),
+
+      clearSession: () => set({ sessionId: null, orderId: "" }),
     }),
     {
       name: "session-storage",

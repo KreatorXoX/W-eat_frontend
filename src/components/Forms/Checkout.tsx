@@ -24,7 +24,7 @@ const newDate = new Date();
 
 const Checkout = (props: Props) => {
   const setSession = useStripeStore((state) => state.setSession);
-  const setOrder = useStripeStore((state) => state.setOrder);
+
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
   const cartItems = useShoppingCart((state) => state.cart);
@@ -36,6 +36,10 @@ const Checkout = (props: Props) => {
     mutationFn: (order: any) => {
       return axios.post("http://localhost:1337/api/orders", order);
     },
+    onSuccess: (response) => {
+      const orderId = response.data.orderId;
+      setSession(null, orderId);
+    },
   });
   const { mutateAsync: payOrder } = useMutation({
     mutationFn: (order: any) => {
@@ -44,7 +48,8 @@ const Checkout = (props: Props) => {
     onSuccess: (response) => {
       const url = response.data.url;
       const sessionId = response.data.sessionId;
-      setSession(sessionId);
+      const orderId = response.data.orderId;
+      setSession(sessionId, orderId);
       window.location.href = url;
     },
     onError: () => {
@@ -108,8 +113,6 @@ const Checkout = (props: Props) => {
 
     const newOrder = {
       orderItems: cartItems.map((item) => {
-        console.log("new order item : ", item);
-
         return {
           product: item.mainProduct.id,
           extras:
@@ -170,7 +173,6 @@ const Checkout = (props: Props) => {
         placeOrderTime: "asap",
         paymentMethod: "pay at door",
       };
-      setOrder(dummyOrderForStripe);
       await payOrder(dummyOrderForStripe);
     } catch (error) {
       console.log(error);
