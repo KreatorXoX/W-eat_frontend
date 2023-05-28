@@ -15,7 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useStripeStore } from "../../context/stripeStore";
+import { useCheckoutStore } from "../../context/checkoutStore";
 
 type Props = {};
 
@@ -23,7 +23,7 @@ Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
-  const setSession = useStripeStore((state) => state.setSession);
+  const setOrderId = useCheckoutStore((state) => state.setOrderId);
 
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
 
@@ -37,23 +37,11 @@ const Checkout = (props: Props) => {
       return axios.post("http://localhost:1337/api/orders", order);
     },
     onSuccess: (response) => {
-      const orderId = response.data.orderId;
-      setSession(null, orderId);
-    },
-  });
-  const { mutateAsync: payOrder } = useMutation({
-    mutationFn: (order: any) => {
-      return axios.post("http://localhost:1337/api/orders/checkout", order);
-    },
-    onSuccess: (response) => {
-      const url = response.data.url;
-      const sessionId = response.data.sessionId;
-      const orderId = response.data.orderId;
-      setSession(sessionId, orderId);
+      const orderId = response.data?.orderId;
+      const url = response.data?.url;
+
+      setOrderId(orderId);
       window.location.href = url;
-    },
-    onError: () => {
-      console.log("error occured in stripe payment");
     },
   });
 
@@ -138,12 +126,7 @@ const Checkout = (props: Props) => {
       paymentMethod: data.paymentMethod.value,
     };
 
-    const paymentMethod = getValues().paymentMethod.value || null;
-    console.log("payment method is ", paymentMethod);
-    if (!paymentMethod || paymentMethod === "pay at door") {
-      placeOrder(newOrder);
-      return;
-    }
+    console.log("Order placed is : ", newOrder);
 
     try {
       const dummyOrderForStripe = {
@@ -173,7 +156,7 @@ const Checkout = (props: Props) => {
         placeOrderTime: "asap",
         paymentMethod: "pay at door",
       };
-      await payOrder(dummyOrderForStripe);
+      await placeOrder(dummyOrderForStripe);
     } catch (error) {
       console.log(error);
     }
