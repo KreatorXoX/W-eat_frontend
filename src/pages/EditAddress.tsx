@@ -32,7 +32,10 @@ const EditAddress = (props: Props) => {
   return (
     <>
       <div className="mt-5 flex items-center gap-10 px-5 pl-5 text-gray-800 dark:text-slate-200 lg:mt-0">
-        <Link to=".." className="text-3xl font-light text-orange-600">
+        <Link
+          to="/account/addresses"
+          className="text-3xl font-light text-orange-600"
+        >
           <RiArrowGoBackLine />
         </Link>
         <h2 className="text-xl font-semibold">Update Address</h2>

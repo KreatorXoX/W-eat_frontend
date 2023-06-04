@@ -1,11 +1,18 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { BiHome, BiPowerOff } from "react-icons/bi";
 import { BsBag, BsHeart } from "react-icons/bs";
-import { useNavigate, useLocation, Link } from "react-router-dom";
-
+import {
+  useNavigate,
+  useLocation,
+  Link,
+  useOutletContext,
+} from "react-router-dom";
+import { useAuthStore } from "../context/useAuthStore";
 interface Props {}
 
 const Account = (props: Props) => {
+  const token = useAuthStore((state) => state.token);
+  const logOut = useAuthStore((state) => state.logOut);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -14,7 +21,9 @@ const Account = (props: Props) => {
       <div className="space-y-2">
         <div className="mt-4 flex flex-row items-center justify-between ">
           <h1 className="text-xl  font-bold">
-            My account / Account name if signed in
+            {token
+              ? `Welcome ${token.slice(0, 4)} to your account`
+              : "Sign in to access to your account"}
           </h1>
           <AiOutlineClose
             onClick={() =>
@@ -69,10 +78,15 @@ const Account = (props: Props) => {
             Address
           </Link>
         </div>
-        <div className="flex cursor-pointer items-center justify-start gap-6 border-t pt-3">
-          <BiPowerOff className="inline text-2xl" />
-          <span className="text-gray-500 dark:text-slate-200">Sign out</span>
-        </div>
+        {token && (
+          <div
+            onClick={logOut}
+            className="flex cursor-pointer items-center justify-start gap-6 border-t pt-3"
+          >
+            <BiPowerOff className="inline text-2xl" />
+            <span className="text-gray-500 dark:text-slate-200">Sign out</span>
+          </div>
+        )}
       </div>
     </div>
   );

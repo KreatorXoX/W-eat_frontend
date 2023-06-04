@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 
 import {
@@ -7,14 +7,16 @@ import {
 } from "../../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-
+import { useLogin } from "../../api/services/auth.service";
 import Input from "../../shared/components/Form/Input";
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const newPath = location.pathname?.split("/login")[0];
+  const { mutate: logUserIn } = useLogin();
 
   const {
     register,
@@ -26,7 +28,11 @@ const Login = (props: Props) => {
   });
 
   const loginHandler: SubmitHandler<LoginValidationSchema> = (data) => {
-    console.log(data);
+    logUserIn(data, {
+      onSuccess: () => {
+        navigate("/");
+      },
+    });
   };
   return (
     <form

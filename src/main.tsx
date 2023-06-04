@@ -12,6 +12,14 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retry: false,
+      onError: (err: any) => {
+        let errMsg;
+        if (err.response) errMsg = err.response.data.message;
+        else if (err.request) errMsg = err.request.message;
+        else errMsg = err.message;
+
+        console.log(errMsg);
+      },
     },
   },
 });

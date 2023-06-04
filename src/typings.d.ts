@@ -66,3 +66,20 @@ type CartItem = {
   totalPrice: number;
   notes?: string;
 };
+
+type OrderUpdate = {
+  status?: "pending" | "accepted" | "canceled" | "delivered" | "shipped";
+  paymentStatus?: "pending" | "successful";
+};
+interface IToken {
+  accessToken: string;
+}
+interface IAccessTokenType {
+  UserInfo: {
+    _id: string;
+    email: string;
+    isAdmin: boolean;
+  };
+  exp: number;
+  iat: number;
+}

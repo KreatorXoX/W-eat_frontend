@@ -48,184 +48,199 @@ import EditRestaurant from "./admin/pages/Settings/EditRestaurant";
 import NewRestaurant from "./admin/pages/Settings/NewRestaurant";
 import AfterPayment from "./pages/AfterPayment";
 import AfterOrder from "./pages/AfterOrder";
+import PersistLogin from "./components/PersistLogin";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <RootLayout />,
+    element: <PersistLogin />,
     errorElement: <Error />,
     children: [
       {
-        path: "/account",
-        element: <ModalLayout />,
-        children: [
-          { index: true, element: <Account /> },
-          { path: "login", element: <Login /> },
-          { path: "register", element: <Register /> },
-          { path: "personal-info", element: <PersonalPage /> },
-          { path: "orders", element: <Orders /> },
-          { path: "favourites", element: <Favourites /> },
-          {
-            element: <ProtectedRoute />,
-            children: [
-              { path: "addresses", element: <Addresses /> },
-              { path: "edit-address", element: <EditAddress /> },
-              { path: "change-password", element: <ChangePassword /> },
-            ],
-          },
-        ],
-      },
-      {
-        path: "/product/:id",
-        element: <ProductLayout />,
-        children: [
-          {
-            index: true,
-            element: <Product />,
-          },
-        ],
-      },
-      {
-        path: "/edit-product/:id",
-        element: <ProductLayout />,
-        children: [
-          {
-            index: true,
-            element: <EditProduct />,
-          },
-        ],
-      },
-      {
-        path: "/nutritions",
-        element: <ProductLayout />,
-        children: [
-          {
-            index: true,
-            element: <Nutritions />,
-          },
-        ],
-      },
-      {
-        path: "/cart",
-        element: <CartLayout />,
-        children: [{ index: true, element: <Cart /> }],
-      },
-    ],
-  },
+        path: "/",
+        element: <RootLayout />,
 
-  {
-    path: "/checkout",
-    element: <CheckoutLayout />,
-    errorElement: <Error />,
-    children: [
-      {
-        path: "account",
-        element: <ModalLayout />,
         children: [
-          { index: true, element: <Account /> },
-          { path: "login", element: <Login /> },
-          { path: "register", element: <Register /> },
-          { path: "personal-info", element: <PersonalPage /> },
-          { path: "orders", element: <Orders /> },
-          { path: "favourites", element: <Favourites /> },
-          { path: "addresses", element: <Addresses /> },
-          { path: "edit-address", element: <EditAddress /> },
-          { path: "change-password", element: <ChangePassword /> },
-        ],
-      },
-    ],
-  },
-  {
-    path: "/payment",
-    element: <AfterPayment />,
-  },
-  {
-    path: "/order",
-    element: <AfterOrder />,
-  },
-  {
-    element: <AdminRoute />,
-    children: [
-      {
-        path: "/admin",
-        element: <AdminLayout />,
-        errorElement: <Error />,
-        children: [
-          { index: true, element: <AdminDashboard /> },
           {
-            path: "orders",
-            element: <OrdersLayout />,
+            path: "/account",
+            element: <ModalLayout />,
             children: [
-              { index: true, element: <ActiveOrders /> },
-              { path: "order-history", element: <OrderHistory /> },
+              { index: true, element: <Account /> },
+              { path: "login", element: <Login /> },
+              { path: "register", element: <Register /> },
+              { path: "orders", element: <Orders /> },
+              { path: "favourites", element: <Favourites /> },
               {
-                path: ":id",
-                element: <ModalLayout />,
+                element: <ProtectedRoute />,
+                // implement a sign-in to access your account informations error page!
                 children: [
-                  {
-                    index: true,
-                    element: <OrderDetails />,
-                  },
+                  { path: "personal-info", element: <PersonalPage /> },
+                  { path: "addresses", element: <Addresses /> },
+                  { path: "edit-address", element: <EditAddress /> },
+                  { path: "change-password", element: <ChangePassword /> },
                 ],
               },
             ],
           },
-          { path: "customers", element: <AdminCustomers /> },
-          { path: "restaurant-settings", element: <Restaurant /> },
-          { path: "restaurant-settings/edit", element: <EditRestaurant /> },
-          { path: "restaurant-settings/new", element: <NewRestaurant /> },
           {
-            path: "menu",
-            element: <MenuLayout />,
+            path: "/product/:id",
+            element: <ProductLayout />,
             children: [
               {
-                path: "categories",
-                element: <MenuCategory />,
+                index: true,
+                element: <Product />,
               },
+            ],
+          },
+          {
+            path: "/edit-product/:id",
+            element: <ProductLayout />,
+            children: [
               {
-                path: "categories/new",
-                element: <NewCategory />,
+                index: true,
+                element: <EditProduct />,
               },
+            ],
+          },
+          {
+            path: "/nutritions",
+            element: <ProductLayout />,
+            children: [
               {
-                path: "categories/edit/:id",
-                element: <EditCategory />,
+                index: true,
+                element: <Nutritions />,
               },
+            ],
+          },
+          {
+            path: "/cart",
+            element: <CartLayout />,
+            children: [{ index: true, element: <Cart /> }],
+          },
+        ],
+      },
 
+      {
+        path: "/checkout",
+        element: <CheckoutLayout />,
+
+        children: [
+          {
+            path: "account",
+            element: <ModalLayout />,
+            children: [
+              { index: true, element: <Account /> },
+              { path: "login", element: <Login /> },
+              { path: "register", element: <Register /> },
+              { path: "orders", element: <Orders /> },
+              { path: "favourites", element: <Favourites /> },
               {
-                path: "products",
-                element: <MenuProduct />,
+                element: <ProtectedRoute />,
+                // implement a sign-in to access your account informations error page!
+                children: [
+                  { path: "personal-info", element: <PersonalPage /> },
+                  { path: "addresses", element: <Addresses /> },
+                  { path: "edit-address", element: <EditAddress /> },
+                  { path: "change-password", element: <ChangePassword /> },
+                ],
               },
+            ],
+          },
+        ],
+      },
+      {
+        path: "/payment",
+        element: <AfterPayment />,
+      },
+      {
+        path: "/order",
+        element: <AfterOrder />,
+      },
+      {
+        element: <AdminRoute />,
+        // implement a sign-in as admin to access! error page!
+        children: [
+          {
+            path: "/admin",
+            element: <AdminLayout />,
+
+            children: [
+              { index: true, element: <AdminDashboard /> },
               {
-                path: "products/new",
-                element: <NewProduct />,
+                path: "orders",
+                element: <OrdersLayout />,
+                children: [
+                  { index: true, element: <ActiveOrders /> },
+                  { path: "order-history", element: <OrderHistory /> },
+                  {
+                    path: ":id",
+                    element: <ModalLayout />,
+                    children: [
+                      {
+                        index: true,
+                        element: <OrderDetails />,
+                      },
+                    ],
+                  },
+                ],
               },
+              { path: "customers", element: <AdminCustomers /> },
+              { path: "restaurant-settings", element: <Restaurant /> },
+              { path: "restaurant-settings/edit", element: <EditRestaurant /> },
+              { path: "restaurant-settings/new", element: <NewRestaurant /> },
               {
-                path: "products/edit/:id",
-                element: <EditAdminProduct />,
-              },
-              {
-                path: "extra",
-                element: <MenuExtra />,
-              },
-              {
-                path: "extra/new",
-                element: <NewExtra />,
-              },
-              {
-                path: "extra/edit/:id",
-                element: <EditExtra />,
-              },
-              {
-                path: "extra-product",
-                element: <MenuExtraProduct />,
-              },
-              {
-                path: "extra-product/new",
-                element: <NewExtraProduct />,
-              },
-              {
-                path: "extra-product/edit/:id",
-                element: <EditExtraProduct />,
+                path: "menu",
+                element: <MenuLayout />,
+                children: [
+                  {
+                    path: "categories",
+                    element: <MenuCategory />,
+                  },
+                  {
+                    path: "categories/new",
+                    element: <NewCategory />,
+                  },
+                  {
+                    path: "categories/edit/:id",
+                    element: <EditCategory />,
+                  },
+
+                  {
+                    path: "products",
+                    element: <MenuProduct />,
+                  },
+                  {
+                    path: "products/new",
+                    element: <NewProduct />,
+                  },
+                  {
+                    path: "products/edit/:id",
+                    element: <EditAdminProduct />,
+                  },
+                  {
+                    path: "extra",
+                    element: <MenuExtra />,
+                  },
+                  {
+                    path: "extra/new",
+                    element: <NewExtra />,
+                  },
+                  {
+                    path: "extra/edit/:id",
+                    element: <EditExtra />,
+                  },
+                  {
+                    path: "extra-product",
+                    element: <MenuExtraProduct />,
+                  },
+                  {
+                    path: "extra-product/new",
+                    element: <NewExtraProduct />,
+                  },
+                  {
+                    path: "extra-product/edit/:id",
+                    element: <EditExtraProduct />,
+                  },
+                ],
               },
             ],
           },
