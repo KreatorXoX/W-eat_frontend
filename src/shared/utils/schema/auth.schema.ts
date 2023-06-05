@@ -40,31 +40,27 @@ export type VerifyUserInput = z.TypeOf<typeof verifyUserSchema>["params"];
 
 // change password schema
 export const changePasswordSchema = z.object({
-  body: z.object({
-    id: z
-      .string({ required_error: "User id is required" })
-      .nonempty("User id cannot be empty string"),
-    oldPassword: z
-      .string({ required_error: "Password is required" })
-      .min(6, { message: "Minimum of 6 Chars" }),
-    newPassword: z
-      .string({ required_error: "Password is required" })
-      .min(6, { message: "Minimum of 6 Chars" }),
-  }),
+  oldPassword: z
+    .string({ required_error: "Password is required" })
+    .min(6, { message: "Minimum of 6 Chars" }),
+  newPassword: z
+    .string({ required_error: "Password is required" })
+    .min(6, { message: "Minimum of 6 Chars" }),
+  confirmNewPassword: z
+    .string({ required_error: "Password is required" })
+    .min(6, { message: "Minimum of 6 Chars" }),
 });
 
-export type ChangePasswordInput = z.TypeOf<typeof changePasswordSchema>["body"];
+export type ChangePasswordInput = z.TypeOf<typeof changePasswordSchema>;
 
 // forgot password schema
 export const forgotPasswordSchema = z.object({
-  body: z.object({
-    email: z
-      .string({ required_error: "Email is required" })
-      .email({ message: "Provide a valid email address" }),
-  }),
+  email: z
+    .string({ required_error: "Email is required" })
+    .email({ message: "Provide a valid email address" }),
 });
 
-export type ForgotPasswordInput = z.TypeOf<typeof forgotPasswordSchema>["body"];
+export type ForgotPasswordInput = z.TypeOf<typeof forgotPasswordSchema>;
 
 // reset password schema
 export const resetPasswordSchema = z.object({

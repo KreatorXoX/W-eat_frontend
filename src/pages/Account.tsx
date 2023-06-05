@@ -1,12 +1,7 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { BiHome, BiPowerOff } from "react-icons/bi";
 import { BsBag, BsHeart } from "react-icons/bs";
-import {
-  useNavigate,
-  useLocation,
-  Link,
-  useOutletContext,
-} from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuthStore } from "../context/useAuthStore";
 interface Props {}
 
@@ -43,22 +38,25 @@ const Account = (props: Props) => {
           </Link>
         </div>
       </div>
-      <div className="flex w-full flex-row items-center justify-evenly gap-4 text-lg font-semibold">
-        <button
-          onClick={() => navigate("login")}
-          className="auth--button bg-slate-200 transition-colors duration-200 hover:bg-slate-300 dark:bg-slate-400
-          dark:hover:bg-slate-500
+      {!token && (
+        <div className="flex w-full flex-row items-center justify-evenly gap-4 text-lg font-semibold">
+          <button
+            onClick={() => navigate("login")}
+            className="auth--button bg-slate-200 text-blue-500 transition-colors duration-200 hover:bg-slate-300 dark:bg-blue-500 dark:text-slate-100
+          dark:hover:bg-blue-600
           "
-        >
-          Sign in
-        </button>
-        <button
-          onClick={() => navigate("register")}
-          className="auth--button bg-orange-500 text-slate-100 transition-colors duration-200 hover:bg-orange-600"
-        >
-          Create Account
-        </button>
-      </div>
+          >
+            Sign in
+          </button>
+          <button
+            onClick={() => navigate("register")}
+            className="auth--button bg-orange-500 text-slate-100 transition-colors duration-200 hover:bg-orange-600"
+          >
+            Create Account
+          </button>
+        </div>
+      )}
+
       <div className="flex flex-col gap-5 px-2">
         <div className="flex cursor-pointer items-center justify-start gap-6">
           <BsBag className="inline text-2xl" />

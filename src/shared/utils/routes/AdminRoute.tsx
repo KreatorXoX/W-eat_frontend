@@ -5,12 +5,17 @@ interface Props {}
 
 const AdminRoute = (props: Props) => {
   const token = useAuthStore((state) => state.token);
+  const location = useLocation();
 
   if (!token) {
-    return <Navigate to="/account/login" />;
+    return <Navigate to="/account/login" state={{ from: location }} />;
   }
-  const isAdmin = (jwtDecode(token!) as IAccessTokenType).UserInfo.isAdmin;
-  return isAdmin ? <Outlet /> : <Navigate to="/account/login" />;
+  const userInfo = (jwtDecode(token!) as IAccessTokenType).UserInfo;
+  return userInfo.isAdmin ? (
+    <Outlet context={{ id: userInfo._id }} />
+  ) : (
+    <Navigate to="/account/login" state={{ from: location }} />
+  );
 };
 
 export default AdminRoute;

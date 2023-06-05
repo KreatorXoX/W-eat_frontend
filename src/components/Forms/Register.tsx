@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -6,26 +6,33 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import Input from "../../shared/components/Form/Input";
 
 import {
-  RegisterValidationSchema,
-  registerValidationSchema,
-} from "../../shared/utils/validationSchema";
+  RegisterUserInput,
+  registerUserSchema,
+} from "../../shared/utils/schema/auth.schema";
+import AuthServices from "../../api/services/auth.service";
 type Props = {};
 
 const Register = (props: Props) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const newPath = location.pathname?.split("/register")[0];
 
+  const { mutate: registerUser } = AuthServices.useRegister();
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<RegisterValidationSchema>({
+  } = useForm<RegisterUserInput>({
     mode: "onChange",
-    resolver: zodResolver(registerValidationSchema),
+    resolver: zodResolver(registerUserSchema),
   });
 
-  const registerHandler: SubmitHandler<RegisterValidationSchema> = (data) => {
-    console.log(data);
+  const registerHandler: SubmitHandler<RegisterUserInput> = (data) => {
+    registerUser(data, {
+      onSuccess: () => {
+        navigate("/verify-account");
+      },
+    });
   };
   return (
     <form

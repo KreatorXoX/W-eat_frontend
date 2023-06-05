@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useCheckoutStore } from "../context/checkoutStore";
 import { useEffect } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -14,6 +14,7 @@ const AfterPayment = (props: Props) => {
   const orderId = useCheckoutStore((state) => state.orderId);
   const clearCart = useShoppingCart((state) => state.clearCart);
 
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const success = searchParams.get("success") === "true";
 
@@ -30,7 +31,7 @@ const AfterPayment = (props: Props) => {
   let content: JSX.Element | null = null;
   if (success) {
     content = (
-      <div className="flex flex-col items-center justify-center space-y-14 rounded-lg bg-zinc-200 p-16">
+      <div className="flex flex-col items-center justify-center space-y-14 rounded-lg bg-slate-200 p-16">
         <h2 className="text-4xl font-semibold text-gray-700">
           Your payment has been received
         </h2>
@@ -56,7 +57,7 @@ const AfterPayment = (props: Props) => {
   }
   if (!success) {
     content = (
-      <div className="flex flex-col items-center justify-center space-y-14 rounded-lg bg-zinc-200 p-16">
+      <div className="flex flex-col items-center justify-center space-y-14 rounded-lg bg-slate-200 p-16">
         <h2 className="text-4xl font-semibold text-gray-700">
           Your payment has been failed
         </h2>
@@ -88,9 +89,12 @@ const AfterPayment = (props: Props) => {
   }
 
   useEffect(() => {
-    if (success) {
+    if (!orderId) {
+      navigate("/");
+    }
+    if (success && orderId) {
       validateOrder({ paymentStatus: "successful" });
-    } else if (!success) {
+    } else if (!success && orderId) {
       deleteOrder(orderId!);
     }
   }, []);

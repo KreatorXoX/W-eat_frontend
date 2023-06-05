@@ -1,14 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { RiArrowGoBackLine } from "react-icons/ri";
 
-import {
-  LoginValidationSchema,
-  loginValidationSchema,
-} from "../../shared/utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLogin } from "../../api/services/auth.service";
+import AuthServices from "../../api/services/auth.service";
 import Input from "../../shared/components/Form/Input";
+import { LoginUserInput } from "../../shared/utils/schema/auth.schema";
+import { loginUserSchema } from "../../shared/utils/schema/auth.schema";
 
 type Props = {};
 
@@ -16,21 +14,22 @@ const Login = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const newPath = location.pathname?.split("/login")[0];
-  const { mutate: logUserIn } = useLogin();
+  const from = location.state?.from.pathname || "/";
+  const { mutate: logUserIn } = AuthServices.useLogin();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<LoginValidationSchema>({
+  } = useForm<LoginUserInput>({
     mode: "onChange",
-    resolver: zodResolver(loginValidationSchema),
+    resolver: zodResolver(loginUserSchema),
   });
 
-  const loginHandler: SubmitHandler<LoginValidationSchema> = (data) => {
+  const loginHandler: SubmitHandler<LoginUserInput> = (data) => {
     logUserIn(data, {
       onSuccess: () => {
-        navigate("/");
+        navigate(from);
       },
     });
   };
@@ -67,7 +66,7 @@ const Login = (props: Props) => {
         />
 
         <Link
-          to="#forgotpassword"
+          to="/forgot-password"
           className="text-right text-sm italic text-blue-500 no-underline
         hover:underline dark:font-medium
         "

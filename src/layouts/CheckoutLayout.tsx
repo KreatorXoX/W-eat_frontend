@@ -8,9 +8,11 @@ type Props = {};
 const CheckoutLayout = (props: Props) => {
   const dark = useTheme((state) => state.dark);
   return (
-    <main className={`${dark ? "dark bg-gray-900" : "bg-slate-100"}`}>
+    <main
+      className={`${dark ? "dark bg-gray-900 text-slate-200" : "bg-slate-100"}`}
+    >
       <MainNavigation />
-      <div className="flex text-gray-700 dark:bg-gray-900 dark:text-slate-200">
+      <div className="flex text-gray-700 ">
         <div className="w-screen px-2 pt-1 lg:w-[calc(100vw-20rem)]">
           <CheckOut />
         </div>

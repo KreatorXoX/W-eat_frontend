@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
 import { useAuthStore } from "../../../context/useAuthStore";
 import jwtDecode from "jwt-decode";
 interface Props {}
@@ -6,11 +6,16 @@ interface Props {}
 const ProtectedRoute = (props: Props) => {
   const token = useAuthStore((state) => state.token);
   if (!token) {
-    return <Navigate to="/account/login" />;
+    const location = useLocation();
+    return <Navigate to="/account/login" state={{ from: location }} />;
   }
   const userInfo = (jwtDecode(token!) as IAccessTokenType).UserInfo;
 
-  return userInfo ? <Outlet /> : <Navigate to="/account/login" />;
+  return userInfo ? (
+    <Outlet context={{ id: userInfo._id }} />
+  ) : (
+    <Navigate to="/account/login" state={{ from: location }} />
+  );
 };
 
 export default ProtectedRoute;

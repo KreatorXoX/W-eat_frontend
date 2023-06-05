@@ -119,7 +119,7 @@ const Checkout = (props: Props) => {
       }),
       user: "userId",
       fullName: data.fullname,
-      email: data.email,
+      email: data.orderEmail,
       address: address,
       phoneNumber: data.phoneNumber,
       placeOrderTime: data.deliveryTime.value,
@@ -266,10 +266,10 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="E-mail"
-                  id="email"
+                  id="orderEmail"
                   placeholder="yourmail@email.com"
-                  {...register("email")}
-                  error={errors.email?.message}
+                  {...register("orderEmail")}
+                  error={errors.orderEmail?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">

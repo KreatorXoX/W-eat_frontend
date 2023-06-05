@@ -10,7 +10,7 @@ const AfterOrder = (props: Props) => {
   const clearCart = useShoppingCart((state) => state.clearCart);
 
   return (
-    <div className=" flex h-screen w-full flex-col items-center justify-center space-y-14 rounded-lg bg-zinc-200 p-16">
+    <div className=" flex h-screen w-full flex-col items-center justify-center space-y-14 rounded-lg bg-slate-200 p-16">
       <h2 className="text-4xl font-semibold text-gray-700">
         Your order has been received
       </h2>

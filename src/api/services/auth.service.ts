@@ -2,13 +2,15 @@ import { useAuthStore } from "../../context/useAuthStore";
 import {
   RegisterUserInput,
   LoginUserInput,
+  ForgotPasswordInput,
+  ChangePasswordInput,
 } from "../../shared/utils/schema/auth.schema";
 import axiosApi from "../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // register user
 const registerUser = async (newUser: RegisterUserInput) => {
-  const result = await axiosApi.post<IToken>("/auth/register", {
+  const result = await axiosApi.post("/auth/register", {
     ...newUser,
   });
   return result.data;
@@ -17,8 +19,14 @@ const registerUser = async (newUser: RegisterUserInput) => {
 const useRegister = () => {
   return useMutation({
     mutationFn: (newUser: RegisterUserInput) => registerUser(newUser),
-    onSuccess: (response) => {
-      useAuthStore.getState().setCredentials(response.accessToken);
+    onError: (err: any) => {
+      let errMsg;
+
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
+      console.log(errMsg);
     },
   });
 };
@@ -31,13 +39,22 @@ const loginUser = async (credentials: LoginUserInput) => {
   return result.data;
 };
 
-export const useLogin = () => {
+const useLogin = () => {
   return useMutation({
     mutationFn: (credentials: LoginUserInput) => loginUser(credentials),
     onSuccess: (response) => {
       console.log(response.accessToken);
       // useAuthStore.getState().setCredentials(response.accessToken);
       useAuthStore.setState({ token: response.accessToken });
+    },
+    onError: (err: any) => {
+      let errMsg;
+
+      if (err.response) errMsg = err.response.data.message;
+      else if (err.request) errMsg = err.request.message;
+      else errMsg = err.message;
+
+      console.log(errMsg);
     },
   });
 };
@@ -59,9 +76,41 @@ const useLogout = () => {
   });
 };
 
+// forgot password
+const forgotPassword = async (data: ForgotPasswordInput) => {
+  const response = await axiosApi.post("/auth/forgot-password", {
+    ...data,
+  });
+  return response.data;
+};
+
+const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: (email: ForgotPasswordInput) => forgotPassword(email),
+  });
+};
+
+// change password
+
+const changePassword = async (data: ChangePasswordInput & { id: string }) => {
+  const response = await axiosApi.post("/auth/change-password", {
+    ...data,
+  });
+  return response.data;
+};
+
+const useChangePassword = () => {
+  return useMutation({
+    mutationFn: (data: ChangePasswordInput & { id: string }) =>
+      changePassword(data),
+  });
+};
+
 const AuthServices = {
   useLogin,
   useRegister,
   useLogout,
+  useForgotPassword,
+  useChangePassword,
 };
 export default AuthServices;

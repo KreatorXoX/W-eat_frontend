@@ -14,7 +14,7 @@ const CheckOut = (props: Props) => {
   }, []);
   return (
     <div
-      className="mx-auto h-full w-full max-w-2xl
+      className="mx-auto w-full max-w-2xl
     dark:bg-gray-900 lg:max-w-6xl
     "
     >

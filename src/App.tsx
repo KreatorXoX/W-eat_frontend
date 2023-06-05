@@ -49,6 +49,8 @@ import NewRestaurant from "./admin/pages/Settings/NewRestaurant";
 import AfterPayment from "./pages/AfterPayment";
 import AfterOrder from "./pages/AfterOrder";
 import PersistLogin from "./components/PersistLogin";
+import VerifyAccount from "./pages/VerifyAccount";
+import ForgotPassword from "./components/Forms/ForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -67,13 +69,14 @@ const router = createBrowserRouter([
               { index: true, element: <Account /> },
               { path: "login", element: <Login /> },
               { path: "register", element: <Register /> },
-              { path: "orders", element: <Orders /> },
-              { path: "favourites", element: <Favourites /> },
+
               {
                 element: <ProtectedRoute />,
                 // implement a sign-in to access your account informations error page!
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
+                  { path: "orders", element: <Orders /> },
+                  { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
                   { path: "edit-address", element: <EditAddress /> },
                   { path: "change-password", element: <ChangePassword /> },
@@ -131,13 +134,13 @@ const router = createBrowserRouter([
               { index: true, element: <Account /> },
               { path: "login", element: <Login /> },
               { path: "register", element: <Register /> },
-              { path: "orders", element: <Orders /> },
-              { path: "favourites", element: <Favourites /> },
               {
                 element: <ProtectedRoute />,
                 // implement a sign-in to access your account informations error page!
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
+                  { path: "orders", element: <Orders /> },
+                  { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
                   { path: "edit-address", element: <EditAddress /> },
                   { path: "change-password", element: <ChangePassword /> },
@@ -154,6 +157,14 @@ const router = createBrowserRouter([
       {
         path: "/order",
         element: <AfterOrder />,
+      },
+      {
+        path: "/verify-account",
+        element: <VerifyAccount />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
       },
       {
         element: <AdminRoute />,
