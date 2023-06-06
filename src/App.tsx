@@ -51,6 +51,7 @@ import AfterOrder from "./pages/AfterOrder";
 import PersistLogin from "./components/PersistLogin";
 import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./components/Forms/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -161,6 +162,14 @@ const router = createBrowserRouter([
       {
         path: "/verify-account",
         element: <VerifyAccount />,
+      },
+      {
+        path: "/reset-password/:id/:resetCode",
+        element: <ResetPassword />,
+      },
+      {
+        path: "/oauth",
+        // element: <VerifyAccount />,
       },
       {
         path: "/forgot-password",

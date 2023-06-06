@@ -59,30 +59,41 @@ const Account = (props: Props) => {
 
       <div className="flex flex-col gap-5 px-2">
         <div className="flex cursor-pointer items-center justify-start gap-6">
-          <BsBag className="inline text-2xl" />
-          <Link to="orders" className="text-gray-500 dark:text-slate-200">
+          <BsBag className="inline text-2xl text-orange-400" />
+          <Link
+            to="orders"
+            className="text-gray-500 hover:font-medium  dark:text-slate-200"
+          >
             Orders
           </Link>
         </div>
         <div className="flex cursor-pointer items-center justify-start gap-6">
-          <BsHeart className="inline text-2xl" />
-          <Link to="favourites" className="text-gray-500 dark:text-slate-200">
+          <BsHeart className="inline text-2xl text-blue-400" />
+          <Link
+            to="favourites"
+            className="text-gray-500 hover:font-medium dark:text-slate-200"
+          >
             Favorites
           </Link>
         </div>
         <div className="flex cursor-pointer items-center justify-start gap-6">
-          <BiHome className="inline text-2xl" />
-          <Link to="addresses" className="text-gray-500 dark:text-slate-200">
+          <BiHome className="inline text-2xl text-green-400" />
+          <Link
+            to="addresses"
+            className="text-gray-500 hover:font-medium dark:text-slate-200"
+          >
             Address
           </Link>
         </div>
         {token && (
           <div
             onClick={logOut}
-            className="flex cursor-pointer items-center justify-start gap-6 border-t pt-3"
+            className="flex cursor-pointer items-center justify-start gap-6 border-t border-indigo-400 pt-3"
           >
-            <BiPowerOff className="inline text-2xl" />
-            <span className="text-gray-500 dark:text-slate-200">Sign out</span>
+            <BiPowerOff className="inline text-2xl text-red-400" />
+            <span className=" text-gray-500  hover:font-medium dark:text-slate-200">
+              Sign out
+            </span>
           </div>
         )}
       </div>

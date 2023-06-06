@@ -6,7 +6,7 @@ export function formatData() {
       id: category.id,
       name: category.name,
       products: category.products.map((pro) => {
-        return { value: `${pro.id} - ${pro.price}`, label: pro.name };
+        return { value: `${pro.id} - ${pro}`, label: pro.name };
       }),
       extraItems: category.extras.map((extra) => {
         return { value: extra.id, label: extra.name };

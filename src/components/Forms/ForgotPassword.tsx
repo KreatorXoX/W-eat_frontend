@@ -28,7 +28,7 @@ const ForgotPassword = (props: Props) => {
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const loginHandler: SubmitHandler<ForgotPasswordInput> = (data) => {
+  const forgotPasswordHandler: SubmitHandler<ForgotPasswordInput> = (data) => {
     sendEmail(data);
   };
 
@@ -38,11 +38,11 @@ const ForgotPassword = (props: Props) => {
         dark ? "bg-gray-800 text-slate-100" : "bg-slate-200 text-gray-700"
       } `}
     >
-      <h2 className="text-2xl font-semibold md:text-4xl">
+      <h2 className="text-2xl font-semibold text-gray-600 md:text-4xl">
         We will send a password reset link to your registered email{" "}
       </h2>
       <form
-        onSubmit={handleSubmit(loginHandler)}
+        onSubmit={handleSubmit(forgotPasswordHandler)}
         className="flex w-full max-w-2xl flex-col items-center space-y-4 overflow-auto rounded-lg p-5 pt-0 text-gray-800"
       >
         <div className="flex w-full flex-col gap-4 text-left">

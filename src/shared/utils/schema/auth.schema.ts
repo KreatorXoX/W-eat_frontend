@@ -63,24 +63,18 @@ export const forgotPasswordSchema = z.object({
 export type ForgotPasswordInput = z.TypeOf<typeof forgotPasswordSchema>;
 
 // reset password schema
-export const resetPasswordSchema = z.object({
-  params: z.object({
-    id: z.string(),
-    passwordResetCode: z.string(),
-  }),
-  body: z
-    .object({
-      password: z
-        .string({ required_error: "Password is required" })
-        .min(6, { message: "Minimum of 6 Chars" }),
-      confirmPassword: z
-        .string({ required_error: "Confirm password is required" })
-        .min(6, { message: "Minimum of 6 Chars" }),
-    })
-    .refine((data) => data.confirmPassword === data.password, {
-      message: "Passwords do not match",
-      path: ["confirmPassword"],
-    }),
-});
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string({ required_error: "Password is required" })
+      .min(6, { message: "Minimum of 6 Chars" }),
+    confirmPassword: z
+      .string({ required_error: "Confirm password is required" })
+      .min(6, { message: "Minimum of 6 Chars" }),
+  })
+  .refine((data) => data.confirmPassword === data.password, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 export type ResetPasswordInput = z.TypeOf<typeof resetPasswordSchema>;

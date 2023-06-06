@@ -4,6 +4,7 @@ import {
   LoginUserInput,
   ForgotPasswordInput,
   ChangePasswordInput,
+  ResetPasswordInput,
 } from "../../shared/utils/schema/auth.schema";
 import axiosApi from "../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -106,11 +107,39 @@ const useChangePassword = () => {
   });
 };
 
+// change password
+
+const resetPassword = async (
+  data: ResetPasswordInput,
+  params: { id: string; resetCode: string }
+) => {
+  const response = await axiosApi.post(
+    `/auth/reset-password/${params.id}/${params.resetCode}`,
+    {
+      ...data,
+    }
+  );
+  return response.data;
+};
+
+const useResetPassword = () => {
+  return useMutation({
+    mutationFn: ({
+      data,
+      params,
+    }: {
+      data: ResetPasswordInput;
+      params: { id: string; resetCode: string };
+    }) => resetPassword(data, params),
+  });
+};
+
 const AuthServices = {
   useLogin,
   useRegister,
   useLogout,
   useForgotPassword,
   useChangePassword,
+  useResetPassword,
 };
 export default AuthServices;

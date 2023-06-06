@@ -28,7 +28,6 @@ const ChangePassword = (props: Props) => {
   const changePasswordHandler: SubmitHandler<ChangePasswordInput> = (data) => {
     changePassword({ ...data, id: ctx.id });
   };
-  console.log("is valid form ", isValid);
 
   return (
     <form

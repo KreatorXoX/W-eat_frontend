@@ -33,15 +33,15 @@ function TopSection({}: Props) {
         </div>
         <div className="my-2 flex items-center gap-5 text-sm">
           <div className="flex items-center gap-2">
-            <AiOutlineClockCircle className="inline text-xl" />
+            <AiOutlineClockCircle className="inline text-xl text-green-400" />
             <p>50-75 min</p>
           </div>
           <div className="flex items-center gap-2">
-            <MdDeliveryDining className="inline text-[1.5rem]" />
+            <MdDeliveryDining className="inline text-[1.5rem] text-indigo-400" />
             <p>€ 6,00</p>
           </div>
           <div className="flex items-center gap-2">
-            <BiShoppingBag className="inline text-xl" />
+            <BiShoppingBag className="inline text-xl  text-orange-400" />
             <p>Min. € 30,00</p>
           </div>
         </div>

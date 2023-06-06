@@ -21,7 +21,7 @@ function MenuItem({ item }: Props) {
             state={{ alergens: item?.alergens }}
             className="flex items-center"
           >
-            <ImInfo className="inline lg:text-xl" />
+            <ImInfo className="inline text-orange-400 lg:text-xl" />
           </Link>
         </div>
         <div>
