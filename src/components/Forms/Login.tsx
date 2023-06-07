@@ -5,8 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import AuthServices from "../../api/services/auth.service";
 import Input from "../../shared/components/Form/Input";
-import { LoginUserInput } from "../../shared/utils/schema/auth.schema";
-import { loginUserSchema } from "../../shared/utils/schema/auth.schema";
+import { LoginUserInput } from "../../utils/schema/auth.schema";
+import { loginUserSchema } from "../../utils/schema/auth.schema";
 
 type Props = {};
 

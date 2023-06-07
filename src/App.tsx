@@ -27,8 +27,8 @@ import AdminCustomers from "./admin/pages/Customers/Customers";
 import OrdersLayout from "./layouts/OrdersLayout";
 import ActiveOrders from "./admin/pages/Orders/ActiveOrders";
 import OrderHistory from "./admin/pages/Orders/OrderHistory";
-import ProtectedRoute from "./shared/utils/routes/ProtectedRoute";
-import AdminRoute from "./shared/utils/routes/AdminRoute";
+import ProtectedRoute from "./utils/routes/ProtectedRoute";
+import AdminRoute from "./utils/routes/AdminRoute";
 import OrderDetails from "./admin/pages/Orders/OrderDetails";
 import MenuLayout from "./layouts/MenuLayout";
 import MenuCategory from "./admin/pages/Menu/Category/MenuCategory";
@@ -52,6 +52,7 @@ import PersistLogin from "./components/PersistLogin";
 import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./components/Forms/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Oauth from "./pages/Oauth";
 
 const router = createBrowserRouter([
   {
@@ -169,7 +170,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/oauth",
-        // element: <VerifyAccount />,
+        element: <Oauth />,
       },
       {
         path: "/forgot-password",

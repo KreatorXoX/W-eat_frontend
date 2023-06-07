@@ -2,15 +2,15 @@ import { useState } from "react";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
 import Input from "../../shared/components/Form/Input";
-import useDeliveryTimes from "../../shared/utils/getDeliveryTime";
-import { getPaymentMethods } from "../../shared/utils/getPaymentMethod";
+import useDeliveryTimes from "../../utils/getDeliveryTime";
+import { getPaymentMethods } from "../../utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle, BsXCircle } from "react-icons/bs";
 import { useShoppingCart } from "../../context/shoppingCartStore";
 import {
   OrderValidationSchema,
   orderValidationSchema,
-} from "../../shared/utils/validationSchema";
+} from "../../utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";

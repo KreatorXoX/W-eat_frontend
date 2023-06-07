@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 import EditCategoryForm from "../../../components/Forms/Category/EditCategoryForm";
-import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
+import { formatData } from "../../../../utils/formatingDAta/formatData";
 
 type Props = {};
 

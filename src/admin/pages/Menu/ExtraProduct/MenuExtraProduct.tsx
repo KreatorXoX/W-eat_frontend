@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import Table from "../../../../shared/components/Table/Table";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
-import { extraProducts } from "../../../../shared/utils/table/allExtraProducts";
+import { extraProducts } from "../../../../utils/table/allExtraProducts";
 import { useNavigate } from "react-router-dom";
 type Props = {};
 

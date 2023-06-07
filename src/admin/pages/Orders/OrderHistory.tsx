@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { orderHistory } from "../../../shared/utils/table/orderHistory";
+import { orderHistory } from "../../../utils/table/orderHistory";
 import { useMemo } from "react";
 import Table from "../../../shared/components/Table/Table";
 import { Link } from "react-router-dom";

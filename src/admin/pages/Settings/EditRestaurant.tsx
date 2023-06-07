@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
-import { formatData } from "../../../shared/utils/formatingDAta/formatData";
+import { formatData } from "../../../utils/formatingDAta/formatData";
 
 import EditRestaurantForm from "../../components/Forms/Restaurant/EditRestaurantForm";
 

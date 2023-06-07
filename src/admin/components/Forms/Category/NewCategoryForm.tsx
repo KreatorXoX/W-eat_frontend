@@ -5,9 +5,9 @@ import GenericButton from "../../../../shared/components/UI-Elements/GenericButt
 import {
   NewCategorySchema,
   newCategorySchema,
-} from "../../../../shared/utils/validationSchema";
+} from "../../../../utils/validationSchema";
 import { useNavigate } from "react-router-dom";
-import { formatData } from "../../../../shared/utils/formatingDAta/formatData";
+import { formatData } from "../../../../utils/formatingDAta/formatData";
 type Props = {};
 
 const category = formatData()[0];

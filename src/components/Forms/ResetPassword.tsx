@@ -8,7 +8,7 @@ import Input from "../../shared/components/Form/Input";
 import {
   ResetPasswordInput,
   resetPasswordSchema,
-} from "../../shared/utils/schema/auth.schema";
+} from "../../utils/schema/auth.schema";
 import { AiFillCheckCircle } from "react-icons/ai";
 
 type Props = {};

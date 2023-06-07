@@ -6,7 +6,7 @@ import GenericButton from "../../../../shared/components/UI-Elements/GenericButt
 import {
   NewRestaurantSchema,
   newRestaurantSchema,
-} from "../../../../shared/utils/validationSchema";
+} from "../../../../utils/validationSchema";
 import { useNavigate } from "react-router-dom";
 import { isDirty } from "zod";
 

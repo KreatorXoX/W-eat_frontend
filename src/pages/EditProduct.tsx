@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 import {
   createProductSchema,
   CreateProductSchema,
-} from "../shared/utils/validationSchema";
+} from "../utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatExtras } from "../shared/utils/getExtrasOptions";
+import { formatExtras } from "../utils/getExtrasOptions";
 import { useShoppingCart } from "../context/shoppingCartStore";
-import { menu } from "../shared/utils/data";
+import { menu } from "../utils/data";
 import { getProductById } from "./Product";
 
 interface Props {}

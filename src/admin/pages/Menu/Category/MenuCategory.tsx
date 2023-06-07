@@ -1,4 +1,4 @@
-import { categories } from "../../../../shared/utils/table/allCategories";
+import { categories } from "../../../../utils/table/allCategories";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 import Table from "../../../../shared/components/Table/Table";
 import { ColumnDef } from "@tanstack/react-table";

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 import Table from "../../../shared/components/Table/Table";
-import { customerList } from "../../../shared/utils/table/customerTable";
+import { customerList } from "../../../utils/table/customerTable";
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
 
 interface Props {}

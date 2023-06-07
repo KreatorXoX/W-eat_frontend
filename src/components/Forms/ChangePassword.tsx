@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   changePasswordSchema,
   ChangePasswordInput,
-} from "../../shared/utils/schema/auth.schema";
+} from "../../utils/schema/auth.schema";
 import Input from "../../shared/components/Form/Input";
 import { Link, useOutletContext } from "react-router-dom";
 import AuthServices from "../../api/services/auth.service";

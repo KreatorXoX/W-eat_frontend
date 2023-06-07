@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../context/themeStore";
-import useWindowSize from "../shared/utils/useWindowSize";
+import useWindowSize from "../utils/useWindowSize";
 type Props = {};
 
 const CartLayout = (props: Props) => {

@@ -14,10 +14,11 @@ const MainNavigation = () => {
       <MainHeader>
         <h1 className="font-serif text-xl dark:text-slate-200">
           <Link to="/">
-            w/<span className="text-blue-400">EAT</span>
+            <span className="text-red-400">w</span>/
+            <span className="text-blue-400">EAT</span>
           </Link>
         </h1>
-        <h2 className="text-xl font-semibold text-violet-900 dark:text-slate-300">
+        <h2 className="text-2xl font-semibold tracking-widest text-violet-900 dark:text-slate-300">
           {path.split("/")[1] === "checkout" ? "Checkout" : "Menu"}
         </h2>
         <div className="flex items-center justify-center gap-4">

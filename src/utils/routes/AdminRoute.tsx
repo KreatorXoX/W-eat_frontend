@@ -1,5 +1,5 @@
 import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../../../context/useAuthStore";
+import { useAuthStore } from "../../context/useAuthStore";
 import jwtDecode from "jwt-decode";
 interface Props {}
 

@@ -1,7 +1,7 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { ImInfo } from "react-icons/im";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { menu } from "../shared/utils/data";
+import { menu } from "../utils/data";
 import FormInput from "../shared/components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
@@ -9,9 +9,9 @@ import { useEffect, useState } from "react";
 import {
   createProductSchema,
   CreateProductSchema,
-} from "../shared/utils/validationSchema";
+} from "../utils/validationSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatExtras } from "../shared/utils/getExtrasOptions";
+import { formatExtras } from "../utils/getExtrasOptions";
 import { v4 as uuidv4 } from "uuid";
 import { useShoppingCart } from "../context/shoppingCartStore";
 

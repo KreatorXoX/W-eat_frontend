@@ -7,7 +7,7 @@ import GenericButton from "../../../../shared/components/UI-Elements/GenericButt
 import {
   NewExtraSchema,
   newExtraSchema,
-} from "../../../../shared/utils/validationSchema";
+} from "../../../../utils/validationSchema";
 
 type Props = {};
 

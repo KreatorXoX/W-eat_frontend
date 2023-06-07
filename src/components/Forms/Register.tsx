@@ -8,7 +8,7 @@ import Input from "../../shared/components/Form/Input";
 import {
   RegisterUserInput,
   registerUserSchema,
-} from "../../shared/utils/schema/auth.schema";
+} from "../../utils/schema/auth.schema";
 import AuthServices from "../../api/services/auth.service";
 type Props = {};
 

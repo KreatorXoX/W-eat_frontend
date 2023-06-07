@@ -6,7 +6,7 @@ import Input from "../shared/components/Form/Input";
 import {
   NewAddressValidationSchema,
   newAddressValidationSchema,
-} from "../shared/utils/validationSchema";
+} from "../utils/validationSchema";
 
 type Props = {};
 

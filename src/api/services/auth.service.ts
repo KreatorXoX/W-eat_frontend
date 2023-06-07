@@ -5,7 +5,7 @@ import {
   ForgotPasswordInput,
   ChangePasswordInput,
   ResetPasswordInput,
-} from "../../shared/utils/schema/auth.schema";
+} from "../../utils/schema/auth.schema";
 import axiosApi from "../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 

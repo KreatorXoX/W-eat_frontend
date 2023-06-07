@@ -1,6 +1,6 @@
 import MenuItem from "./MenuItem";
 
-import { menu } from "../../shared/utils/data";
+import { menu } from "../../utils/data";
 type Props = {};
 
 function MenuItemList({}: Props) {
