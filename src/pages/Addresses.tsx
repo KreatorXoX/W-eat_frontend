@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowGoBackLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
-
+import { Link, useOutletContext } from "react-router-dom";
+import UserServices from "../api/services/user.service";
 interface Props {}
 
+const formatAddress = (address?: Address) => {
+  if (address)
+    return (
+      address.city +
+      " " +
+      address.street +
+      " " +
+      "House Number: " +
+      address.houseNumber +
+      " " +
+      address.postalCode
+    );
+  return "";
+};
 const Addresses = (props: Props) => {
+  const ctx: UserContext = useOutletContext();
+  const { data: userInfo } = UserServices.useUser(ctx.id);
   const [home, setHome] = useState<string>("");
   const [work, setWork] = useState<string>("");
   const [other, setOther] = useState<string>("");
+
+  useEffect(() => {
+    setHome(formatAddress(userInfo?.homeAddress));
+    setWork(formatAddress(userInfo?.workAddress));
+    setOther(formatAddress(userInfo?.otherAddress));
+  }, [userInfo]);
   return (
     <div className="px-5 text-gray-800 dark:text-slate-200">
       <div className="mt-5 flex items-center gap-10 lg:mt-0">
@@ -31,7 +53,15 @@ const Addresses = (props: Props) => {
 
           <Link
             to="/account/edit-address"
-            state={{ type: "home" }}
+            state={{
+              type: "home",
+              defaultValues: {
+                street: userInfo?.homeAddress?.street,
+                city: userInfo?.homeAddress?.city,
+                postalCode: userInfo?.homeAddress?.postalCode,
+                houseNumber: userInfo?.homeAddress?.houseNumber,
+              },
+            }}
             className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
           >
             Add / Edit
@@ -52,9 +82,17 @@ const Addresses = (props: Props) => {
           <Link
             className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
             to="/account/edit-address"
-            state={{ type: "work" }}
+            state={{
+              type: "work",
+              defaultValues: {
+                street: userInfo?.workAddress?.street,
+                city: userInfo?.workAddress?.city,
+                postalCode: userInfo?.workAddress?.postalCode,
+                houseNumber: userInfo?.workAddress?.houseNumber,
+              },
+            }}
           >
-            Edit
+            Add / Edit
           </Link>
         </div>
         <div className="rounded-lg border p-4">
@@ -71,10 +109,18 @@ const Addresses = (props: Props) => {
 
           <Link
             to="/account/edit-address"
-            state={{ type: "other" }}
+            state={{
+              type: "other",
+              defaultValues: {
+                street: userInfo?.otherAddress?.street,
+                city: userInfo?.otherAddress?.city,
+                postalCode: userInfo?.otherAddress?.postalCode,
+                houseNumber: userInfo?.otherAddress?.houseNumber,
+              },
+            }}
             className="rounded-lg bg-orange-500 px-4 py-[0.15rem] text-slate-100"
           >
-            Edit
+            Add / Edit
           </Link>
         </div>
       </div>

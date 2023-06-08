@@ -1,23 +1,17 @@
-import mongoose, { isValidObjectId } from "mongoose";
 import { z } from "zod";
 
-// finding user by the provided id schema
-export const findUserByIdSchema = z.object({
-  params: z.object({
-    id: z
-      .string()
-      .transform((id, ctx) => {
-        if (!isValidObjectId(id)) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "Not a valid id",
-          });
-
-          return z.NEVER;
-        }
-        return new mongoose.Types.ObjectId(id);
-      })
-      .optional(),
-  }),
+// updating user schema
+export const updateUserNameSchema = z.object({
+  name: z.string().nonempty({ message: "User name cannot be empty string" }),
+  email: z.string().optional(),
 });
-export type FindUserByIdInput = z.TypeOf<typeof findUserByIdSchema>["params"];
+export type UpdateUserNameInput = z.TypeOf<typeof updateUserNameSchema>;
+
+// Update User Address Schema
+export const updateUserAddressSchema = z.object({
+  street: z.string().nonempty("Street is required"),
+  city: z.string().nonempty("City is required"),
+  houseNumber: z.string().nonempty("House number is required"),
+  postalCode: z.string().nonempty("Postal code is required"),
+});
+export type UpdateUserAddressInput = z.TypeOf<typeof updateUserAddressSchema>;

@@ -83,3 +83,24 @@ interface IAccessTokenType {
   exp: number;
   iat: number;
 }
+
+type Address = {
+  street: string;
+  city: string;
+  houseNumber: string;
+  postalCode: string;
+};
+
+interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  orders?: string[];
+  favorites?: string[];
+  homeAddress?: Address;
+  workAddress?: Address;
+  otherAddress?: Address;
+}
+type UserContext = {
+  id: string;
+};

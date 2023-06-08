@@ -20,9 +20,7 @@ const Account = (props: Props) => {
       <div className="space-y-2">
         <div className="mt-4 flex flex-row items-center justify-between ">
           <h1 className="text-xl font-bold tracking-wide">
-            {token
-              ? `Welcome ${token.slice(0, 4)} to your account`
-              : "Sign in to access to your account"}
+            {token ? `My account` : "Sign in to access to your account"}
           </h1>
           <AiOutlineClose
             onClick={() =>

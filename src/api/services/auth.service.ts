@@ -107,7 +107,7 @@ const useChangePassword = () => {
   });
 };
 
-// change password
+// reset password
 
 const resetPassword = async (
   data: ResetPasswordInput,

@@ -9,10 +9,6 @@ import { Link, useOutletContext } from "react-router-dom";
 import AuthServices from "../../api/services/auth.service";
 type Props = {};
 
-type UserContext = {
-  id: string;
-};
-
 const ChangePassword = (props: Props) => {
   const { mutate: changePassword } = AuthServices.useChangePassword();
   const ctx: UserContext = useOutletContext();

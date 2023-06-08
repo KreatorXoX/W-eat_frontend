@@ -1,33 +1,48 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { RiArrowGoBackLine } from "react-icons/ri";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useOutletContext } from "react-router-dom";
 import Input from "../shared/components/Form/Input";
 import {
-  NewAddressValidationSchema,
-  newAddressValidationSchema,
-} from "../utils/validationSchema";
+  UpdateUserAddressInput,
+  updateUserAddressSchema,
+} from "../utils/schema/user.schema";
+import UserServices from "../api/services/user.service";
 
 type Props = {};
 
-const EditAddress = (props: Props) => {
+const UpsertAddress = (props: Props) => {
+  const ctx: UserContext = useOutletContext();
+
+  const location = useLocation();
+  const addressType: string = location?.state.type + "Address";
+  const defaultValues: Address = location?.state.defaultValues;
+
+  const { mutate: updateAddress } = UserServices.useUpdateUserAddress();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
-  } = useForm<NewAddressValidationSchema>({
+    formState: { errors, isValid, isDirty },
+  } = useForm<UpdateUserAddressInput>({
     mode: "onChange",
-    resolver: zodResolver(newAddressValidationSchema),
+    defaultValues: {
+      ...defaultValues,
+    },
+    resolver: zodResolver(updateUserAddressSchema),
   });
 
-  const location = useLocation();
-  const addressType: string = location?.state.type;
-
-  const editAddressHandler: SubmitHandler<NewAddressValidationSchema> = (
+  const upsertAddressHandler: SubmitHandler<UpdateUserAddressInput> = (
     data
   ) => {
-    console.log(data);
-    // send post req to change or add the new address
+    const address = {
+      [addressType]: {
+        ...data,
+      },
+    };
+    updateAddress({
+      data: { ...address },
+      id: ctx.id,
+    });
   };
   return (
     <>
@@ -41,7 +56,7 @@ const EditAddress = (props: Props) => {
         <h2 className="text-xl font-semibold">Update Address</h2>
       </div>
       <form
-        onSubmit={handleSubmit(editAddressHandler)}
+        onSubmit={handleSubmit(upsertAddressHandler)}
         className="m-4 flex flex-col space-y-5 py-5 text-gray-800 dark:text-slate-100
         
         "
@@ -53,7 +68,7 @@ const EditAddress = (props: Props) => {
             text-blue-300 lg:px-4 lg:text-2xl
             "
             >
-              {addressType.toUpperCase()}
+              {location?.state.type.toUpperCase()}
             </h2>
             <div className="grid grid-cols-2 gap-2 p-0 lg:gap-5 lg:p-4">
               <div className="col-span-2 lg:col-span-1">
@@ -84,9 +99,9 @@ const EditAddress = (props: Props) => {
                   half={false}
                   label="Postal code"
                   placeholder="Type your postal code"
-                  id="postCode"
-                  {...register("postCode")}
-                  error={errors.postCode?.message}
+                  id="postalCode"
+                  {...register("postalCode")}
+                  error={errors.postalCode?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
@@ -111,7 +126,7 @@ const EditAddress = (props: Props) => {
             px-10 text-lg font-medium text-slate-100
       disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-gray-500
           "
-          disabled={!isValid}
+          disabled={!isValid || !isDirty}
         >
           Save Address
         </button>
@@ -120,4 +135,4 @@ const EditAddress = (props: Props) => {
   );
 };
 
-export default EditAddress;
+export default UpsertAddress;

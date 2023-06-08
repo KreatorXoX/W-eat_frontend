@@ -19,7 +19,7 @@ import Orders from "./pages/Orders";
 import Favourites from "./pages/Favourites";
 import Addresses from "./pages/Addresses";
 import ChangePassword from "./pages/ChangePassword";
-import EditAddress from "./pages/EditAddress";
+import UpsertAddress from "./pages/UpsertAddress";
 import ProductLayout from "./layouts/ProductLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./admin/pages/Home/AdminDashboard";
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
                   { path: "orders", element: <Orders /> },
                   { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
-                  { path: "edit-address", element: <EditAddress /> },
+                  { path: "edit-address", element: <UpsertAddress /> },
                   { path: "change-password", element: <ChangePassword /> },
                 ],
               },
@@ -144,7 +144,7 @@ const router = createBrowserRouter([
                   { path: "orders", element: <Orders /> },
                   { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
-                  { path: "edit-address", element: <EditAddress /> },
+                  { path: "edit-address", element: <UpsertAddress /> },
                   { path: "change-password", element: <ChangePassword /> },
                 ],
               },
