@@ -1,3 +1,7 @@
+type UserContext = {
+  id: string;
+};
+
 type ExtraItem = {
   id: string;
   name: string;
@@ -71,6 +75,15 @@ type OrderUpdate = {
   status?: "pending" | "accepted" | "canceled" | "delivered" | "shipped";
   paymentStatus?: "pending" | "successful";
 };
+
+type Address = {
+  street: string;
+  city: string;
+  houseNumber: string;
+  postalCode: string;
+};
+
+// Backend Related Interfaces
 interface IToken {
   accessToken: string;
 }
@@ -83,24 +96,67 @@ interface IAccessTokenType {
   exp: number;
   iat: number;
 }
-
-type Address = {
-  street: string;
-  city: string;
-  houseNumber: string;
-  postalCode: string;
-};
-
-interface IUser {
+interface IApi {
   _id: string;
+  __v?: number;
+  createdAt?: string;
+  updatedAt?: string;
+}
+interface IUser extends IApi {
   name: string;
   email: string;
-  orders?: string[];
-  favorites?: string[];
   homeAddress?: Address;
   workAddress?: Address;
   otherAddress?: Address;
 }
-type UserContext = {
-  id: string;
-};
+
+interface IProductSize {
+  size: string;
+  price: number;
+}
+
+interface IProduct extends IApi {
+  name: string;
+  description: string;
+  sizes: IProductSize[];
+  ingridients: string;
+  allergens?: string;
+  tag?: string;
+  category?: string;
+}
+
+interface IExtraItem extends IApi {
+  name: string;
+  price: number;
+  allergens?: string;
+}
+
+interface IExtra extends IApi {
+  name: string;
+  paid: boolean;
+  extraItems?: IExtraItem[];
+}
+interface IOrderItem {
+  product: IProduct;
+  extras: IExtraItem[];
+  quantity: number;
+  size: string;
+  note?: string;
+}
+
+interface IOrder extends IApi {
+  orderItems: IOrderItem[];
+  deliveryCost?: number;
+  totalPrice?: number;
+  status: string;
+  address: string;
+  placeOrderTime: string;
+  paymentMethod: string;
+  paymentStatus: string;
+}
+
+interface ICategory extends IApi {
+  name: string;
+  products?: IProduct[];
+  extras?: IExtra[];
+}

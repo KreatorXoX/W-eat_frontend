@@ -63,9 +63,37 @@ const useUpdateUserAddress = () => {
   });
 };
 
+// Get User Orders
+const getUserOrders = async (id: string) => {
+  const response = await axiosApi.get<IOrder[]>(`/user/orders/${id}`);
+  return response.data;
+};
+
+const useUserOrders = (id: string) => {
+  return useQuery([`userOrders-${id}`], {
+    queryFn: () => getUserOrders(id),
+    enabled: !!id,
+  });
+};
+
+// Get User Favorites
+const getUserFavorites = async (id: string) => {
+  const response = await axiosApi.get<IOrder[]>(`/user/favorites/${id}`);
+  return response.data;
+};
+
+const useUserFavorites = (id: string) => {
+  return useQuery([`userFavorites-${id}`], {
+    queryFn: () => getUserFavorites(id),
+    enabled: !!id,
+  });
+};
+
 const UserServices = {
   useUpdateUserAddress,
   useUpdateUserName,
   useUser,
+  useUserOrders,
+  useUserFavorites,
 };
 export default UserServices;
