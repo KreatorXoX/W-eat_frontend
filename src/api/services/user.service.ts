@@ -57,15 +57,22 @@ const updateUserAddress = async (data: UpdateAddress, id: string) => {
 };
 
 const useUpdateUserAddress = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: ({ data, id }: { data: UpdateAddress; id: string }) =>
       updateUserAddress(data, id),
+    onSuccess: (response: { id: string }) => {
+      queryClient.invalidateQueries([`user-${response.id}`]);
+    },
   });
 };
 
 // Get User Orders
 const getUserOrders = async (id: string) => {
-  const response = await axiosApi.get<IOrder[]>(`/user/orders/${id}`);
+  const response = await axiosApi.get<{
+    allOrders: IOrder[];
+    favouriteOrders: IOrder[];
+  }>(`/user/orders/${id}`);
   return response.data;
 };
 

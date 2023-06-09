@@ -24,9 +24,9 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
   });
 
   return (
-    <div className="h-full w-full max-w-[60rem] overflow-auto text-xs sm:text-sm">
-      <table className="mt-3 w-full table-auto rounded-lg bg-gray-200 text-center shadow-lg sm:border-separate sm:border-spacing-1">
-        <thead className="bg-gray-800 text-gray-100 sm:text-base">
+    <div className="h-full w-full max-w-[60rem] overflow-auto text-xs dark:bg-gray-800 dark:text-blue-600 sm:text-sm">
+      <table className="mt-3 w-full table-auto rounded-lg bg-gray-200 text-center shadow-lg dark:bg-gray-600 sm:border-separate sm:border-spacing-1">
+        <thead className="bg-gray-800 text-slate-100 sm:text-base">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -71,26 +71,29 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
         <tbody>
           {table.getRowModel().rows.map((row) => {
             return (
-              <tr key={row.id} className="odd:bg-slate-300 even:bg-slate-100">
+              <tr
+                key={row.id}
+                className="odd:bg-slate-300 even:bg-slate-100 dark:odd:bg-gray-800 dark:even:bg-gray-800"
+              >
                 {row.getVisibleCells().map((cell) => {
                   return (
                     <td
                       key={cell.id}
-                      className={`p-2 font-medium text-gray-700 ${
+                      className={`p-2 font-medium text-gray-700 dark:text-slate-100 ${
                         cell.getValue() === "delivered"
-                          ? "bg-green-200/60 uppercase text-green-700"
+                          ? "bg-green-200/60 uppercase text-green-700 dark:bg-green-700"
                           : cell.getValue() === "canceled"
-                          ? "bg-red-200/60 uppercase text-red-700"
+                          ? "bg-red-200/60 uppercase text-red-700 dark:bg-red-700"
                           : ""
                       }
                       
                       ${
                         cell.getValue() === "verified"
-                          ? "bg-green-200/60 uppercase text-green-700"
+                          ? "bg-green-200/60 uppercase text-green-700 dark:bg-green-700"
                           : cell.getValue() === "pending"
-                          ? "bg-yellow-200/60 uppercase text-yellow-700"
+                          ? "bg-yellow-200/60 uppercase text-yellow-700 dark:bg-yellow-700"
                           : cell.getValue() === "suspended"
-                          ? "bg-gray-200/60 uppercase text-gray-400"
+                          ? "bg-gray-200/60 uppercase text-gray-400 dark:bg-gray-700"
                           : ""
                       }
                       ${

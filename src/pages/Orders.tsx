@@ -2,6 +2,7 @@ import { RiArrowGoBackLine } from "react-icons/ri";
 import { Link, useOutletContext } from "react-router-dom";
 import UserServices from "../api/services/user.service";
 import OrderItem from "../components/Order/OrderItem";
+import OrderTable from "../components/Order/OrderTable";
 
 interface Props {}
 
@@ -20,15 +21,18 @@ const Orders = (props: Props) => {
         <ul>
           {isLoading ? (
             <p>Loading</p>
-          ) : userOrders && userOrders?.length > 0 ? (
-            userOrders?.map((order) => (
-              <OrderItem key={order._id} order={order} />
-            ))
+          ) : userOrders?.allOrders && userOrders.allOrders.length > 0 ? (
+            // userOrders.allOrders.map((order) => (
+            //   <OrderItem key={order._id} order={order} />
+            // ))
+            <OrderTable orders={userOrders.allOrders} />
           ) : (
-            <p className="text-xl">No previous orders available</p>
+            <p className="h-16 text-center text-xl">
+              You never placed an order,{" "}
+              <span className="italic text-red-500 underline">yet</span>
+            </p>
           )}
         </ul>
-        <div className="mt-4 text-center">Pagination</div>
       </div>
     </div>
   );
