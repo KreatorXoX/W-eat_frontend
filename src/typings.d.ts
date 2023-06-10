@@ -120,7 +120,7 @@ interface IProduct extends IApi {
   description: string;
   sizes: IProductSize[];
   ingridients: string;
-  allergens?: string;
+  allergens?: string[];
   tag?: string;
   category?: string;
 }
@@ -128,7 +128,7 @@ interface IProduct extends IApi {
 interface IExtraItem extends IApi {
   name: string;
   price: number;
-  allergens?: string;
+  allergens?: string[];
 }
 
 interface IExtra extends IApi {

@@ -3,31 +3,37 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+import MenuServices from "../../../api/services/menu.service";
 import {
-  NewExtraProductSchema,
-  newExtraProductSchema,
-} from "../../../../utils/validationSchema";
+  NewExtraItemInput,
+  newExtraItemSchema,
+} from "../../../../utils/schema/menu.schema";
 
 type Props = {};
 
 const NewExtraProductForm = (props: Props) => {
+  const { mutate: createExtraItem } = MenuServices.useCreateExtraItem();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<NewExtraProductSchema>({
+  } = useForm<NewExtraItemInput>({
     mode: "onChange",
-    resolver: zodResolver(newExtraProductSchema),
-    defaultValues: {
-      price: 0,
-    },
+    resolver: zodResolver(newExtraItemSchema),
+    defaultValues: { price: 0 },
   });
 
-  const createExtraProductHandler: SubmitHandler<NewExtraProductSchema> = (
+  const createExtraProductHandler: SubmitHandler<NewExtraItemInput> = (
     data
   ) => {
-    console.log(data);
+    const transformedData: NewExtraItemInput = {
+      name: data.name,
+      allergens: data.allergens ? data.allergens : undefined,
+      price: data.price ? data.price : undefined,
+    };
+
+    createExtraItem(transformedData);
   };
   return (
     <form
@@ -52,6 +58,7 @@ const NewExtraProductForm = (props: Props) => {
           {...register("price", { valueAsNumber: true })}
           error={errors.price?.message}
         />
+        {/* valueAsNumber: true, */}
       </div>
       <Input
         type="text"

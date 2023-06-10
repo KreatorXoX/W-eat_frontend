@@ -51,7 +51,7 @@ const EditExtraForm = (props: Props) => {
               border border-gray-400 py-[0.4rem]
               "
           >
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2" htmlFor="paid">
               <Input
                 id="paid"
                 label=""

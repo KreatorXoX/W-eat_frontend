@@ -10,14 +10,13 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
   const columns = useMemo<ColumnDef<IOrder>[]>(
     () => [
       {
-        header: "Id",
-        accessorKey: "_id",
+        header: "Main Products",
+        accessorKey: "products",
         cell: ({ row }) => {
           return (
-            <Link
-              to={`/orders/${row.original._id}`}
-              className="text-blue-600 underline hover:no-underline dark:text-gray-200"
-            >{`${row.original._id}`}</Link>
+            <p className="">{`${row.original.orderItems.map(
+              (order) => order.product.name
+            )}`}</p>
           );
         },
       },

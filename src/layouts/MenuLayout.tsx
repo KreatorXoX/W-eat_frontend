@@ -6,7 +6,7 @@ const MenuLayout = (props: Props) => {
   return (
     <div className="mt-5 lg:mt-10">
       <nav>
-        <ul className="mx-auto flex max-w-[60rem] flex-row justify-evenly font-semibold text-gray-700">
+        <ul className="mx-auto flex max-w-[60rem] flex-row justify-evenly text-sm font-semibold text-gray-700">
           <li>
             <NavLink
               to="categories"

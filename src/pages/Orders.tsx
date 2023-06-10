@@ -10,7 +10,7 @@ const Orders = (props: Props) => {
   const ctx: UserContext = useOutletContext();
   const { data: userOrders, isLoading } = UserServices.useUserOrders(ctx.id);
   return (
-    <div className="h-full space-y-10 px-1 text-gray-800 dark:text-slate-200 sm:px-5 ">
+    <div className="flex h-full flex-col justify-start space-y-10 px-1 text-gray-800 dark:text-slate-200 sm:px-5">
       <div className="mt-5 flex items-center gap-10 lg:mt-0">
         <Link to=".." className="text-3xl font-light text-orange-600">
           <RiArrowGoBackLine />

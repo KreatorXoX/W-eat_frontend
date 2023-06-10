@@ -24,7 +24,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
   });
 
   return (
-    <div className="h-full w-full max-w-[60rem] overflow-auto text-xs dark:bg-gray-800 dark:text-blue-600 sm:text-sm">
+    <div className="h-full w-full max-w-[60rem] overflow-auto text-xs dark:bg-gray-800 sm:text-sm">
       <table className="mt-3 w-full table-auto rounded-lg bg-gray-200 text-center shadow-lg dark:bg-gray-600 sm:border-separate sm:border-spacing-1">
         <thead className="bg-gray-800 text-slate-100 sm:text-base">
           {table.getHeaderGroups().map((headerGroup) => (
@@ -45,6 +45,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                     ${header.id === "email" ? "hidden md:table-cell" : ""}
                     ${header.id === "tag" ? "hidden md:table-cell" : ""}
                     ${header.id === "category" ? "hidden md:table-cell" : ""}
+                    ${header.id === "status" ? "hidden md:table-cell" : ""}
                     `}
                   >
                     {header.isPlaceholder ? null : (
@@ -102,6 +103,11 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                       ${cell.column.id === "tag" ? "hidden md:table-cell" : ""}
                       ${
                         cell.column.id === "category"
+                          ? "hidden md:table-cell"
+                          : ""
+                      }
+                      ${
+                        cell.column.id === "status"
                           ? "hidden md:table-cell"
                           : ""
                       }
@@ -165,17 +171,22 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="w-8 rounded border p-1"
+            className="w-8 rounded border p-1 text-center dark:bg-gray-800"
           />
         </span>
         <select
+          className="border border-slate-200 dark:bg-gray-800"
           value={table.getState().pagination.pageSize}
           onChange={(e) => {
             table.setPageSize(Number(e.target.value));
           }}
         >
           {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
+            <option
+              key={pageSize}
+              value={pageSize}
+              className="text-center dark:bg-gray-800"
+            >
               Show {pageSize}
             </option>
           ))}

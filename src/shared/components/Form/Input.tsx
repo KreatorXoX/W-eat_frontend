@@ -43,6 +43,7 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
           id={props.id}
           placeholder={props.placeholder}
           min={props.type === "number" ? 0 : undefined}
+          step={0.01}
           name={props.name}
           onChange={props.onChange}
           onBlur={props.onBlur}

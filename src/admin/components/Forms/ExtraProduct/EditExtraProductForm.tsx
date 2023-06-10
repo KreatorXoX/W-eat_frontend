@@ -1,33 +1,52 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
-import {
-  NewExtraProductSchema,
-  newExtraProductSchema,
-} from "../../../../utils/validationSchema";
 
+import {
+  UpdateExtraItemInput,
+  updateExtraItemSchema,
+} from "../../../../utils/schema/menu.schema";
+import MenuServices from "../../../api/services/menu.service";
+import { useEffect } from "react";
 type Props = {};
 
 const EditExtraProductForm = (props: Props) => {
+  const { id } = useParams();
+  const { data: extraItem } = MenuServices.useExtraItem(id);
+  const { mutate: updateExtraItem } = MenuServices.useUpdateExtraItem();
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<NewExtraProductSchema>({
+    reset,
+    formState: { errors, isDirty },
+  } = useForm<UpdateExtraItemInput>({
     mode: "onChange",
-    resolver: zodResolver(newExtraProductSchema),
-    defaultValues: {
-      price: 0,
-    },
+    resolver: zodResolver(updateExtraItemSchema),
   });
 
-  const createExtraProductHandler: SubmitHandler<NewExtraProductSchema> = (
+  useEffect(() => {
+    const defaultValues: UpdateExtraItemInput = {
+      name: extraItem?.name,
+      allergens: extraItem?.allergens?.join(","),
+      price: extraItem?.price,
+    };
+
+    reset({ ...defaultValues });
+  }, [extraItem]);
+
+  const createExtraProductHandler: SubmitHandler<UpdateExtraItemInput> = (
     data
   ) => {
-    console.log(data);
+    const transformedData: UpdateExtraItemInput = {
+      name: data.name,
+      allergens: data.allergens ? data.allergens : undefined,
+      price: data.price ? data.price : undefined,
+    };
+    if (isDirty) updateExtraItem({ data: transformedData, id: id! });
   };
   return (
     <form
@@ -70,7 +89,7 @@ const EditExtraProductForm = (props: Props) => {
               "
           color="red"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/extra-product")}
         />
         <GenericButton
           classes="rounded font-semibold

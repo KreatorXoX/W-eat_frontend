@@ -6,24 +6,28 @@ import GenericButton from "../../../../shared/components/UI-Elements/GenericButt
 
 import { extraProducts } from "../../../../utils/table/allExtraProducts";
 import { useNavigate } from "react-router-dom";
+import MenuServices from "../../../api/services/menu.service";
 type Props = {};
 
 const MenuExtraProduct = (props: Props) => {
+  const { data: extraItems } = MenuServices.useExtraItems();
+  const { mutate: deleteExtraItem } = MenuServices.useDeleteExtraItem();
+
   const navigate = useNavigate();
-  const columns = useMemo<ColumnDef<ExtraItem>[]>(
+  const columns = useMemo<ColumnDef<IExtraItem>[]>(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       to={`/admin/orders/${row.original.orderId}`}
-        //       className="text-blue-600 underline hover:no-underline"
-        //     >{`${row.original.orderId}`}</Link>
-        //   );
-        // },
-      },
+      // {
+      //   header: "Id",
+      //   accessorKey: "id",
+      //   // cell: ({ row }) => {
+      //   //   return (
+      //   //     <Link
+      //   //       to={`/admin/orders/${row.original.orderId}`}
+      //   //       className="text-blue-600 underline hover:no-underline"
+      //   //     >{`${row.original.orderId}`}</Link>
+      //   //   );
+      //   // },
+      // },
       {
         header: "Name",
         accessorKey: "name",
@@ -41,14 +45,14 @@ const MenuExtraProduct = (props: Props) => {
               classes="rounded-lg"
               text="Edit"
               color="yellow"
-              onClick={() => navigate(`edit/${row.original.id}`)}
+              onClick={() => navigate(`edit/${row.original._id}`)}
             />
 
             <GenericButton
               classes="rounded-lg"
               text="Delete"
               color="red"
-              onClick={() => console.log(row.original.id + "deleted")}
+              onClick={() => deleteExtraItem(row.original._id)}
             />
           </div>
         ),
@@ -65,12 +69,16 @@ const MenuExtraProduct = (props: Props) => {
           text="Add new extra product"
         />
       </div>
-      <Table
-        {...{
-          data: extraProducts,
-          columns,
-        }}
-      />
+      {extraItems ? (
+        <Table
+          {...{
+            data: extraItems,
+            columns,
+          }}
+        />
+      ) : (
+        <div>No extra yet</div>
+      )}
     </div>
   );
 };

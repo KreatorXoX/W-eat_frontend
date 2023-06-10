@@ -148,7 +148,7 @@ const Checkout = (props: Props) => {
             size: "large",
           },
         ],
-        user: "6457bf7ecd929252ce16d4f9",
+        user: "647c752defec21dc7ddfd133",
         fullName: "taaas",
         email: "tas@ast.co",
         address: "tasd ,tass ,tdd ,tz",
@@ -314,7 +314,7 @@ const Checkout = (props: Props) => {
                   },
                   content: {
                     backgroundColor: `${
-                      dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
+                      dark ? "rgb(31 41 55)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
                     height: "15rem",
@@ -389,7 +389,7 @@ const Checkout = (props: Props) => {
                   },
                   content: {
                     backgroundColor: `${
-                      dark ? "rgb(55 65 81)" : "rgb(241 245 249)"
+                      dark ? "rgb(31 41 55)" : "rgb(241 245 249)"
                     }`,
                     opacity: "1",
                     height: "12rem",

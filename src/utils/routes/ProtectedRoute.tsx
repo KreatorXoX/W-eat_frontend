@@ -5,16 +5,20 @@ interface Props {}
 
 const ProtectedRoute = (props: Props) => {
   const token = useAuthStore((state) => state.token);
+  const location = useLocation();
+
+  const navigateTo = location.pathname.includes("checkout")
+    ? "/checkout/account/login"
+    : "/account/login";
   if (!token) {
-    const location = useLocation();
-    return <Navigate to="/account/login" state={{ from: location }} />;
+    return <Navigate to={navigateTo} state={{ from: location }} />;
   }
   const userInfo = (jwtDecode(token!) as IAccessTokenType).UserInfo;
 
   return userInfo ? (
     <Outlet context={{ id: userInfo._id }} />
   ) : (
-    <Navigate to="/account/login" state={{ from: location }} />
+    <Navigate to={navigateTo} state={{ from: location }} />
   );
 };
 
