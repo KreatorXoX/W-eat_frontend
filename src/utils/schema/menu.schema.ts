@@ -107,8 +107,10 @@ export const newExtraSchema = z.object({
   name: z
     .string({ required_error: "Name field is required" })
     .nonempty({ message: "Name cannot be empty string" }),
-  paid: z.boolean(),
-  extraItems: z.array(z.string()).optional(),
+  paid: z.boolean().or(z.string()),
+  extraItems: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
 });
 
 export type NewExtraInput = z.TypeOf<typeof newExtraSchema>;
@@ -119,8 +121,10 @@ export const updateExtraSchema = z.object({
     .string({ required_error: "Name field is required" })
     .nonempty({ message: "Name cannot be empty string" })
     .optional(),
-  paid: z.boolean().optional(),
-  extraItems: z.array(z.string()).optional(),
+  paid: z.boolean().or(z.string()).optional(),
+  extraItems: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
 });
 
 export type UpdateExtraInput = z.TypeOf<typeof updateExtraSchema>;

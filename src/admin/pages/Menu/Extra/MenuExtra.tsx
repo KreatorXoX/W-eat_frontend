@@ -4,26 +4,16 @@ import { useMemo } from "react";
 import Table from "../../../../shared/components/Table/Table";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
-import { extraCategories } from "../../../../utils/table/allExtras";
 import { useNavigate } from "react-router-dom";
+import MenuServices from "../../../api/services/menu.service";
 type Props = {};
 
 const MenuExtra = (props: Props) => {
+  const { data: extras } = MenuServices.useExtras();
+  const { mutate: deleteExtra } = MenuServices.useDeleteExtra();
   const navigate = useNavigate();
-  const columns = useMemo<ColumnDef<Extra>[]>(
+  const columns = useMemo<ColumnDef<IExtra>[]>(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       to={`/admin/orders/${row.original.orderId}`}
-        //       className="text-blue-600 underline hover:no-underline"
-        //     >{`${row.original.orderId}`}</Link>
-        //   );
-        // },
-      },
       {
         header: "Name",
         accessorKey: "name",
@@ -40,14 +30,14 @@ const MenuExtra = (props: Props) => {
               classes="rounded-lg"
               text="Edit"
               color="yellow"
-              onClick={() => navigate(`edit/${row.original.id}`)}
+              onClick={() => navigate(`edit/${row.original._id}`)}
             />
 
             <GenericButton
               classes="rounded-lg"
               text="Delete"
               color="red"
-              onClick={() => console.log(row.original.id + "deleted")}
+              onClick={() => deleteExtra(row.original._id)}
             />
           </div>
         ),
@@ -64,12 +54,16 @@ const MenuExtra = (props: Props) => {
           text="Add new extra"
         />
       </div>
-      <Table
-        {...{
-          data: extraCategories,
-          columns,
-        }}
-      />
+      {extras ? (
+        <Table
+          {...{
+            data: extras,
+            columns,
+          }}
+        />
+      ) : (
+        <p>No extras created yet</p>
+      )}
     </div>
   );
 };

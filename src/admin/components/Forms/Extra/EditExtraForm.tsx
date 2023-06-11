@@ -1,36 +1,58 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FiAlertTriangle } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+
+import MenuServices from "../../../api/services/menu.service";
 import {
-  NewExtraSchema,
-  newExtraSchema,
-} from "../../../../utils/validationSchema";
+  UpdateExtraInput,
+  updateExtraSchema,
+} from "../../../../utils/schema/menu.schema";
+import { useEffect } from "react";
 
-type Props = {};
+const formatData = (data: IExtraItem[] | undefined) => {
+  return data?.map((item) => {
+    const option: OptionSelect = {
+      value: item._id,
+      label: item.name,
+    };
+    return option;
+  });
+};
 
-const EditExtraForm = (props: Props) => {
+const EditExtraForm = () => {
+  const { id } = useParams();
+  const { data: extra } = MenuServices.useExtra(id);
+  const { data: extraItems } = MenuServices.useExtraItems();
+  const { mutate: updateExtra } = MenuServices.useUpdateExtra();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
+    reset,
 
     formState: { errors, isDirty },
-  } = useForm<NewExtraSchema>({
+  } = useForm<UpdateExtraInput>({
     mode: "onChange",
-    resolver: zodResolver(newExtraSchema),
-    defaultValues: {
-      paid: String(false),
-    },
+    resolver: zodResolver(updateExtraSchema),
   });
 
-  const editExtraHandler: SubmitHandler<NewExtraSchema> = (data) => {
+  useEffect(() => {
+    const defaultValues: UpdateExtraInput = {
+      name: extra?.name,
+      paid: String(extra?.paid),
+      extraItems: formatData(extra?.extraItems),
+    };
+    reset({ ...defaultValues });
+  }, [extra]);
+
+  const editExtraHandler: SubmitHandler<UpdateExtraInput> = (data) => {
     // if not isDirty navigate to main menu
-    console.log(isDirty);
-    console.log(data);
+
+    updateExtra({ data: data, id: id! });
   };
   return (
     <form onSubmit={handleSubmit(editExtraHandler)} className="space-y-4">
@@ -95,7 +117,8 @@ const EditExtraForm = (props: Props) => {
         label="Extra-Products"
         id="extraItems"
         control={control}
-        options={[{ value: "ketchup", label: "id-ketchup" }]}
+        // options={[{ value: "ketchup", label: "id-ketchup" }]}
+        options={formatData(extraItems)}
         error={errors.extraItems?.message}
       />
 

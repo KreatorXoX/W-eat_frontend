@@ -4,14 +4,27 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+
+import MenuServices from "../../../api/services/menu.service";
 import {
-  NewExtraSchema,
+  NewExtraInput,
   newExtraSchema,
-} from "../../../../utils/validationSchema";
+} from "../../../../utils/schema/menu.schema";
 
 type Props = {};
 
+const formatData = (data: IExtraItem[] | undefined) => {
+  return data?.map((item) => {
+    const option: OptionSelect = {
+      value: item._id,
+      label: item.name,
+    };
+    return option;
+  });
+};
 const NewExtraForm = (props: Props) => {
+  const { mutate: createExtra } = MenuServices.useCreateExtra();
+  const { data: extraItems } = MenuServices.useExtraItems();
   const navigate = useNavigate();
   const {
     register,
@@ -19,16 +32,17 @@ const NewExtraForm = (props: Props) => {
     control,
 
     formState: { errors },
-  } = useForm<NewExtraSchema>({
+  } = useForm<NewExtraInput>({
     mode: "onChange",
     resolver: zodResolver(newExtraSchema),
+
     defaultValues: {
-      paid: String(false),
+      paid: "false",
     },
   });
 
-  const createExtraHandler: SubmitHandler<NewExtraSchema> = (data) => {
-    console.log(data);
+  const createExtraHandler: SubmitHandler<NewExtraInput> = (data) => {
+    createExtra(data);
   };
   return (
     <form onSubmit={handleSubmit(createExtraHandler)} className="space-y-4">
@@ -93,7 +107,7 @@ const NewExtraForm = (props: Props) => {
         label="Extra-Products"
         id="extraItems"
         control={control}
-        options={[{ value: "ketchup", label: "id-ketchup" }]}
+        options={formatData(extraItems)}
         error={errors.extraItems?.message}
       />
 
@@ -107,6 +121,7 @@ const NewExtraForm = (props: Props) => {
           onClick={() => navigate(-1)}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "
