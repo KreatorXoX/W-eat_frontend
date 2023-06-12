@@ -18,7 +18,7 @@ export const customStyles = {
   option: (baseStyles: any, state: any) => ({
     ...baseStyles,
     outline: "none",
-    color: "rgb(107 114 128)",
+    color: "rgb(0 0 0)",
     fontWeight: "500",
     padding: "0.5rem",
     ":hover": {
@@ -29,19 +29,19 @@ export const customStyles = {
   }),
   singleValue: (baseStyles: any) => ({
     ...baseStyles,
-    color: "rgb(107 114 128)",
+    color: "rgb(0 0 0)",
     fontWeight: "500",
   }),
   multiValue: (baseStyles: any) => ({
     ...baseStyles,
     backgroundColor: "rgb(241 245 249)",
-    color: "rgb(107 114 128)",
+    color: "rgb(0 0 0)",
     fontWeight: "500",
     padding: "0.1rem",
   }),
   multiValueLabel: (baseStyles: any) => ({
     ...baseStyles,
-    color: "rgb(107 114 128)",
+    color: "rgb(0 0 0)",
     fontWeight: "500",
   }),
 };

@@ -77,7 +77,7 @@ const NewExtraProductForm = (props: Props) => {
               "
           color="red"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/extra-product")}
         />
         <GenericButton
           classes="rounded font-semibold

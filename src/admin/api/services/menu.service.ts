@@ -1,12 +1,208 @@
 import {
+  NewCategoryInput,
   NewExtraInput,
   NewExtraItemInput,
+  NewProductInput,
+  UpdateCategoryInput,
   UpdateExtraInput,
   UpdateExtraItemInput,
+  UpdateProductInput,
 } from "../../../utils/schema/menu.schema";
 
 import axiosApi from "../axios";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+
+// Categories
+// Get All Categories
+const getCategories = async () => {
+  const response = await axiosApi.get<ICategory[]>("/menu/category");
+  return response.data;
+};
+
+const useCategories = () => {
+  return useQuery(["categories"], {
+    queryFn: () => getCategories(),
+  });
+};
+// Get Categoryß by Id
+const getCategory = async (id: string) => {
+  const response = await axiosApi.get<ICategory>(`/menu/category/${id}`);
+  return response.data;
+};
+
+const useCategory = (id: string | undefined) => {
+  return useQuery([`category-${id}`], {
+    queryFn: () => getCategory(id!),
+    enabled: !!id,
+  });
+};
+
+// Create New Category
+type NewCategoryInputApi = {
+  name?: string;
+  paid?: string | boolean;
+  categoryItems?: string[];
+};
+const createCategory = async (data: NewCategoryInput) => {
+  const transformedData: NewCategoryInputApi = {};
+  const response = await axiosApi.post("/menu/category", {
+    ...transformedData,
+  });
+  return response.data;
+};
+
+const useCreateCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: NewCategoryInput) => createCategory(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["categories"]);
+    },
+  });
+};
+
+// Update Category
+type UpdateCategoryInputApi = {
+  name?: string;
+  paid?: string | boolean;
+  categoryItems?: string[];
+};
+const updateCategory = async (data: UpdateCategoryInput, id: string) => {
+  const transformedData: UpdateCategoryInputApi = {};
+  // const transformedData: UpdateCategoryInputApi = {
+  //   name: data.name,
+  //     paid: data.paid === "true",
+  //   categoryItems:
+  //     data.categoryItems && data.categoryItems.length > 0
+  //       ? data.categoryItems?.map((item: any) => item.value)
+  //       : undefined,
+  // };
+  const response = await axiosApi.patch(`/menu/category/${id}`, {
+    ...transformedData,
+  });
+  return response.data;
+};
+
+const useUpdateCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ data, id }: { data: UpdateCategoryInput; id: string }) =>
+      updateCategory(data, id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries([`category-${response._id}`]);
+    },
+  });
+};
+// Delete Category
+const deleteCategory = async (id: string) => {
+  const response = await axiosApi.delete(`/menu/category/${id}`);
+  return response.data;
+};
+
+const useDeleteCategory = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteCategory(id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries(["categories"]);
+    },
+  });
+};
+
+// Products
+// Get All Product Items
+const getProducts = async () => {
+  const response = await axiosApi.get<IProduct[]>("/menu/product");
+  return response.data;
+};
+
+const useProducts = () => {
+  return useQuery(["products"], {
+    queryFn: () => getProducts(),
+  });
+};
+// Get Product Item by Id
+const getProduct = async (id: string) => {
+  const response = await axiosApi.get<IProduct>(`/menu/product/${id}`);
+  return response.data;
+};
+
+const useProduct = (id: string | undefined) => {
+  return useQuery([`product-${id}`], {
+    queryFn: () => getProduct(id!),
+    enabled: !!id,
+  });
+};
+
+// Create New Product Item
+type NewProductInputApi = {
+  name?: string;
+  paid?: string | boolean;
+  productItems?: string[];
+};
+const createProduct = async (data: NewProductInput) => {
+  const transformedData: NewProductInputApi = {};
+  const response = await axiosApi.post("/menu/product", {
+    ...transformedData,
+  });
+  return response.data;
+};
+
+const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: NewProductInput) => createProduct(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["products"]);
+    },
+  });
+};
+
+// Update Product
+type UpdateProductInputApi = {
+  name?: string;
+  description?: string;
+  sizes?: {
+    size: string;
+    price: number;
+  }[];
+  ingridients?: string;
+  allergens?: string;
+  tag?: string;
+  category?: string;
+};
+const updateProduct = async (data: UpdateProductInputApi, id: string) => {
+  const response = await axiosApi.patch(`/menu/product/${id}`, {
+    ...data,
+  });
+  return response.data;
+};
+
+const useUpdateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ data, id }: { data: UpdateProductInputApi; id: string }) =>
+      updateProduct(data, id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries([`product-${response._id}`]);
+    },
+  });
+};
+// Delete Product Item
+const deleteProduct = async (id: string) => {
+  const response = await axiosApi.delete(`/menu/product/${id}`);
+  return response.data;
+};
+
+const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteProduct(id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries(["products"]);
+    },
+  });
+};
 
 // Extras
 // Get All Extra Items
@@ -191,6 +387,16 @@ const useDeleteExtraItem = () => {
 };
 
 const MenuServices = {
+  useCreateCategory,
+  useCategories,
+  useCategory,
+  useUpdateCategory,
+  useDeleteCategory,
+  useCreateProduct,
+  useProducts,
+  useProduct,
+  useUpdateProduct,
+  useDeleteProduct,
   useCreateExtra,
   useExtras,
   useExtra,

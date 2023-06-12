@@ -1,39 +1,89 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+
+import MenuServices from "../../../api/services/menu.service";
 import {
-  NewProductSchema,
-  newProductSchema,
-} from "../../../../utils/validationSchema";
+  UpdateProductInput,
+  updateProductSchema,
+} from "../../../../utils/schema/menu.schema";
+import { useEffect } from "react";
 
 type Props = {};
+const formatPrices = (data: IProduct | undefined) => {
+  return data?.sizes.map((size, idx) => {
+    const option: OptionSelect = {
+      value: size.price,
+      label: size.size,
+    };
+    return option;
+  });
+};
+
+const formatCategories = (data: ICategory[] | undefined) => {
+  return data?.map((category) => {
+    const option: OptionSelect = {
+      value: category._id,
+      label: category.name,
+    };
+    return option;
+  });
+};
 
 const EditProductForm = (props: Props) => {
+  const { id } = useParams();
+  const { data: product } = MenuServices.useProduct(id);
+  const { mutate: updateProduct } = MenuServices.useUpdateProduct();
+  const { data: categories } = MenuServices.useCategories();
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
     getValues,
+    reset,
     formState: { errors, isDirty },
-  } = useForm<NewProductSchema>({
+  } = useForm<UpdateProductInput>({
     mode: "onChange",
-    resolver: zodResolver(newProductSchema),
+    resolver: zodResolver(updateProductSchema),
     defaultValues: {
-      sizes: [
-        { size: "Standard", price: 8 },
-        { size: "Large", price: 12 },
-      ],
+      sizes: product?.sizes,
     },
   });
 
-  const editProductHandler: SubmitHandler<NewProductSchema> = (data) => {
+  useEffect(() => {
+    const defaultValues: UpdateProductInput = {
+      name: product?.name,
+      description: product?.description,
+      sizes: product?.sizes,
+      ingridients: product?.ingridients,
+      allergens: product?.allergens ? product?.allergens.join(",") : undefined,
+      tag: product?.tag,
+      category: {
+        value: product?.category?._id || "",
+        label: product?.category?.name || "",
+      },
+    };
+
+    reset({ ...defaultValues });
+  }, [product]);
+
+  const editProductHandler: SubmitHandler<UpdateProductInput> = (data) => {
     // submit the form if isDirty else
     // naivigate to main menu
-    console.log(isDirty);
-    console.log(data);
+    const transformedData = {
+      allergens: data.allergens,
+      category: data.category?.value as string,
+      description: data.description,
+      ingridients: data.ingridients,
+      name: data.name,
+      sizes: data.sizes,
+      tag: data.tag ? data.tag : undefined,
+    };
+    updateProduct({ data: transformedData, id: id! });
   };
 
   const { fields, append, remove } = useFieldArray({
@@ -95,6 +145,7 @@ const EditProductForm = (props: Props) => {
           error={errors.allergens?.message}
         />
       </div>
+      {/*  */}
       {/* <Input
         type="text"
         half={false}
@@ -113,10 +164,7 @@ const EditProductForm = (props: Props) => {
         placeholder="ex: Pizza"
         control={control}
         id="category"
-        options={[
-          { label: "Pizza", value: "pizza-id" },
-          { label: "Salad", value: "salad-id" },
-        ]}
+        options={formatCategories(categories)}
         error={errors.category?.message}
       />
 
@@ -166,7 +214,7 @@ const EditProductForm = (props: Props) => {
           "
         />
         <span className="text-sm italic text-red-600">
-          {getValues().sizes.length > 0
+          {getValues().sizes && getValues().sizes!.length > 0
             ? ""
             : "Please add price to your product"}
         </span>
@@ -180,7 +228,7 @@ const EditProductForm = (props: Props) => {
           color="red"
           type="button"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/products")}
         />
         <GenericButton
           classes="rounded font-semibold

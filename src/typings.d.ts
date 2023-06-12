@@ -110,6 +110,12 @@ interface IUser extends IApi {
   otherAddress?: Address;
 }
 
+interface ICategory extends IApi {
+  name: string;
+  products: IProduct[];
+  extras: IExtra[];
+}
+
 interface IProductSize {
   size: string;
   price: number;
@@ -122,7 +128,7 @@ interface IProduct extends IApi {
   ingridients: string;
   allergens?: string[];
   tag?: string;
-  category?: string;
+  category?: ICategory;
 }
 
 interface IExtraItem extends IApi {

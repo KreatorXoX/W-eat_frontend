@@ -18,7 +18,7 @@ const EditExtra = (props: Props) => {
           text="<<"
           color="blue"
           classes="rounded-full w-10 h-10 text-slate-50 font-semibold text-xl flex items-center justify-center"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/extra")}
         />
       </div>
       <div>

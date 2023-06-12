@@ -4,27 +4,16 @@ import { useMemo } from "react";
 import Table from "../../../../shared/components/Table/Table";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
-import { products } from "../../../../utils/table/allProducts";
 import { useNavigate } from "react-router-dom";
+import MenuServices from "../../../api/services/menu.service";
 type Props = {};
 
 const MenuProduct = (props: Props) => {
+  const { data: products } = MenuServices.useProducts();
   const navigate = useNavigate();
 
-  const columns = useMemo<ColumnDef<Item>[]>(
+  const columns = useMemo<ColumnDef<IProduct>[]>(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       to={`/admin/orders/${row.original.orderId}`}
-        //       className="text-blue-600 underline hover:no-underline"
-        //     >{`${row.original.orderId}`}</Link>
-        //   );
-        // },
-      },
       {
         header: "Name",
         accessorKey: "name",
@@ -32,11 +21,11 @@ const MenuProduct = (props: Props) => {
       {
         header: "Price",
         accessorKey: "price",
-        cell: ({ row }) => `$ ${row.original.price.toFixed(2)}`,
+        cell: ({ row }) => `$ ${row.original.sizes[0].price.toFixed(2)}`,
       },
       {
         header: "Category",
-        accessorKey: "category",
+        accessorKey: "category.name",
       },
       {
         header: "Tag",
@@ -50,14 +39,14 @@ const MenuProduct = (props: Props) => {
               classes="rounded-lg"
               text="Edit"
               color="yellow"
-              onClick={() => navigate(`edit/${row.original.id}`)}
+              onClick={() => navigate(`edit/${row.original._id}`)}
             />
 
             <GenericButton
               classes="rounded-lg"
               text="Delete"
               color="red"
-              onClick={() => console.log(row.original.id + "deleted")}
+              onClick={() => console.log(row.original._id + "deleted")}
             />
           </div>
         ),
@@ -74,12 +63,16 @@ const MenuProduct = (props: Props) => {
           text="Add new product"
         />
       </div>
-      <Table
-        {...{
-          data: products,
-          columns,
-        }}
-      />
+      {products ? (
+        <Table
+          {...{
+            data: products,
+            columns,
+          }}
+        />
+      ) : (
+        <p>No product created yet</p>
+      )}
     </div>
   );
 };

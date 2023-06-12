@@ -129,7 +129,7 @@ const EditExtraForm = () => {
               "
           color="red"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/extra")}
         />
         <GenericButton
           classes="rounded font-semibold

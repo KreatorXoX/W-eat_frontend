@@ -64,13 +64,6 @@ export type NewProductInput = z.TypeOf<typeof newProductSchema>;
 
 // updating product schema
 export const updateProductSchema = z.object({
-  params: z.object({
-    id: z
-      .string()
-
-      .optional(),
-  }),
-
   name: z
     .string()
     .nonempty({ message: "Product name cannot be empty string" })
@@ -89,14 +82,10 @@ export const updateProductSchema = z.object({
     .string()
     .nonempty({ message: "Allergen cannot be empty string" })
     .optional(),
-  tag: z
-    .string()
-    .nonempty({ message: "Tag cannot be empty string" })
-    .optional(),
+  tag: z.string().optional(),
   sizes: z.array(z.object({ size: z.string(), price: z.number() })).optional(),
   category: z
-    .string()
-
+    .object({ value: z.string().or(z.number()), label: z.string() })
     .optional(),
 });
 
