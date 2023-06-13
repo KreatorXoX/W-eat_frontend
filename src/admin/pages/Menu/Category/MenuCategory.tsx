@@ -1,28 +1,17 @@
-import { categories } from "../../../../utils/table/allCategories";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 import Table from "../../../../shared/components/Table/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-
+import MenuServices from "../../../api/services/menu.service";
 type Props = {};
 
 const MenuCategory = (props: Props) => {
+  const { data: categories } = MenuServices.useCategories();
+  const { mutate: deleteCategory } = MenuServices.useDeleteCategory();
   const navigate = useNavigate();
-  const columns = useMemo<ColumnDef<Category>[]>(
+  const columns = useMemo<ColumnDef<ICategory>[]>(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       to={`/admin/orders/${row.original.orderId}`}
-        //       className="text-blue-600 underline hover:no-underline"
-        //     >{`${row.original.orderId}`}</Link>
-        //   );
-        // },
-      },
       {
         header: "Name",
         accessorKey: "name",
@@ -35,14 +24,14 @@ const MenuCategory = (props: Props) => {
               classes="rounded-lg"
               text="Edit"
               color="yellow"
-              onClick={() => navigate(`edit/${row.original.id}`)}
+              onClick={() => navigate(`edit/${row.original._id}`)}
             />
 
             <GenericButton
               classes="rounded-lg"
               text="Delete"
               color="red"
-              onClick={() => console.log(row.original.id + "deleted")}
+              onClick={() => deleteCategory(row.original._id)}
             />
           </div>
         ),
@@ -59,12 +48,16 @@ const MenuCategory = (props: Props) => {
           text="Add new category"
         />
       </div>
-      <Table
-        {...{
-          data: categories,
-          columns,
-        }}
-      />
+      {categories ? (
+        <Table
+          {...{
+            data: categories,
+            columns,
+          }}
+        />
+      ) : (
+        <p>No category created yet</p>
+      )}
     </div>
   );
 };

@@ -3,14 +3,26 @@ import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
+
 import {
-  NewProductSchema,
+  NewProductInput,
   newProductSchema,
-} from "../../../../utils/validationSchema";
+} from "../../../../utils/schema/menu.schema";
+import MenuServices from "../../../api/services/menu.service";
 
 type Props = {};
-
+const formatCategories = (data: ICategory[] | undefined) => {
+  return data?.map((category) => {
+    const option: OptionSelect = {
+      value: category._id,
+      label: category.name,
+    };
+    return option;
+  });
+};
 const NewProductForm = (props: Props) => {
+  const { mutate: createProduct } = MenuServices.useCreateProduct();
+  const { data: categories } = MenuServices.useCategories();
   const navigate = useNavigate();
   const {
     register,
@@ -18,7 +30,7 @@ const NewProductForm = (props: Props) => {
     control,
     getValues,
     formState: { errors },
-  } = useForm<NewProductSchema>({
+  } = useForm<NewProductInput>({
     mode: "onChange",
     resolver: zodResolver(newProductSchema),
     defaultValues: {
@@ -26,8 +38,8 @@ const NewProductForm = (props: Props) => {
     },
   });
 
-  const createProductHandler: SubmitHandler<NewProductSchema> = (data) => {
-    console.log(data);
+  const createProductHandler: SubmitHandler<NewProductInput> = (data) => {
+    createProduct(data);
   };
 
   const { fields, append, remove } = useFieldArray({
@@ -107,10 +119,7 @@ const NewProductForm = (props: Props) => {
         placeholder="ex: Pizza"
         control={control}
         id="category"
-        options={[
-          { label: "Pizza", value: "pizza-id" },
-          { label: "Salad", value: "salad-id" },
-        ]}
+        options={formatCategories(categories)}
         error={errors.category?.message}
       />
 

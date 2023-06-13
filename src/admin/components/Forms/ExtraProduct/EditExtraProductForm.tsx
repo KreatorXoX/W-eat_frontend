@@ -43,8 +43,8 @@ const EditExtraProductForm = (props: Props) => {
   ) => {
     const transformedData: UpdateExtraItemInput = {
       name: data.name,
-      allergens: data.allergens ? data.allergens : undefined,
-      price: data.price ? data.price : undefined,
+      allergens: data.allergens,
+      price: data.price,
     };
     if (isDirty) updateExtraItem({ data: transformedData, id: id! });
   };

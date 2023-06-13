@@ -24,7 +24,7 @@ const useCategories = () => {
     queryFn: () => getCategories(),
   });
 };
-// Get Categoryß by Id
+// Get Category by Id
 const getCategory = async (id: string) => {
   const response = await axiosApi.get<ICategory>(`/menu/category/${id}`);
   return response.data;
@@ -64,19 +64,15 @@ const useCreateCategory = () => {
 // Update Category
 type UpdateCategoryInputApi = {
   name?: string;
-  paid?: string | boolean;
-  categoryItems?: string[];
+  products?: string[];
+  extras?: string[];
 };
 const updateCategory = async (data: UpdateCategoryInput, id: string) => {
-  const transformedData: UpdateCategoryInputApi = {};
-  // const transformedData: UpdateCategoryInputApi = {
-  //   name: data.name,
-  //     paid: data.paid === "true",
-  //   categoryItems:
-  //     data.categoryItems && data.categoryItems.length > 0
-  //       ? data.categoryItems?.map((item: any) => item.value)
-  //       : undefined,
-  // };
+  const transformedData: UpdateCategoryInputApi = {
+    name: data.name,
+    products: data.products?.map((product) => product.value as string),
+    extras: data.extras?.map((extra) => extra.value as string),
+  };
   const response = await axiosApi.patch(`/menu/category/${id}`, {
     ...transformedData,
   });
@@ -136,12 +132,27 @@ const useProduct = (id: string | undefined) => {
 
 // Create New Product Item
 type NewProductInputApi = {
-  name?: string;
-  paid?: string | boolean;
-  productItems?: string[];
+  name: string;
+  description: string;
+  sizes: {
+    size: string;
+    price: number;
+  }[];
+  ingridients?: string;
+  allergens?: string;
+  tag?: string;
+  category?: string;
 };
 const createProduct = async (data: NewProductInput) => {
-  const transformedData: NewProductInputApi = {};
+  const transformedData: NewProductInputApi = {
+    allergens: data.allergens || undefined,
+    category: data.category?.value as string,
+    description: data.description,
+    ingridients: data.ingridients,
+    name: data.name,
+    sizes: data.sizes,
+    tag: data.tag || undefined,
+  };
   const response = await axiosApi.post("/menu/product", {
     ...transformedData,
   });
@@ -171,9 +182,19 @@ type UpdateProductInputApi = {
   tag?: string;
   category?: string;
 };
-const updateProduct = async (data: UpdateProductInputApi, id: string) => {
+const updateProduct = async (data: UpdateProductInput, id: string) => {
+  const transformedData: UpdateProductInputApi = {
+    allergens: data.allergens,
+    category: data.category?.value as string,
+    description: data.description,
+    ingridients: data.ingridients,
+    name: data.name,
+    sizes: data.sizes,
+    tag: data.tag,
+  };
+
   const response = await axiosApi.patch(`/menu/product/${id}`, {
-    ...data,
+    ...transformedData,
   });
   return response.data;
 };
@@ -181,7 +202,7 @@ const updateProduct = async (data: UpdateProductInputApi, id: string) => {
 const useUpdateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ data, id }: { data: UpdateProductInputApi; id: string }) =>
+    mutationFn: ({ data, id }: { data: UpdateProductInput; id: string }) =>
       updateProduct(data, id),
     onSuccess: (response: { _id: string }) => {
       queryClient.invalidateQueries([`product-${response._id}`]);

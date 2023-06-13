@@ -10,6 +10,7 @@ type Props = {};
 
 const MenuProduct = (props: Props) => {
   const { data: products } = MenuServices.useProducts();
+  const { mutate: deleteProduct } = MenuServices.useDeleteProduct();
   const navigate = useNavigate();
 
   const columns = useMemo<ColumnDef<IProduct>[]>(
@@ -25,7 +26,8 @@ const MenuProduct = (props: Props) => {
       },
       {
         header: "Category",
-        accessorKey: "category.name",
+        accessorKey: "category",
+        cell: ({ row }) => row.original.category?.name,
       },
       {
         header: "Tag",
@@ -46,7 +48,7 @@ const MenuProduct = (props: Props) => {
               classes="rounded-lg"
               text="Delete"
               color="red"
-              onClick={() => console.log(row.original._id + "deleted")}
+              onClick={() => deleteProduct(row.original._id)}
             />
           </div>
         ),

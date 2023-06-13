@@ -1,20 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 import EditCategoryForm from "../../../components/Forms/Category/EditCategoryForm";
-import { formatData } from "../../../../utils/formatingDAta/formatData";
 
 type Props = {};
 
 const EditCategory = (props: Props) => {
   const navigate = useNavigate();
 
-  const id = useParams().id;
-
-  const category = formatData().find((cat) => cat.id === id);
-  if (!category) {
-    return <h2>no Cat</h2>;
-  }
   return (
     <div className="mx-auto mt-10 w-full max-w-[60rem] space-y-5 px-5">
       <div className="flex justify-between border-b-2 pb-5">
@@ -27,7 +20,7 @@ const EditCategory = (props: Props) => {
         />
       </div>
       <div>
-        <EditCategoryForm category={category!} />
+        <EditCategoryForm />
       </div>
     </div>
   );

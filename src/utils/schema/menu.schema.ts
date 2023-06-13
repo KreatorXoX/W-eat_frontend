@@ -15,8 +15,12 @@ export const updateCategorySchema = z.object({
     .string()
     .nonempty({ message: "Product name cannot be empty string" })
     .optional(),
-  products: z.array(z.string().optional()),
-  extras: z.array(z.string()).optional(),
+  products: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
+  extras: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
 });
 
 export type UpdateCategoryInput = z.TypeOf<typeof updateCategorySchema>;
@@ -30,33 +34,19 @@ export const newProductSchema = z.object({
     .min(10, "Must be 10 or more characters long"),
   ingridients: z
     .string()
-    .nonempty({ message: "Product name cannot be empty string" })
+    .nonempty({ message: "Please enter some of the ingridients" })
     .min(10, "Must be 10 or more characters long"),
   allergens: z
     .string()
-    .nonempty({ message: "Allergens cannot be empty string" })
-    .transform((allergens, ctx) => {
-      const allergensArray = allergens.split(",");
-      if (!allergensArray) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: "allergens should be seperated by a comma",
-        });
 
-        return z.NEVER;
-      }
-      return allergensArray;
-    })
     .optional(),
-
   tag: z
     .string()
-    .nonempty({ message: "Product name cannot be empty string" })
-    .optional(),
-  sizes: z.array(z.object({ size: z.string(), price: z.number() })),
-  category: z
-    .string()
 
+    .optional(),
+  sizes: z.array(z.object({ size: z.string(), price: z.number().positive() })),
+  category: z
+    .object({ value: z.string().or(z.number()), label: z.string() })
     .optional(),
 });
 
@@ -78,10 +68,7 @@ export const updateProductSchema = z.object({
     .nonempty({ message: "Ingridients cannot be empty string" })
     .min(10, "Must be 10 or more characters long")
     .optional(),
-  allergens: z
-    .string()
-    .nonempty({ message: "Allergen cannot be empty string" })
-    .optional(),
+  allergens: z.string().optional(),
   tag: z.string().optional(),
   sizes: z.array(z.object({ size: z.string(), price: z.number() })).optional(),
   category: z

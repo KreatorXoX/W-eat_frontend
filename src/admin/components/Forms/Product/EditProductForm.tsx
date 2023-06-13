@@ -12,15 +12,6 @@ import {
 import { useEffect } from "react";
 
 type Props = {};
-const formatPrices = (data: IProduct | undefined) => {
-  return data?.sizes.map((size, idx) => {
-    const option: OptionSelect = {
-      value: size.price,
-      label: size.size,
-    };
-    return option;
-  });
-};
 
 const formatCategories = (data: ICategory[] | undefined) => {
   return data?.map((category) => {
@@ -74,16 +65,8 @@ const EditProductForm = (props: Props) => {
   const editProductHandler: SubmitHandler<UpdateProductInput> = (data) => {
     // submit the form if isDirty else
     // naivigate to main menu
-    const transformedData = {
-      allergens: data.allergens,
-      category: data.category?.value as string,
-      description: data.description,
-      ingridients: data.ingridients,
-      name: data.name,
-      sizes: data.sizes,
-      tag: data.tag ? data.tag : undefined,
-    };
-    updateProduct({ data: transformedData, id: id! });
+
+    updateProduct({ data: data, id: id! });
   };
 
   const { fields, append, remove } = useFieldArray({
