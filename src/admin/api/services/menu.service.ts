@@ -39,12 +39,16 @@ const useCategory = (id: string | undefined) => {
 
 // Create New Category
 type NewCategoryInputApi = {
-  name?: string;
-  paid?: string | boolean;
-  categoryItems?: string[];
+  name: string;
+  products?: string[];
+  extras?: string[];
 };
 const createCategory = async (data: NewCategoryInput) => {
-  const transformedData: NewCategoryInputApi = {};
+  const transformedData: NewCategoryInputApi = {
+    name: data.name,
+    products: data.products?.map((product) => product.value as string),
+    extras: data.extras?.map((extra) => extra.value as string),
+  };
   const response = await axiosApi.post("/menu/category", {
     ...transformedData,
   });
@@ -106,6 +110,19 @@ const useDeleteCategory = () => {
 };
 
 // Products
+// Get All Product Items Without Category
+const getUncategorizedProducts = async () => {
+  const response = await axiosApi.get<IProduct[]>(
+    "/menu/products-without-category"
+  );
+  return response.data;
+};
+
+const useUncategorizedProducts = () => {
+  return useQuery(["products-without-category"], {
+    queryFn: () => getUncategorizedProducts(),
+  });
+};
 // Get All Product Items
 const getProducts = async () => {
   const response = await axiosApi.get<IProduct[]>("/menu/product");
@@ -415,6 +432,7 @@ const MenuServices = {
   useDeleteCategory,
   useCreateProduct,
   useProducts,
+  useUncategorizedProducts,
   useProduct,
   useUpdateProduct,
   useDeleteProduct,

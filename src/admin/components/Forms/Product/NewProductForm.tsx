@@ -161,9 +161,9 @@ const NewProductForm = (props: Props) => {
       })}
       <div className="flex flex-col gap-2">
         <GenericButton
+          type="button"
           onClick={addSize}
           text="Add price"
-          type="button"
           classes="
           bg-green-800 text-white rounded-lg w-fit
           "
@@ -177,19 +177,19 @@ const NewProductForm = (props: Props) => {
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "
           color="red"
-          type="button"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/products")}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "
-          type="submit"
           text="Save"
         />
       </div>

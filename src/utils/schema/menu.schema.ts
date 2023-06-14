@@ -3,8 +3,12 @@ import { z } from "zod";
 // creating a new category schema
 export const newCategorySchema = z.object({
   name: z.string().nonempty({ message: "Product name cannot be empty string" }),
-  products: z.array(z.string()).optional(),
-  extras: z.array(z.string()).optional(),
+  products: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
+  extras: z
+    .array(z.object({ value: z.string().or(z.number()), label: z.string() }))
+    .optional(),
 });
 
 export type NewCategoryInput = z.TypeOf<typeof newCategorySchema>;

@@ -18,9 +18,6 @@ const queryClient = new QueryClient({
         if (err.response) errMsg = err.response.data.message;
         else if (err.request) errMsg = err.request.message;
         else errMsg = err.message;
-
-        console.log(errMsg);
-        console.log("error is ", err);
       },
     },
   },

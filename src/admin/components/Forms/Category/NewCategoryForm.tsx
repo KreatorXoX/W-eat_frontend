@@ -2,30 +2,44 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
-import {
-  NewCategorySchema,
-  newCategorySchema,
-} from "../../../../utils/validationSchema";
+
 import { useNavigate } from "react-router-dom";
-import { formatData } from "../../../../utils/formatingDAta/formatData";
+
+import MenuServices from "../../../api/services/menu.service";
+import {
+  NewCategoryInput,
+  newCategorySchema,
+} from "../../../../utils/schema/menu.schema";
 type Props = {};
 
-const category = formatData()[0];
+const formatProducts = (data: IProduct[] | IExtra[] | undefined) => {
+  return data?.map((product) => {
+    const option: OptionSelect = {
+      value: product._id,
+      label: product.name,
+    };
+    return option;
+  });
+};
 
 const NewCategoryForm = (props: Props) => {
+  const { data: products } = MenuServices.useUncategorizedProducts();
+  const { data: extras } = MenuServices.useExtras();
+  const { mutate: createCategory } = MenuServices.useCreateCategory();
+
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<NewCategorySchema>({
+  } = useForm<NewCategoryInput>({
     mode: "onChange",
     resolver: zodResolver(newCategorySchema),
   });
 
-  const createNewCategoryHandler: SubmitHandler<NewCategorySchema> = (data) => {
-    console.log(data);
+  const createNewCategoryHandler: SubmitHandler<NewCategoryInput> = (data) => {
+    createCategory(data);
   };
   return (
     <form
@@ -50,7 +64,7 @@ const NewCategoryForm = (props: Props) => {
         placeholder="ex: Pizza"
         control={control}
         id="products"
-        options={category.products}
+        options={formatProducts(products)}
         error={errors.products?.message}
       />
       <Input
@@ -61,20 +75,22 @@ const NewCategoryForm = (props: Props) => {
         placeholder="ex: Pizza"
         id="extras"
         control={control}
-        options={category.extraItems}
+        options={formatProducts(extras)}
         error={errors.extras?.message}
       />
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "
           color="red"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/categories")}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "

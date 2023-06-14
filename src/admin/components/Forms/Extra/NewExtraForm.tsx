@@ -113,6 +113,7 @@ const NewExtraForm = (props: Props) => {
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "

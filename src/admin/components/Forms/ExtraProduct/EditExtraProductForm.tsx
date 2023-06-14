@@ -84,6 +84,7 @@ const EditExtraProductForm = (props: Props) => {
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "
@@ -92,6 +93,7 @@ const EditExtraProductForm = (props: Props) => {
           onClick={() => navigate("/admin/menu/extra-product")}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "

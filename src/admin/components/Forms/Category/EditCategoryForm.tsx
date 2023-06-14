@@ -61,7 +61,6 @@ const EditCategoryForm = () => {
 
   const editCategoryHandler: SubmitHandler<UpdateCategoryInput> = (data) => {
     // if isDirty then send it to backend otherwise values are the same.
-    console.log(isDirty);
     updateCategory({ data: data, id: id! });
   };
 
@@ -102,14 +101,16 @@ const EditCategoryForm = () => {
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "
           color="red"
           text="Cancel"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/admin/menu/categories")}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "
