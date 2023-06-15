@@ -2,32 +2,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
-import {
-  newRestaurantSchema,
-  NewRestaurantSchema,
-} from "../../../../utils/validationSchema";
+
 import { useNavigate } from "react-router-dom";
 import { formatData } from "../../../../utils/formatingDAta/formatData";
+import RestaurantServices from "../../../api/services/restaurant.service";
+import {
+  NewRestaurantInput,
+  newRestaurantSchema,
+} from "../../../../utils/schema/restaurant.schema";
 type Props = {};
 
 const category = formatData()[0];
 
 const NewRestaurantForm = (props: Props) => {
+  const { mutate: createRestaurant } = RestaurantServices.useCreateRestaurant();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
 
     formState: { errors },
-  } = useForm<NewRestaurantSchema>({
-    mode: "onChange",
+  } = useForm<NewRestaurantInput>({
+    mode: "onBlur",
     resolver: zodResolver(newRestaurantSchema),
   });
 
-  const createNewCategoryHandler: SubmitHandler<NewRestaurantSchema> = (
+  const createNewCategoryHandler: SubmitHandler<NewRestaurantInput> = (
     data
   ) => {
     console.log(data);
+    createRestaurant(data);
   };
   return (
     <form
@@ -89,8 +93,8 @@ const NewRestaurantForm = (props: Props) => {
           label="Opening"
           placeholder="ex: 09:00"
           id="openingTime"
-          {...register("openingTime")}
-          error={errors.openingTime?.message}
+          {...register("operationTime.openingTime")}
+          error={errors.operationTime?.openingTime?.message}
         />
 
         <Input
@@ -99,8 +103,8 @@ const NewRestaurantForm = (props: Props) => {
           label="Closing"
           placeholder="ex: 22:00"
           id="closingTime"
-          {...register("closingTime")}
-          error={errors.closingTime?.message}
+          {...register("operationTime.closingTime")}
+          error={errors.operationTime?.closingTime?.message}
         />
       </div>
       <div className="flex flex-col gap-4 md:flex-row">
@@ -111,7 +115,7 @@ const NewRestaurantForm = (props: Props) => {
           label="Minimum Amount of Purchase"
           placeholder="ex: 20"
           id="minDeliveryAmount"
-          {...register("minDeliveryAmount")}
+          {...register("minDeliveryAmount", { valueAsNumber: true })}
           error={errors.minDeliveryAmount?.message}
         />
 
@@ -121,7 +125,7 @@ const NewRestaurantForm = (props: Props) => {
           label="Delivery Cost"
           placeholder="ex: 5"
           id="deliveryCost"
-          {...register("deliveryCost")}
+          {...register("deliveryCost", { valueAsNumber: true })}
           error={errors.deliveryCost?.message}
         />
       </div>
@@ -137,6 +141,7 @@ const NewRestaurantForm = (props: Props) => {
 
       <div className="flex justify-end gap-4">
         <GenericButton
+          type="button"
           classes="rounded font-semibold
               w-20
               "
@@ -145,6 +150,7 @@ const NewRestaurantForm = (props: Props) => {
           onClick={() => navigate(-1)}
         />
         <GenericButton
+          type="submit"
           classes="rounded font-semibold
             w-20
             "

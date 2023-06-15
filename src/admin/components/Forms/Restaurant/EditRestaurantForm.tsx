@@ -3,31 +3,53 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
-import {
-  NewRestaurantSchema,
-  newRestaurantSchema,
-} from "../../../../utils/validationSchema";
+
 import { useNavigate } from "react-router-dom";
-import { isDirty } from "zod";
+import {
+  UpdateRestaurantInput,
+  updateRestaurantSchema,
+} from "../../../../utils/schema/restaurant.schema";
+import RestaurantServices from "../../../api/services/restaurant.service";
+import { useEffect } from "react";
 
-type Props = {};
-
-const EditRestaurantForm = ({}: Props) => {
+const EditRestaurantForm = () => {
+  const { data: restaurant } = RestaurantServices.useRestaurant();
+  const { mutate: updateRestaurant } = RestaurantServices.useUpdateRestaurant();
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-
-    formState: { errors },
-  } = useForm<NewRestaurantSchema>({
+    reset,
+    formState: { errors, isDirty },
+  } = useForm<UpdateRestaurantInput>({
     mode: "onChange",
-    resolver: zodResolver(newRestaurantSchema),
+    resolver: zodResolver(updateRestaurantSchema),
   });
 
-  const editCategoryHandler: SubmitHandler<NewRestaurantSchema> = (data) => {
+  useEffect(() => {
+    if (restaurant) {
+      const defaultValues: UpdateRestaurantInput = {
+        name: restaurant?.name,
+        email: restaurant?.email,
+        address: restaurant?.address,
+        phoneNumber: restaurant?.phoneNumber,
+        backgroundImage: restaurant?.backgroundImage,
+        minDeliveryAmount: restaurant?.minDeliveryAmount,
+        averageDeliveryTime: restaurant?.averageDeliveryTime,
+        deliveryCost: restaurant?.deliveryCost,
+        operationTime: {
+          openingTime: restaurant.operationTime.openingTime,
+          closingTime: restaurant.operationTime.closingTime,
+        },
+      };
+      reset({ ...defaultValues });
+    }
+  }, [restaurant]);
+
+  const editCategoryHandler: SubmitHandler<UpdateRestaurantInput> = (data) => {
     // if isDirty then send it to backend otherwise values are the same.
     console.log(isDirty);
-    console.log(data);
+    updateRestaurant({ data: data, id: restaurant?._id! });
   };
 
   return (
@@ -87,8 +109,8 @@ const EditRestaurantForm = ({}: Props) => {
           label="Opening"
           placeholder="ex: 09:00"
           id="openingTime"
-          {...register("openingTime")}
-          error={errors.openingTime?.message}
+          {...register("operationTime.openingTime")}
+          error={errors.operationTime?.openingTime?.message}
         />
 
         <Input
@@ -97,8 +119,8 @@ const EditRestaurantForm = ({}: Props) => {
           label="Closing"
           placeholder="ex: 22:00"
           id="closingTime"
-          {...register("closingTime")}
-          error={errors.closingTime?.message}
+          {...register("operationTime.closingTime")}
+          error={errors.operationTime?.closingTime?.message}
         />
       </div>
       <div className="flex flex-col gap-4 md:flex-row">

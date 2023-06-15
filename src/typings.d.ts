@@ -105,6 +105,7 @@ interface IApi {
 interface IUser extends IApi {
   name: string;
   email: string;
+  isSuspended: boolean;
   homeAddress?: Address;
   workAddress?: Address;
   otherAddress?: Address;
@@ -165,4 +166,27 @@ interface ICategory extends IApi {
   name: string;
   products?: IProduct[];
   extras?: IExtra[];
+}
+
+interface IReview extends IApi {
+  user: IUser;
+  content?: string;
+  rating: number;
+  response?: string;
+}
+
+interface IRestaurant extends IApi {
+  name: string;
+  address: string;
+  email?: string;
+  phoneNumber?: string;
+  backgroundImage?: string;
+  minDeliveryAmount: number;
+  averageDeliveryTime: string;
+  deliveryCost: number;
+  operationTime: {
+    openingTime: string;
+    closingTime: string;
+  };
+  reviews?: IReview[];
 }

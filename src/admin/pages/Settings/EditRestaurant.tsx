@@ -6,7 +6,7 @@ import EditRestaurantForm from "../../components/Forms/Restaurant/EditRestaurant
 
 type Props = {};
 
-const EditRestaurant = (props: Props) => {
+const EditRestaurant = () => {
   const navigate = useNavigate();
 
   return (

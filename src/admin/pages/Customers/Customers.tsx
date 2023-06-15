@@ -4,24 +4,16 @@ import { Link } from "react-router-dom";
 import Table from "../../../shared/components/Table/Table";
 import { customerList } from "../../../utils/table/customerTable";
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
-
+import UserServices from "../../api/services/user.service";
 interface Props {}
 
 const Customers = (props: Props) => {
-  const columns = useMemo<ColumnDef<Customer>[]>(
+  const { data: users } = UserServices.useUsers();
+  const { mutate: updateUserStatus } = UserServices.useUpdateUserStatus();
+  const { mutate: deleteUser } = UserServices.useDeleteUser();
+
+  const columns = useMemo<ColumnDef<IUser>[]>(
     () => [
-      {
-        header: "Id",
-        accessorKey: "id",
-        // cell: ({ row }) => {
-        //   return (
-        //     <Link
-        //       to={`/admin/orders/${row.original.orderId}`}
-        //       className="text-blue-600 underline hover:no-underline"
-        //     >{`${row.original.orderId}`}</Link>
-        //   );
-        // },
-      },
       {
         header: "Name",
         accessorKey: "name",
@@ -32,7 +24,8 @@ const Customers = (props: Props) => {
       },
       {
         header: "Status",
-        accessorKey: "status",
+        accessorKey: "isSuspended",
+        cell: ({ row }) => (row.original.isSuspended ? "Suspended" : "Active"),
       },
       {
         header: "Action",
@@ -42,18 +35,22 @@ const Customers = (props: Props) => {
               classes="rounded-lg"
               text="Del"
               color="red"
-              onClick={() => console.log(row.original.id + "is deleted")}
+              onClick={() => deleteUser(row.original._id)}
             />
             <GenericButton
               classes="rounded-lg"
               text="Sus"
               color="gray"
-              onClick={() => console.log(row.original.id + "is suspended")}
+              onClick={() =>
+                updateUserStatus({ suspend: "true", id: row.original._id })
+              }
             />
             <GenericButton
               classes="rounded-lg"
               text="Act"
-              onClick={() => console.log(row.original.id + "is activated")}
+              onClick={() =>
+                updateUserStatus({ suspend: "false", id: row.original._id })
+              }
             />
           </div>
         ),
@@ -64,12 +61,16 @@ const Customers = (props: Props) => {
   return (
     <div className="flex h-full flex-col items-center py-5 sm:px-10">
       <h2 className="text-2xl font-semibold text-green-800">Customers</h2>
-      <Table
-        {...{
-          data: customerList,
-          columns,
-        }}
-      />
+      {users ? (
+        <Table
+          {...{
+            data: users,
+            columns,
+          }}
+        />
+      ) : (
+        <p>No user is registered yet</p>
+      )}
     </div>
   );
 };
