@@ -1,6 +1,6 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { ImInfo } from "react-icons/im";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { menu } from "../utils/data";
 import FormInput from "../shared/components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -30,6 +30,7 @@ export const getProductById = (id: string) => {
 };
 
 const Product = (props: Props) => {
+  const location = useLocation();
   const addToCart = useShoppingCart((state) => state.addToCart);
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
@@ -127,7 +128,7 @@ const Product = (props: Props) => {
             <h3 className="text-2xl font-semibold">{item?.name}</h3>
             <Link
               to="/nutritions"
-              state={{ alergens: item?.alergens }}
+              state={{ alergens: item?.alergens, from: location }}
               className="flex items-center"
             >
               <ImInfo className="inline lg:text-xl" />

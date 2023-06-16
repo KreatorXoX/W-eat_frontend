@@ -8,17 +8,17 @@ const OrderItem = ({ order }: Props) => {
   const navigate = useNavigate();
   return (
     <div
-      className="flex justify-between rounded-md px-2 py-1 text-sm text-gray-700 ring-2 ring-green-600 transition-colors duration-150
-    hover:cursor-pointer hover:bg-gray-200 md:text-base 
+      className="flex justify-between rounded-md px-2 py-1 text-xs text-gray-700 ring-2 ring-green-600 transition-colors duration-150 hover:cursor-pointer
+    hover:bg-gray-200 sm:text-sm md:text-base 
     "
     >
       <div
         onClick={() => navigate(`/admin/orders/${order.id}`)}
-        className="flex w-full justify-between pr-10"
+        className="flex w-full justify-between pr-3 md:pr-10"
       >
         <div className="flex flex-col items-center justify-center space-y-2">
-          <h1 className="font-semibold">Order Id</h1>
-          <h2>{order.id}</h2>
+          <h1 className=" font-semibold">Order Id</h1>
+          <h2>{order.id.slice(0, 7)}</h2>
         </div>
         <div className="flex flex-col items-center justify-center space-y-2">
           <h1 className="font-semibold">Order Date</h1>

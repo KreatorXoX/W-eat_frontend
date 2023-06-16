@@ -6,7 +6,28 @@ type Props = {};
 
 const sectionsArr = ["popular", "tai", "beef"];
 
-function TopSection({}: Props) {
+function TopSection({
+  name,
+  rating,
+  reviews,
+  deliveryInfo,
+  workingHours,
+  sections,
+}: {
+  name: string | undefined;
+  rating: number | undefined;
+  sections: string[] | undefined;
+  reviews: number | undefined;
+  deliveryInfo: {
+    averageTime: string | undefined;
+    deliveryCost: number | undefined;
+    minCost: number | undefined;
+  };
+  workingHours: {
+    openingTime: string | undefined;
+    closingTime: string | undefined;
+  };
+}) {
   return (
     <div className="mx-auto max-w-7xl rounded-lg bg-slate-50 pb-2 shadow-md dark:bg-gray-800">
       <div className="h-[20rem]">
@@ -17,42 +38,45 @@ function TopSection({}: Props) {
         />
       </div>
       <div className="pl-5">
-        <h2 className="my-6 font-serif text-xl font-bold">Rest the Round</h2>
+        <h2 className="my-6 font-serif text-xl font-bold">{name}</h2>
         <div className="flex w-full items-baseline gap-2">
           <Rating
             fillColor="rgb(234 88 12)"
-            initialValue={5}
+            initialValue={rating || 5}
             size={20}
             SVGstyle={{ display: "inline" }}
             readonly
             allowTitleTag={false}
           />
           <span className="text-sm underline hover:cursor-pointer hover:no-underline">
-            2.4k reviews
+            {reviews} reviews
           </span>
         </div>
         <div className="my-2 flex items-center gap-5 text-sm">
           <div className="flex items-center gap-2">
             <AiOutlineClockCircle className="inline text-xl text-green-400" />
-            <p>50-75 min</p>
+            <p>{deliveryInfo.averageTime}</p>
           </div>
           <div className="flex items-center gap-2">
             <MdDeliveryDining className="inline text-[1.5rem] text-indigo-400" />
-            <p>€ 6,00</p>
+            <p>€ {deliveryInfo.deliveryCost?.toFixed(2)}</p>
           </div>
           <div className="flex items-center gap-2">
             <BiShoppingBag className="inline text-xl  text-orange-400" />
-            <p>Min. € 30,00</p>
+            <p>Min. € {deliveryInfo.minCost?.toFixed(2)}</p>
           </div>
         </div>
         <div className="my-2 text-sm">
           <p className="font-semibold">
-            Working Hours : <span className="font-normal">10:00 - 22:00</span>
+            Working Hours :{" "}
+            <span className="font-normal">
+              {workingHours.openingTime} - {workingHours.closingTime}
+            </span>
           </p>
         </div>
       </div>
       <div className="mx-5 mt-4 flex flex-row justify-center gap-5 overflow-hidden rounded-lg bg-gray-200 py-2 dark:bg-zinc-500">
-        {sectionsArr.map((sec) => (
+        {sections?.map((sec) => (
           <div
             key={sec + Date.now()}
             className="px-2 font-semibold text-gray-500 hover:text-gray-900 dark:text-slate-50 dark:hover:text-gray-900"

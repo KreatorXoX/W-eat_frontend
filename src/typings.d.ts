@@ -190,3 +190,9 @@ interface IRestaurant extends IApi {
   };
   reviews?: IReview[];
 }
+
+interface IMenu extends IApi {
+  categories: ICategory[];
+  restaurant: IRestaurant;
+  rating: number;
+}

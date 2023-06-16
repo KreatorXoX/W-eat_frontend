@@ -3,10 +3,10 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 
 type Props = {
-  item: Item;
+  product: IProduct;
 };
 
-function MenuItem({ item }: Props) {
+function MenuItem({ product }: Props) {
   const navigate = useNavigate();
   return (
     <div
@@ -15,10 +15,10 @@ function MenuItem({ item }: Props) {
     >
       <div>
         <div className="flex flex-row items-center gap-3">
-          <h3 className="font-semibold">{item?.name}</h3>
+          <h3 className="font-semibold">{product?.name}</h3>
           <Link
             to="/nutritions"
-            state={{ alergens: item?.alergens }}
+            state={{ alergens: product.allergens }}
             className="flex items-center"
           >
             <ImInfo className="inline text-orange-400 lg:text-xl" />
@@ -26,16 +26,16 @@ function MenuItem({ item }: Props) {
         </div>
         <div>
           <p className="my-1 text-sm text-gray-500 dark:text-slate-200">
-            {item?.description}
+            {product?.description}
           </p>
         </div>
         <p className="mt-4 font-semibold">
-          € {item?.sizes[0].price.toFixed(2)}
+          € {product?.sizes[0].price.toFixed(2)}
         </p>
       </div>
       <button
         className="rounded-full bg-gray-200 p-1 dark:bg-gray-500"
-        onClick={() => navigate(`/product/${item?.id}`)}
+        onClick={() => navigate(`/product/${product?._id}`)}
       >
         <AiOutlinePlus className="text-2xl" />
       </button>

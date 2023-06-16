@@ -16,6 +16,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useCheckoutStore } from "../../context/checkoutStore";
+import { useAuthStore } from "../../context/useAuthStore";
+import jwtDecode from "jwt-decode";
 
 type Props = {};
 
@@ -23,6 +25,9 @@ Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
+  const token = useAuthStore((state) => state.token);
+  const userInfo = (jwtDecode(token!) as IAccessTokenType).UserInfo;
+
   const setOrderId = useCheckoutStore((state) => state.setOrderId);
 
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
@@ -117,7 +122,7 @@ const Checkout = (props: Props) => {
           note: item.notes,
         };
       }),
-      user: "userId",
+      user: userInfo._id,
       fullName: data.fullname,
       email: data.orderEmail,
       address: address,
@@ -129,34 +134,34 @@ const Checkout = (props: Props) => {
     console.log("Order placed is : ", newOrder);
 
     try {
-      const dummyOrderForStripe = {
-        orderItems: [
-          {
-            product: "6457bccd5f9fc5531d4dc1e7",
-            extras: [
-              "64510167c5d5e0d5f17df934",
-              "645101bec5d5e0d5f17df936",
-              "645103b1b9da791b582087ef",
-            ],
-            quantity: 2,
-            size: "medium",
-          },
-          {
-            product: "6457c06ef8e63890e289ec80",
-            extras: ["645101bec5d5e0d5f17df936"],
-            quantity: 1,
-            size: "large",
-          },
-        ],
-        user: "647c752defec21dc7ddfd133",
-        fullName: "taaas",
-        email: "tas@ast.co",
-        address: "tasd ,tass ,tdd ,tz",
-        phoneNumber: "32131422323",
-        placeOrderTime: "asap",
-        paymentMethod: "pay at door",
-      };
-      await placeOrder(dummyOrderForStripe);
+      // const dummyOrderForStripe = {
+      //   orderItems: [
+      //     {
+      //       product: "6457bccd5f9fc5531d4dc1e7",
+      //       extras: [
+      //         "64510167c5d5e0d5f17df934",
+      //         "645101bec5d5e0d5f17df936",
+      //         "645103b1b9da791b582087ef",
+      //       ],
+      //       quantity: 2,
+      //       size: "medium",
+      //     },
+      //     {
+      //       product: "6457c06ef8e63890e289ec80",
+      //       extras: ["645101bec5d5e0d5f17df936"],
+      //       quantity: 1,
+      //       size: "large",
+      //     },
+      //   ],
+      //   user: "647c752defec21dc7ddfd133",
+      //   fullName: "taaas",
+      //   email: "tas@ast.co",
+      //   address: "tasd ,tass ,tdd ,tz",
+      //   phoneNumber: "32131422323",
+      //   placeOrderTime: "asap",
+      //   paymentMethod: "pay at door",
+      // };
+      // await placeOrder(dummyOrderForStripe);
     } catch (error) {
       console.log(error);
     }

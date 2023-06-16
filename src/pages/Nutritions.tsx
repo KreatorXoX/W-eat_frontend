@@ -7,12 +7,13 @@ const Nutritions = (props: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const alergens: string[] = location.state?.alergens;
+  const from = location.state?.from?.pathname || "/";
   return (
     <div className="space-y-6 overflow-y-hidden px-4 text-gray-700 dark:text-slate-200">
       <div className="mt-4 flex flex-row items-center justify-between ">
         <h1 className="text-3xl  font-bold">Nutrition information</h1>
         <AiOutlineClose
-          onClick={() => navigate("..")}
+          onClick={() => navigate(from)}
           className="cursor-pointer text-2xl"
         />
       </div>
