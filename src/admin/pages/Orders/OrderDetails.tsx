@@ -1,8 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
-import OrderServices from "../../api/services/order.service";
+
 import { formatDate } from "../../../utils/formatDate";
 import DetailedOrderItem from "../../components/Orders/DetailedOrderItem";
+import OrderServices from "../../../api/services/order.service";
 type Props = {};
 
 const OrderDetails = (props: Props) => {

@@ -3,7 +3,8 @@ import Table from "../../../../shared/components/Table/Table";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import MenuServices from "../../../api/services/menu.service";
+import MenuServices from "../../../../api/services/menu.service";
+
 type Props = {};
 
 const MenuCategory = (props: Props) => {

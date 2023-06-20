@@ -19,25 +19,27 @@ const ModalLayout = (props: Props) => {
 
   return (
     <>
-      <div
-        onClick={() => {
-          location.includes("checkout")
-            ? navigate("/checkout")
-            : location.includes("admin")
-            ? navigate(-1)
-            : navigate("/");
-        }}
-        className="fixed right-0 top-0 h-full w-full lg:bg-gray-700/80"
-      ></div>
-      <div
-        className={`${
-          dark ? "bg-gray-800" : "bg-slate-50"
-        }  absolute top-0 bottom-0 right-0 left-0 z-20 m-auto
+      <div className="fixed right-0 top-0 h-full w-full lg:bg-gray-700/0">
+        <div
+          onClick={() => {
+            location.includes("checkout")
+              ? navigate("/checkout")
+              : location.includes("admin")
+              ? navigate(-1)
+              : navigate("/");
+          }}
+          className="fixed right-0 top-0 z-10 h-full w-full lg:bg-gray-700/80"
+        ></div>
+        <div
+          className={`${
+            dark ? "bg-gray-800" : "bg-slate-50"
+          }  absolute top-0 bottom-0 right-0 left-0 z-20 m-auto
           h-full w-full
       overflow-auto lg:h-fit lg:w-[40rem] lg:rounded-xl lg:py-5
           `}
-      >
-        <Outlet />
+        >
+          <Outlet />
+        </div>
       </div>
       {/* <div
         onClick={() => navigate(-1)}

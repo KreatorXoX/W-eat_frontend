@@ -44,7 +44,6 @@ const useLogin = () => {
   return useMutation({
     mutationFn: (credentials: LoginUserInput) => loginUser(credentials),
     onSuccess: (response) => {
-      console.log(response.accessToken);
       // useAuthStore.getState().setCredentials(response.accessToken);
       useAuthStore.setState({ token: response.accessToken });
     },

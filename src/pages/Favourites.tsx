@@ -1,14 +1,14 @@
 import { RiArrowGoBackLine } from "react-icons/ri";
 import { Link, useOutletContext } from "react-router-dom";
-import UserServices from "../api/services/user.service";
-import OrderItem from "../components/Order/OrderItem";
+import OrderServices from "../api/services/order.service";
+
 import FavouriteOrderTable from "../components/Order/FavouriteOrderTable";
 
 interface Props {}
 
 const Favourites = (props: Props) => {
   const ctx: UserContext = useOutletContext();
-  const { data: userOrders, isLoading } = UserServices.useUserOrders(ctx.id);
+  const { data: userOrders, isLoading } = OrderServices.useOrdersByUser(ctx.id);
   return (
     <div className="h-full space-y-10 px-1 text-gray-800 dark:text-slate-200 sm:px-5 ">
       <div className="mt-5 flex items-center gap-10 lg:mt-0">
@@ -23,9 +23,6 @@ const Favourites = (props: Props) => {
             <p>Loading</p>
           ) : userOrders?.favouriteOrders &&
             userOrders.favouriteOrders.length > 0 ? (
-            // userOrders.favouriteOrders.map((order) => (
-            //   <OrderItem key={order._id} order={order} />
-            // ))
             <FavouriteOrderTable orders={userOrders.favouriteOrders} />
           ) : (
             <p className="h-16 text-center text-xl">

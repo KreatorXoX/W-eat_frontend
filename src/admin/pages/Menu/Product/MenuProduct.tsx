@@ -5,7 +5,8 @@ import Table from "../../../../shared/components/Table/Table";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
 import { useNavigate } from "react-router-dom";
-import MenuServices from "../../../api/services/menu.service";
+import MenuServices from "../../../../api/services/menu.service";
+
 type Props = {};
 
 const MenuProduct = (props: Props) => {

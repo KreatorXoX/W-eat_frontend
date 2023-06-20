@@ -3,10 +3,10 @@ type Props = {};
 import MenuItemList from "../components/MenuItems/MenuItemList";
 import TopSection from "../components/TopSection/TopSection";
 import MenuServices from "../api/services/menu.service";
-import AdminMenuServices from "../admin/api/services/menu.service";
+
 const Home = (props: Props) => {
   const { data: restaurantMenuAndInfo } = MenuServices.useMenu();
-  const { data: products } = AdminMenuServices.useProducts();
+  const { data: products } = MenuServices.useProducts();
 
   // getMenu includes categories restaurant info and restaurant rating
 

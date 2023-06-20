@@ -8,7 +8,7 @@ import {
   NewProductInput,
   newProductSchema,
 } from "../../../../utils/schema/menu.schema";
-import MenuServices from "../../../api/services/menu.service";
+import MenuServices from "../../../../api/services/menu.service";
 
 type Props = {};
 const formatCategories = (data: ICategory[] | undefined) => {

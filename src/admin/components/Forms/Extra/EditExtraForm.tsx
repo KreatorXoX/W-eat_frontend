@@ -5,12 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
-import MenuServices from "../../../api/services/menu.service";
 import {
   UpdateExtraInput,
   updateExtraSchema,
 } from "../../../../utils/schema/menu.schema";
 import { useEffect } from "react";
+import MenuServices from "../../../../api/services/menu.service";
 
 const formatData = (data: IExtraItem[] | undefined) => {
   return data?.map((item) => {

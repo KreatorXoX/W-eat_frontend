@@ -16,7 +16,6 @@ export const useShoppingCart = create<CartState>()(
   persist(
     (set, get) => ({
       cart: [],
-      totalPrice: 0,
       addToCart: (newCartItem) => {
         const index = get().cart.findIndex(
           (cartItem) => cartItem.id === newCartItem.id
@@ -88,9 +87,6 @@ export const useShoppingCart = create<CartState>()(
           let updatedCartItems = [...get().cart];
 
           updatedCartItems[index].notes = note;
-
-          console.log(updatedCartItems[index]);
-
           set({ cart: updatedCartItems });
         }
       },

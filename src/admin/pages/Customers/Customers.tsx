@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Link } from "react-router-dom";
+
 import Table from "../../../shared/components/Table/Table";
-import { customerList } from "../../../utils/table/customerTable";
+
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
-import UserServices from "../../api/services/user.service";
+import UserServices from "../../../api/services/user.service";
+
 interface Props {}
 
 const Customers = (props: Props) => {

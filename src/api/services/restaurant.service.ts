@@ -1,10 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import axiosApi from "../axios";
 import {
   NewRestaurantInput,
   UpdateRestaurantInput,
-} from "../../../utils/schema/restaurant.schema";
+} from "../../utils/schema/restaurant.schema";
+import axiosApi from "../axios";
 
 // Restaurant
 // Get Restaurant
@@ -78,7 +78,7 @@ const useUpdateRestaurant = () => {
   return useMutation({
     mutationFn: ({ data, id }: { data: UpdateRestaurantInput; id: string }) =>
       updateRestaurant(data, id),
-    onSuccess: (response: { _id: string }) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["restaurant"]);
     },
   });

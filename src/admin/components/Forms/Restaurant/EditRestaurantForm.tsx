@@ -9,7 +9,7 @@ import {
   UpdateRestaurantInput,
   updateRestaurantSchema,
 } from "../../../../utils/schema/restaurant.schema";
-import RestaurantServices from "../../../api/services/restaurant.service";
+import RestaurantServices from "../../../../api/services/restaurant.service";
 import { useEffect } from "react";
 
 const EditRestaurantForm = () => {

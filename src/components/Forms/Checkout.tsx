@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import { AiOutlineClockCircle, AiFillCreditCard } from "react-icons/ai";
 import Input from "../../shared/components/Form/Input";
@@ -7,10 +8,7 @@ import { getPaymentMethods } from "../../utils/getPaymentMethod";
 import { useTheme } from "../../context/themeStore";
 import { BsCheck2Circle, BsXCircle } from "react-icons/bs";
 import { useShoppingCart } from "../../context/shoppingCartStore";
-import {
-  OrderValidationSchema,
-  orderValidationSchema,
-} from "../../utils/validationSchema";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -18,6 +16,12 @@ import axios from "axios";
 import { useCheckoutStore } from "../../context/checkoutStore";
 import { useAuthStore } from "../../context/useAuthStore";
 import jwtDecode from "jwt-decode";
+import {
+  CheckoutFormInput,
+  NewOrderInput,
+  PaymentMethod,
+  checkoutFormSchema,
+} from "../../utils/schema/order.schema";
 
 type Props = {};
 
@@ -25,17 +29,17 @@ Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
+  const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
+  const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
+
+  const dark = useTheme().dark;
+
   const token = useAuthStore((state) => state.token);
   const userInfo = (jwtDecode(token!) as IAccessTokenType).UserInfo;
 
   const setOrderId = useCheckoutStore((state) => state.setOrderId);
-
   const getCartTotal = useShoppingCart((state) => state.getCartTotal);
-
   const cartItems = useShoppingCart((state) => state.cart);
-  const dark = useTheme().dark;
-  const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
-  const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
 
   const { mutateAsync: placeOrder } = useMutation({
     mutationFn: (order: any) => {
@@ -62,16 +66,16 @@ const Checkout = (props: Props) => {
     control,
     getValues,
     formState: { errors, isValid },
-  } = useForm<OrderValidationSchema>({
+  } = useForm<CheckoutFormInput>({
     mode: "onChange",
-    resolver: zodResolver(orderValidationSchema),
+    resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
-      deliveryTime: {
+      placeOrderTime: {
         value: initialHour,
         label: "As soon as possible",
       },
       paymentMethod: {
-        value: "pay at door",
+        value: PaymentMethod.PAD,
         label: "Cash",
       },
     },
@@ -94,9 +98,7 @@ const Checkout = (props: Props) => {
     setPaymentModal(false);
   };
 
-  const checkoutHandler: SubmitHandler<OrderValidationSchema> = async (
-    data
-  ) => {
+  const checkoutHandler: SubmitHandler<CheckoutFormInput> = async (data) => {
     const address = [
       data.city,
       data.houseNumber,
@@ -104,64 +106,42 @@ const Checkout = (props: Props) => {
       data.postCode,
     ].join(",");
 
-    const newOrder = {
+    const newOrder: NewOrderInput = {
       orderItems: cartItems.map((item) => {
+        const existingExtras = item.extras?.filter(
+          (extra) => extra.values!.length > 0
+        );
+
         return {
-          product: item.mainProduct.id,
-          extras:
-            item.extras &&
-            item.extras
-              .map((extra) =>
-                extra.values!.length > 0
-                  ? (extra.values!.map((extra) => extra.value) as string[])
-                  : undefined
-              )
-              .flat(),
+          product: item.mainProduct._id,
+          extras: existingExtras
+            ?.map((extra) =>
+              extra.values!.length > 0
+                ? extra.values!.map(
+                    (extra) => String(extra.value).split("-")[0]
+                  )
+                : undefined
+            )
+            .flat(),
+
           size: item.size,
           quantity: item.quantity,
           note: item.notes,
         };
       }),
-      user: userInfo._id,
-      fullName: data.fullname,
+      user: userInfo!._id,
+      fullName: data.fullName,
       email: data.orderEmail,
       address: address,
       phoneNumber: data.phoneNumber,
-      placeOrderTime: data.deliveryTime.value,
-      paymentMethod: data.paymentMethod.value,
+      placeOrderTime: data.placeOrderTime.value,
+      paymentMethod: data.paymentMethod.value as string,
     };
 
     console.log("Order placed is : ", newOrder);
 
     try {
-      // const dummyOrderForStripe = {
-      //   orderItems: [
-      //     {
-      //       product: "6457bccd5f9fc5531d4dc1e7",
-      //       extras: [
-      //         "64510167c5d5e0d5f17df934",
-      //         "645101bec5d5e0d5f17df936",
-      //         "645103b1b9da791b582087ef",
-      //       ],
-      //       quantity: 2,
-      //       size: "medium",
-      //     },
-      //     {
-      //       product: "6457c06ef8e63890e289ec80",
-      //       extras: ["645101bec5d5e0d5f17df936"],
-      //       quantity: 1,
-      //       size: "large",
-      //     },
-      //   ],
-      //   user: "647c752defec21dc7ddfd133",
-      //   fullName: "taaas",
-      //   email: "tas@ast.co",
-      //   address: "tasd ,tass ,tdd ,tz",
-      //   phoneNumber: "32131422323",
-      //   placeOrderTime: "asap",
-      //   paymentMethod: "pay at door",
-      // };
-      // await placeOrder(dummyOrderForStripe);
+      await placeOrder(newOrder);
     } catch (error) {
       console.log(error);
     }
@@ -260,10 +240,10 @@ const Checkout = (props: Props) => {
                   type="text"
                   half={false}
                   label="First and last name"
-                  id="fullname"
+                  id="fullName"
                   placeholder="Type your full name "
-                  {...register("fullname")}
-                  error={errors.fullname?.message}
+                  {...register("fullName")}
+                  error={errors.fullName?.message}
                 />
               </div>
               <div className="col-span-2 lg:col-span-1">
@@ -339,10 +319,10 @@ const Checkout = (props: Props) => {
               >
                 <Input
                   type="select"
-                  id="deliveryTime"
+                  id="placeOrderTime"
                   half={false}
                   label="Select time for delivery"
-                  error={errors.deliveryTime?.message}
+                  error={errors.placeOrderTime?.message}
                   options={deliveryTimes}
                   control={control}
                 />
@@ -355,10 +335,12 @@ const Checkout = (props: Props) => {
                 </button>
               </Modal>
 
-              <span className="text-sm">{getValues().deliveryTime?.label}</span>
+              <span className="text-sm">
+                {getValues().placeOrderTime?.label}
+              </span>
             </div>
           </div>
-          {getValues().deliveryTime ? (
+          {getValues().placeOrderTime ? (
             <div>
               <BsCheck2Circle className="text-3xl text-green-600" />
             </div>

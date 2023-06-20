@@ -63,7 +63,8 @@ type Customer = {
 };
 type CartItem = {
   id: string;
-  mainProduct: Item;
+  mainProduct: IProduct;
+  category?: string;
   extras?: { name: string; values: OptionSelect[] | undefined }[];
   size: string;
   quantity: number;

@@ -88,7 +88,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/product/:id",
-            element: <ProductLayout />,
+            element: <ModalLayout />,
             children: [
               {
                 index: true,
@@ -98,7 +98,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/edit-product/:id",
-            element: <ProductLayout />,
+            element: <ModalLayout />,
             children: [
               {
                 index: true,
@@ -108,7 +108,7 @@ const router = createBrowserRouter([
           },
           {
             path: "/nutritions",
-            element: <ProductLayout />,
+            element: <ModalLayout />,
             children: [
               {
                 index: true,

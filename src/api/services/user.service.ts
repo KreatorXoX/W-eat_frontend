@@ -6,6 +6,18 @@ import {
 import axiosApi from "../axios";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
 
+// Get Users
+const getUsers = async () => {
+  const response = await axiosApi.get<IUser[]>("/users");
+  return response.data;
+};
+
+const useUsers = () => {
+  return useQuery(["users"], {
+    queryFn: () => getUsers(),
+  });
+};
+
 // Get User
 const getUser = async (id: string) => {
   const response = await axiosApi.get<IUser>(`/user/${id}`);
@@ -20,7 +32,24 @@ const useUser = (id: string) => {
     cacheTime: 100000,
   });
 };
+// Update User Status
+const updateUserStatus = async (suspend: string, id: string) => {
+  const response = await axiosApi.patch(
+    `/user/suspend/${id}?suspend=${suspend}`
+  );
+  return response.data;
+};
 
+const useUpdateUserStatus = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ suspend, id }: { suspend: string; id: string }) =>
+      updateUserStatus(suspend, id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries(["users"]);
+    },
+  });
+};
 // Update User Name
 const updateUserName = async (data: UpdateUserNameInput, id: string) => {
   const response = await axiosApi.patch(`/user/${id}`, {
@@ -66,33 +95,19 @@ const useUpdateUserAddress = () => {
     },
   });
 };
-
-// Get User Orders
-const getUserOrders = async (id: string) => {
-  const response = await axiosApi.get<{
-    allOrders: IOrder[];
-    favouriteOrders: IOrder[];
-  }>(`/user/orders/${id}`);
+// Delete User
+const deleteUser = async (id: string) => {
+  const response = await axiosApi.delete(`/user/${id}`);
   return response.data;
 };
 
-const useUserOrders = (id: string) => {
-  return useQuery([`userOrders-${id}`], {
-    queryFn: () => getUserOrders(id),
-    enabled: !!id,
-  });
-};
-
-// Get User Favorites
-const getUserFavorites = async (id: string) => {
-  const response = await axiosApi.get<IOrder[]>(`/user/favorites/${id}`);
-  return response.data;
-};
-
-const useUserFavorites = (id: string) => {
-  return useQuery([`userFavorites-${id}`], {
-    queryFn: () => getUserFavorites(id),
-    enabled: !!id,
+const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => deleteUser(id),
+    onSuccess: (response: { _id: string }) => {
+      queryClient.invalidateQueries(["users"]);
+    },
   });
 };
 
@@ -100,7 +115,8 @@ const UserServices = {
   useUpdateUserAddress,
   useUpdateUserName,
   useUser,
-  useUserOrders,
-  useUserFavorites,
+  useUsers,
+  useUpdateUserStatus,
+  useDeleteUser,
 };
 export default UserServices;

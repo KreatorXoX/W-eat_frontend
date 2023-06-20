@@ -1,8 +1,9 @@
 import { CgChevronLeft, CgChevronRight } from "react-icons/cg";
 import OrderItem from "../../components/Orders/OrderItem";
 import { useState } from "react";
-import OrderServices from "../../api/services/order.service";
+
 import { formatDate } from "../../../utils/formatDate";
+import OrderServices from "../../../api/services/order.service";
 interface Props {}
 
 const ActiveOrders = (props: Props) => {

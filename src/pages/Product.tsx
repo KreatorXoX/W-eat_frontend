@@ -1,67 +1,72 @@
 import { AiOutlineClose } from "react-icons/ai";
 import { ImInfo } from "react-icons/im";
 import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
-import { menu } from "../utils/data";
 import FormInput from "../shared/components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
 import { useEffect, useState } from "react";
-import {
-  createProductSchema,
-  CreateProductSchema,
-} from "../utils/validationSchema";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatExtras } from "../utils/getExtrasOptions";
+
 import { v4 as uuidv4 } from "uuid";
 import { useShoppingCart } from "../context/shoppingCartStore";
+import MenuServices from "../api/services/menu.service";
+import {
+  ProductCartInput,
+  productCartSchema,
+} from "../utils/schema/cart.schema";
 
 interface Props {}
 
-// we can remove this after backend is created
-// and react-query implemented.
-export const getProductById = (id: string) => {
-  let pro: Item | undefined;
-  for (let category of menu) {
-    for (let product of category.products) {
-      if (product.id === id) return product;
-    }
-  }
-  return undefined;
+const formatExtras = (data: IExtraItem[] | undefined) => {
+  return data?.map((extra) => {
+    const option: OptionSelect = {
+      value: extra._id + "-" + extra.price,
+      label: extra.name + " (+ €" + extra.price.toFixed(2) + ")",
+    };
+    return option;
+  });
 };
 
 const Product = (props: Props) => {
   const location = useLocation();
-  const addToCart = useShoppingCart((state) => state.addToCart);
+  const navigate = useNavigate();
+  const id = useParams().id!;
+
   const [quantity, setQuantity] = useState<number>(1);
   const [extraTotal, setExtraTotal] = useState<number>(0);
 
-  const id = useParams().id!;
+  const addToCart = useShoppingCart((state) => state.addToCart);
 
-  const item = getProductById(id);
-  const CategoryExtras = menu.find(
-    (category) => category.name === item?.category
-  )?.extras;
+  const { data: product } = MenuServices.useProduct(id);
 
-  const allSizes = item?.sizes.map((size) => {
+  const CategoryExtras = product?.category?.extras;
+
+  const allSizes = product?.sizes.map((size) => {
     return {
-      label: size.size,
+      label: size.size + " €" + size.price.toFixed(2),
       value: size.price,
     };
   });
 
-  const { handleSubmit, control, watch, getValues } =
-    useForm<CreateProductSchema>({
+  const { handleSubmit, control, watch, getValues, reset } =
+    useForm<ProductCartInput>({
       mode: "onChange",
       reValidateMode: "onChange",
-      resolver: zodResolver(createProductSchema),
-      defaultValues: {
-        extras: undefined,
-        size: { value: item?.sizes[0].price, label: item?.sizes[0].size },
-      },
+      resolver: zodResolver(productCartSchema),
     });
 
-  const navigate = useNavigate();
-  const addItemHandler: SubmitHandler<CreateProductSchema> = (data) => {
+  useEffect(() => {
+    if (product) {
+      const defaultValues = {
+        size: { value: product?.sizes[0].price, label: product?.sizes[0].size },
+      };
+
+      reset({ ...defaultValues });
+    }
+  }, [product]);
+
+  const addItemHandler: SubmitHandler<ProductCartInput> = (data) => {
     let extras: { name: string; values: OptionSelect[] | undefined }[] = [];
 
     for (const key in data) {
@@ -75,10 +80,11 @@ const Product = (props: Props) => {
       }
     }
     const productPrice = getValues("size").value;
-    const newProduct = {
+    const newProduct: CartItem = {
       id: uuidv4(),
-      mainProduct: item!,
-      size: getValues("size.label"),
+      mainProduct: product!,
+
+      size: getValues("size.label").split(" ")[0],
       quantity,
       extras: extras!.map((extra) => {
         return {
@@ -92,6 +98,7 @@ const Product = (props: Props) => {
     addToCart(newProduct);
     navigate("..");
   };
+
   useEffect(() => {
     let extrasTotal = 0;
 
@@ -120,15 +127,16 @@ const Product = (props: Props) => {
 
     setExtraTotal(extrasTotal);
   }, [watch()]);
+
   return (
     <div className="text-gray-700 dark:text-slate-200">
       <div className="space-y-4 py-2 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row items-center gap-3 ">
-            <h3 className="text-2xl font-semibold">{item?.name}</h3>
+            <h3 className="text-2xl font-semibold">{product?.name}</h3>
             <Link
               to="/nutritions"
-              state={{ alergens: item?.alergens, from: location }}
+              state={{ alergens: product?.allergens, from: location }}
               className="flex items-center"
             >
               <ImInfo className="inline lg:text-xl" />
@@ -138,14 +146,16 @@ const Product = (props: Props) => {
             <AiOutlineClose className="cursor-pointer text-2xl" />
           </Link>
         </div>
-        <p>{item?.ingridients}</p>
-        <p className="text-xl font-bold">€ {item?.sizes[0].price.toFixed(2)}</p>
+        <p>{product?.ingridients}</p>
+        <p className="text-xl font-bold">
+          € {product?.sizes[0].price.toFixed(2)}
+        </p>
       </div>
       <div className="h-full min-h-[30rem]">
         <form onSubmit={handleSubmit(addItemHandler)} className="space-y-4">
           <div className="bg-slate-100 py-2 px-5 pb-10 dark:bg-gray-800 ">
             <>
-              {item?.sizes.length! > 1 && (
+              {product?.sizes.length! > 1 && (
                 <div>
                   <h3 className="mt-2 font-medium">Sizes</h3>
                   <div>
@@ -167,7 +177,7 @@ const Product = (props: Props) => {
             <>
               {CategoryExtras?.map((extra) => {
                 return (
-                  <div key={`${extra.id}`}>
+                  <div key={`${extra._id}`}>
                     <h3 className="mt-2 font-medium">{extra.name}</h3>
                     <div>
                       <FormInput
@@ -177,9 +187,10 @@ const Product = (props: Props) => {
                         half={false}
                         label={""}
                         error={undefined}
-                        options={formatExtras(CategoryExtras!).get(
-                          `${extra.name}`
-                        )}
+                        options={formatExtras(extra.extraItems!)}
+                        // options={formatExtras(CategoryExtras!).get(
+                        //   `${extra.name}`
+                        // )}
                         control={control}
                         isMulti={true}
                       />

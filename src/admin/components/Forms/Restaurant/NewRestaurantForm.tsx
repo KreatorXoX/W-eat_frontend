@@ -5,14 +5,12 @@ import GenericButton from "../../../../shared/components/UI-Elements/GenericButt
 
 import { useNavigate } from "react-router-dom";
 import { formatData } from "../../../../utils/formatingDAta/formatData";
-import RestaurantServices from "../../../api/services/restaurant.service";
+import RestaurantServices from "../../../../api/services/restaurant.service";
 import {
   NewRestaurantInput,
   newRestaurantSchema,
 } from "../../../../utils/schema/restaurant.schema";
 type Props = {};
-
-const category = formatData()[0];
 
 const NewRestaurantForm = (props: Props) => {
   const { mutate: createRestaurant } = RestaurantServices.useCreateRestaurant();

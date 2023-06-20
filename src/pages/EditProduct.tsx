@@ -5,26 +5,36 @@ import FormInput from "../shared/components/Form/Input";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { TbMinus, TbPlus } from "react-icons/tb";
 import { useEffect, useState } from "react";
-import {
-  createProductSchema,
-  CreateProductSchema,
-} from "../utils/validationSchema";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatExtras } from "../utils/getExtrasOptions";
+
 import { useShoppingCart } from "../context/shoppingCartStore";
-import { menu } from "../utils/data";
-import { getProductById } from "./Product";
+import MenuServices from "../api/services/menu.service";
+import {
+  ProductCartInput,
+  productCartSchema,
+} from "../utils/schema/cart.schema";
 
 interface Props {}
-
+const formatExtras = (data: IExtraItem[] | undefined) => {
+  return data?.map((extra) => {
+    const option: OptionSelect = {
+      value: extra._id + "-" + extra.price,
+      label: extra.name + " (+ €" + extra.price.toFixed(2) + ")",
+    };
+    return option;
+  });
+};
 const EditProduct = (props: Props) => {
-  const cartItems = useShoppingCart((state) => state.cart);
-  const replaceItem = useShoppingCart((state) => state.replaceItem);
+  const navigate = useNavigate();
+  const id = useParams().id;
 
   const [extraTotal, setExtraTotal] = useState<number>(0);
   const [itemPrice, setItemPrice] = useState<number>(0);
 
-  const id = useParams().id;
+  const cartItems = useShoppingCart((state) => state.cart);
+  const replaceItem = useShoppingCart((state) => state.replaceItem);
+
   const item = cartItems.find((item) => item.id === id);
   const priceIdx = item?.mainProduct.sizes.findIndex(
     (prod) => prod.size === item.size
@@ -32,15 +42,14 @@ const EditProduct = (props: Props) => {
 
   const allSizes = item?.mainProduct.sizes.map((size) => {
     return {
-      label: size.size,
+      label: size.size + " (+ €" + size.price.toFixed(2) + ")",
       value: size.price,
     };
   });
-  const itemId = item?.mainProduct.id!;
 
-  const orgCatExtras = menu.find(
-    (cate) => cate.name === getProductById(itemId)?.category
-  )?.extras;
+  const productId = item?.mainProduct._id!;
+  const { data: product } = MenuServices.useProduct(productId);
+  const orgCatExtras = product?.category?.extras;
 
   const [quantity, setQuantity] = useState<number>(item ? item.quantity : 0);
 
@@ -49,24 +58,23 @@ const EditProduct = (props: Props) => {
     return acc;
   }, {});
 
-  const { handleSubmit, control, watch, getValues } =
-    useForm<CreateProductSchema>({
+  const { handleSubmit, control, watch, getValues } = useForm<ProductCartInput>(
+    {
       mode: "onChange",
       reValidateMode: "onChange",
-      resolver: zodResolver(createProductSchema),
+      resolver: zodResolver(productCartSchema),
       defaultValues: {
         extras: extrasObject,
 
         size: {
-          value: item?.mainProduct.sizes[priceIdx!].price,
-          label: item?.mainProduct.sizes[priceIdx!].size,
+          value: item?.mainProduct.sizes[priceIdx!]?.price,
+          label: item?.mainProduct.sizes[priceIdx!]?.size,
         },
       },
-    });
+    }
+  );
 
-  const navigate = useNavigate();
-
-  const updateItemHandler: SubmitHandler<any> = (data) => {
+  const updateItemHandler: SubmitHandler<ProductCartInput> = (data) => {
     let extras: { name: string; values: OptionSelect[] | undefined }[] = [];
 
     for (const key in data) {
@@ -140,7 +148,7 @@ const EditProduct = (props: Props) => {
             </h3>
             <Link
               to="/nutritions"
-              state={{ alergens: item!.mainProduct?.alergens }}
+              state={{ alergens: item!.mainProduct?.allergens }}
               className="flex items-center"
             >
               <ImInfo className="inline lg:text-xl" />
@@ -183,7 +191,7 @@ const EditProduct = (props: Props) => {
             <>
               {orgCatExtras?.map((extra) => {
                 return (
-                  <div key={`${extra.id}`}>
+                  <div key={`${extra._id}`}>
                     <h3 className="mt-2 font-medium">{extra.name}</h3>
                     <div className="">
                       <FormInput
@@ -193,9 +201,7 @@ const EditProduct = (props: Props) => {
                         half={false}
                         label={""}
                         error={undefined}
-                        options={formatExtras(orgCatExtras!).get(
-                          `${extra.name}`
-                        )}
+                        options={formatExtras(extra.extraItems!)}
                         control={control}
                         isMulti={true}
                       />

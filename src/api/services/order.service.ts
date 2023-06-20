@@ -1,10 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import axiosApi from "../axios";
-import {
-  NewRestaurantInput,
-  UpdateRestaurantInput,
-} from "../../../utils/schema/restaurant.schema";
 
 // User
 // Get Orders
@@ -19,7 +15,7 @@ const useOrders = () => {
   });
 };
 
-// Get Orders
+// Get Orders Paginated
 const getPaginatedOrders = async (page: number) => {
   const response = await axiosApi.get<IOrder[]>(`/orders?page=${page}`);
   return response.data;
@@ -46,44 +42,28 @@ const useOrderById = (id: string) => {
   });
 };
 
-// // Update User Status
-// const updateUserStatus = async (suspend: string, id: string) => {
-//   const response = await axiosApi.patch(
-//     `/user/suspend/${id}?suspend=${suspend}`
-//   );
-//   return response.data;
-// };
+// Get User Orders
+const getOrdersByUser = async (id: string) => {
+  const response = await axiosApi.get<{
+    allOrders: IOrder[];
+    favouriteOrders: IOrder[];
+  }>(`/user/orders/${id}`);
+  return response.data;
+};
 
-// const useUpdateUserStatus = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: ({ suspend, id }: { suspend: string; id: string }) =>
-//       updateUserStatus(suspend, id),
-//     onSuccess: (response: { _id: string }) => {
-//       queryClient.invalidateQueries(["users"]);
-//     },
-//   });
-// };
-
-// // Delete User
-// const deleteUser = async (id: string) => {
-//   const response = await axiosApi.delete(`/user/${id}`);
-//   return response.data;
-// };
-
-// const useDeleteUser = () => {
-//   const queryClient = useQueryClient();
-//   return useMutation({
-//     mutationFn: (id: string) => deleteUser(id),
-//     onSuccess: (response: { _id: string }) => {
-//       queryClient.invalidateQueries(["users"]);
-//     },
-//   });
-// };
+const useOrdersByUser = (id: string) => {
+  return useQuery([`userOrders-${id}`], {
+    queryFn: () => getOrdersByUser(id),
+    staleTime: 100000,
+    cacheTime: 100000,
+    enabled: !!id,
+  });
+};
 
 const OrderServices = {
   useOrders,
   usePaginatedOrders,
   useOrderById,
+  useOrdersByUser,
 };
 export default OrderServices;

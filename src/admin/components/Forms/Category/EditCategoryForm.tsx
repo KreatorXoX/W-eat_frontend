@@ -5,12 +5,13 @@ import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
 import { useNavigate, useParams } from "react-router-dom";
-import MenuServices from "../../../api/services/menu.service";
+
 import {
   UpdateCategoryInput,
   updateCategorySchema,
 } from "../../../../utils/schema/menu.schema";
 import { useEffect } from "react";
+import MenuServices from "../../../../api/services/menu.service";
 
 const formatProducts = (data: IProduct[] | undefined) => {
   return data?.map((product) => {
