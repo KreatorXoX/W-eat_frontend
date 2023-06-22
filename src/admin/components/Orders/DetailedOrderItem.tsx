@@ -27,7 +27,7 @@ const DetailedOrderItem = ({
         <span>$ {productPrice?.price.toFixed(2)}</span>
       </div>
       {/* show the extras */}
-      <ul className="list-disc text-sm text-gray-500">
+      <ul className="list-disc text-gray-500">
         {extras.map((extra) => (
           <DetailedExtraItem
             key={extra._id}
@@ -36,7 +36,11 @@ const DetailedOrderItem = ({
           />
         ))}
       </ul>
-      <p className="border-b font-bold italic text-red-500">{note}</p>
+      {note && (
+        <p className="ml-2 text-base">
+          Product Note : <span className="italic text-red-500">{note}</span>
+        </p>
+      )}
     </div>
   );
 };

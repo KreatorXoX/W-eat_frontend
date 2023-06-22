@@ -20,7 +20,6 @@ import Favourites from "./pages/Favourites";
 import Addresses from "./pages/Addresses";
 import ChangePassword from "./pages/ChangePassword";
 import UpsertAddress from "./pages/UpsertAddress";
-import ProductLayout from "./layouts/ProductLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./admin/pages/Home/AdminDashboard";
 import AdminCustomers from "./admin/pages/Customers/Customers";
@@ -29,7 +28,8 @@ import ActiveOrders from "./admin/pages/Orders/ActiveOrders";
 import OrderHistory from "./admin/pages/Orders/OrderHistory";
 import ProtectedRoute from "./utils/routes/ProtectedRoute";
 import AdminRoute from "./utils/routes/AdminRoute";
-import OrderDetails from "./admin/pages/Orders/OrderDetails";
+
+import OrderDetails from "./components/Order/OrderDetails";
 import MenuLayout from "./layouts/MenuLayout";
 import MenuCategory from "./admin/pages/Menu/Category/MenuCategory";
 import MenuProduct from "./admin/pages/Menu/Product/MenuProduct";
@@ -78,6 +78,10 @@ const router = createBrowserRouter([
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
                   { path: "orders", element: <Orders /> },
+                  {
+                    path: "order-details/:id",
+                    element: <OrderDetails />,
+                  },
                   { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
                   { path: "edit-address", element: <UpsertAddress /> },
@@ -142,6 +146,10 @@ const router = createBrowserRouter([
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
                   { path: "orders", element: <Orders /> },
+                  {
+                    path: "order-details/:id",
+                    element: <OrderDetails />,
+                  },
                   { path: "favourites", element: <Favourites /> },
                   { path: "addresses", element: <Addresses /> },
                   { path: "edit-address", element: <UpsertAddress /> },

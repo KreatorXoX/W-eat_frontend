@@ -1,22 +1,5 @@
 import { z } from "zod";
 
-enum Status {
-  PENDING = "pending",
-  ACCEPTED = "accepted",
-  CANCELED = "canceled",
-  DELIVERED = "delivered",
-  SHIPPED = "shipped",
-}
-
-enum PaymentStatus {
-  SUCCESS = "successful",
-  PENDING = "pending",
-}
-export enum PaymentMethod {
-  CARD = "card",
-  PAD = "pay at door",
-}
-
 const OrderItem = z.object({
   product: z.string().nonempty(),
   extras: z.array(z.string().optional()).optional(),
@@ -24,6 +7,23 @@ const OrderItem = z.object({
   size: z.string().nonempty({ message: "Size has to be declared" }),
   note: z.string().optional(),
 });
+
+export enum Status {
+  PENDING = "pending",
+  ACCEPTED = "accepted",
+  CANCELED = "canceled",
+  DELIVERED = "delivered",
+  SHIPPED = "shipped",
+}
+
+export enum PaymentStatus {
+  SUCCESS = "successful",
+  PENDING = "pending",
+}
+export enum PaymentMethod {
+  CARD = "card",
+  PAD = "pay at door",
+}
 
 // Checkout and create order schema
 
@@ -59,7 +59,7 @@ export const newOrderSchema = z.object({
   user: z.string().nonempty(),
   fullName: z.string().nonempty({ message: "Name cannot be empty string" }),
   company: z.string().optional(),
-  notes: z.string().optional(),
+  note: z.string().optional(),
   email: z.string().nonempty({ message: "Email cannot be empty string" }),
   status: z.nativeEnum(Status).optional(),
   address: z.string(),
@@ -73,3 +73,11 @@ export const newOrderSchema = z.object({
 });
 
 export type NewOrderInput = z.TypeOf<typeof newOrderSchema>;
+
+// updating order schema
+export const updateOrderSchema = z.object({
+  status: z.nativeEnum(Status).optional(),
+  paymentStatus: z.nativeEnum(PaymentStatus).optional(),
+  isFavorite: z.boolean().optional(),
+});
+export type UpdateOrderInput = z.TypeOf<typeof updateOrderSchema>;

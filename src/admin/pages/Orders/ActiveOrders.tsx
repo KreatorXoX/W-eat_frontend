@@ -9,7 +9,7 @@ interface Props {}
 const ActiveOrders = (props: Props) => {
   const [page, setPage] = useState<number>(1);
   const { data: orders } = OrderServices.usePaginatedOrders(page);
-  console.log(orders);
+
   const totalPages = Math.ceil(orders ? orders.length / 8 : 1);
 
   return (
@@ -26,6 +26,7 @@ const ActiveOrders = (props: Props) => {
                   id: order._id,
                   orderDate: formatDate(order.createdAt!)!,
                   price: order.totalPrice!,
+                  status: order.status,
                 }}
               />
             ))

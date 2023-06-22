@@ -2,11 +2,14 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { useMemo } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Table from "../../shared/components/Table/Table";
 import { formatDate } from "../../utils/formatDate";
 
 const OrderTable = ({ orders }: { orders: IOrder[] }) => {
+  const location = useLocation();
+  const from = location.pathname.includes("checkout");
+
   const columns = useMemo<ColumnDef<IOrder>[]>(
     () => [
       {
@@ -14,9 +17,13 @@ const OrderTable = ({ orders }: { orders: IOrder[] }) => {
         accessorKey: "products",
         cell: ({ row }) => {
           return (
-            <p className="">{`${row.original.orderItems.map(
+            <Link
+              to={`/${from ? "checkout/account" : "account"}/order-details/${
+                row.original._id
+              }`}
+            >{`${row.original.orderItems.map(
               (order) => order.product.name
-            )}`}</p>
+            )}`}</Link>
           );
         },
       },

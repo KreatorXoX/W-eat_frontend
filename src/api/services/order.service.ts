@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import axiosApi from "../axios";
+import { UpdateOrderInput } from "../../utils/schema/order.schema";
 
 // User
 // Get Orders
@@ -60,10 +61,40 @@ const useOrdersByUser = (id: string) => {
   });
 };
 
+// Update Order
+type UpdateOrderInputApi = {
+  status?: string;
+  paymentStatus?: string;
+  isFavorite?: boolean;
+};
+const updateOrder = async (data: UpdateOrderInput, id: string) => {
+  const transformedData: UpdateOrderInputApi = {
+    status: data.status,
+    paymentStatus: data.paymentStatus,
+    isFavorite: data.isFavorite,
+  };
+  const response = await axiosApi.patch(`/orders/${id}`, {
+    ...data,
+  });
+  return response.data;
+};
+
+const useUpdateOrder = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ data, id }: { data: UpdateOrderInput; id: string }) =>
+      updateOrder(data, id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(["orders"]);
+    },
+  });
+};
+
 const OrderServices = {
   useOrders,
   usePaginatedOrders,
   useOrderById,
   useOrdersByUser,
+  useUpdateOrder,
 };
 export default OrderServices;

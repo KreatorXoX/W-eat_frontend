@@ -46,6 +46,7 @@ type Order = {
   id: string;
   orderDate: string;
   price: number;
+  status?: "pending" | "accepted" | "canceled" | "delivered" | "shipped";
 };
 
 type OrderHistory = {
@@ -156,7 +157,8 @@ interface IOrder extends IApi {
   orderItems: IOrderItem[];
   deliveryCost?: number;
   totalPrice?: number;
-  status: string;
+  note?: string;
+  status: "pending" | "accepted" | "canceled" | "delivered" | "shipped";
   address: string;
   placeOrderTime: string;
   paymentMethod: string;

@@ -19,7 +19,6 @@ import jwtDecode from "jwt-decode";
 import {
   CheckoutFormInput,
   NewOrderInput,
-  PaymentMethod,
   checkoutFormSchema,
 } from "../../utils/schema/order.schema";
 
@@ -134,6 +133,7 @@ const Checkout = (props: Props) => {
       email: data.orderEmail,
       address: address,
       phoneNumber: data.phoneNumber,
+      note: data.notes,
       placeOrderTime: data.placeOrderTime.value,
       paymentMethod: data.paymentMethod.value as string,
     };

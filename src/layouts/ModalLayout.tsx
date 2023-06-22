@@ -1,5 +1,12 @@
 import { useEffect } from "react";
-import { Outlet, useNavigate, useLocation, To } from "react-router-dom";
+import {
+  Outlet,
+  useNavigate,
+  useLocation,
+  To,
+  useOutlet,
+  useOutletContext,
+} from "react-router-dom";
 import { useTheme } from "../context/themeStore";
 
 type Props = {};
@@ -8,6 +15,7 @@ const ModalLayout = (props: Props) => {
   const navigate = useNavigate();
   const dark = useTheme((state) => state.dark);
   const location = useLocation().pathname;
+  const ctx = useOutletContext();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -38,7 +46,7 @@ const ModalLayout = (props: Props) => {
       overflow-auto lg:h-fit lg:w-[40rem] lg:rounded-xl lg:py-5
           `}
         >
-          <Outlet />
+          <Outlet context={ctx} />
         </div>
       </div>
       {/* <div

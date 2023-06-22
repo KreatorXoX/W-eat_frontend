@@ -1,4 +1,4 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useOutletContext } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { FiSettings, FiUsers } from "react-icons/fi";
 import { IoRestaurantOutline } from "react-icons/io5";
@@ -6,6 +6,8 @@ import { MdDeliveryDining, MdSettingsApplications } from "react-icons/md";
 type Props = {};
 
 const AdminLayout = (props: Props) => {
+  const ctx = useOutletContext();
+
   return (
     <main className="mx-auto flex h-screen flex-col lg:flex-row">
       <aside className="w-full rounded-lg bg-neutral-200 text-left lg:w-[14rem] ">
@@ -95,7 +97,7 @@ const AdminLayout = (props: Props) => {
         </nav>
       </aside>
       <div className="h-full w-full overflow-y-auto lg:w-[calc(100vw-14rem)]">
-        <Outlet />
+        <Outlet context={ctx} />
       </div>
     </main>
   );

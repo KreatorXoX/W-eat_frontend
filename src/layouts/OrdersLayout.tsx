@@ -1,8 +1,10 @@
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useOutletContext } from "react-router-dom";
 
 type Props = {};
 
 const OrdersLayout = (props: Props) => {
+  const ctx = useOutletContext();
+
   return (
     <div className="mt-5 lg:mt-10">
       <nav>
@@ -34,7 +36,7 @@ const OrdersLayout = (props: Props) => {
           </li>
         </ul>
       </nav>
-      <Outlet />
+      <Outlet context={ctx} />
     </div>
   );
 };
