@@ -19,15 +19,17 @@ import jwtDecode from "jwt-decode";
 import {
   CheckoutFormInput,
   NewOrderInput,
+  PaymentMethod,
   checkoutFormSchema,
 } from "../../utils/schema/order.schema";
-
+import RestaurantServices from "../../api/services/restaurant.service";
 type Props = {};
 
 Modal.setAppElement("#root");
 const newDate = new Date();
 
 const Checkout = (props: Props) => {
+  const { data: restaurant } = RestaurantServices.useRestaurant();
   const [showDeliveryModal, setDeliveryModal] = useState<boolean>(false);
   const [showPaymentModal, setPaymentModal] = useState<boolean>(false);
 
@@ -54,9 +56,9 @@ const Checkout = (props: Props) => {
   });
 
   const { initialHour, deliveryTimes } = useDeliveryTimes(
-    "23:00",
+    restaurant?.operationTime.closingTime!,
     newDate,
-    "10:00"
+    restaurant?.operationTime.openingTime!
   );
 
   const {
@@ -97,7 +99,7 @@ const Checkout = (props: Props) => {
     setPaymentModal(false);
   };
 
-  const checkoutHandler: SubmitHandler<CheckoutFormInput> = async (data) => {
+  const checkoutHandler: SubmitHandler<CheckoutFormInput> = (data) => {
     const address = [
       data.city,
       data.houseNumber,
@@ -138,13 +140,7 @@ const Checkout = (props: Props) => {
       paymentMethod: data.paymentMethod.value as string,
     };
 
-    console.log("Order placed is : ", newOrder);
-
-    try {
-      await placeOrder(newOrder);
-    } catch (error) {
-      console.log(error);
-    }
+    placeOrder(newOrder);
   };
 
   return (

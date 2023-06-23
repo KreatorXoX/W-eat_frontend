@@ -53,6 +53,9 @@ import VerifyAccount from "./pages/VerifyAccount";
 import ForgotPassword from "./components/Forms/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Oauth from "./pages/Oauth";
+import NewOrders from "./admin/pages/Orders/NewOrders";
+import ClientOrdersLayout from "./layouts/ClientOrdersLayout";
+import ClientOrderHistory from "./pages/ClientOrderHistory";
 
 const router = createBrowserRouter([
   {
@@ -77,7 +80,18 @@ const router = createBrowserRouter([
                 // implement a sign-in to access your account informations error page!
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
-                  { path: "orders", element: <Orders /> },
+                  {
+                    path: "orders",
+                    element: <ClientOrdersLayout />,
+                    children: [
+                      { index: true, element: <Orders /> },
+                      {
+                        path: "order-history",
+                        element: <ClientOrderHistory />,
+                      },
+                    ],
+                  },
+
                   {
                     path: "order-details/:id",
                     element: <OrderDetails />,
@@ -145,7 +159,17 @@ const router = createBrowserRouter([
                 // implement a sign-in to access your account informations error page!
                 children: [
                   { path: "personal-info", element: <PersonalPage /> },
-                  { path: "orders", element: <Orders /> },
+                  {
+                    path: "orders",
+                    element: <ClientOrdersLayout />,
+                    children: [
+                      { index: true, element: <Orders /> },
+                      {
+                        path: "order-history",
+                        element: <ClientOrderHistory />,
+                      },
+                    ],
+                  },
                   {
                     path: "order-details/:id",
                     element: <OrderDetails />,
@@ -198,7 +222,8 @@ const router = createBrowserRouter([
                 path: "orders",
                 element: <OrdersLayout />,
                 children: [
-                  { index: true, element: <ActiveOrders /> },
+                  { index: true, element: <NewOrders /> },
+                  { path: "active-orders", element: <ActiveOrders /> },
                   { path: "order-history", element: <OrderHistory /> },
                   {
                     path: ":id",

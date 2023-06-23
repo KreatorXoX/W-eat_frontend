@@ -22,11 +22,18 @@ const getPaginatedOrders = async (page: number) => {
   return response.data;
 };
 
-const usePaginatedOrders = (page: number) => {
-  return useQuery(["orders"], {
+const usePaginatedPendingOrders = (page: number) => {
+  return useQuery(["pending-orders"], {
     queryFn: () => getPaginatedOrders(page),
     select: (data: IOrder[]) =>
       data.filter((order) => order.status === "pending"),
+  });
+};
+const usePaginatedActiveOrders = (page: number) => {
+  return useQuery(["active-orders"], {
+    queryFn: () => getPaginatedOrders(page),
+    select: (data: IOrder[]) =>
+      data.filter((order) => order.status === "accepted"),
   });
 };
 
@@ -86,13 +93,16 @@ const useUpdateOrder = () => {
       updateOrder(data, id),
     onSuccess: () => {
       queryClient.invalidateQueries(["orders"]);
+      queryClient.invalidateQueries(["active-orders"]);
+      queryClient.invalidateQueries(["pending-orders"]);
     },
   });
 };
 
 const OrderServices = {
   useOrders,
-  usePaginatedOrders,
+  usePaginatedActiveOrders,
+  usePaginatedPendingOrders,
   useOrderById,
   useOrdersByUser,
   useUpdateOrder,

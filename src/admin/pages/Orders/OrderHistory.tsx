@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { orderHistory } from "../../../utils/table/orderHistory";
+
 import { useMemo } from "react";
 import Table from "../../../shared/components/Table/Table";
 import { Link } from "react-router-dom";
@@ -51,7 +51,10 @@ const OrderHistory = (props: Props) => {
       {orders ? (
         <Table
           {...{
-            data: orders.filter((order) => order.status !== "pending"),
+            data: orders.filter(
+              (order) =>
+                order.status === "delivered" || order.status === "canceled"
+            ),
             columns,
           }}
         />

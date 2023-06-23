@@ -81,6 +81,7 @@ function Table<T extends object>({ data, columns }: ReactTableProps<T>) {
                     <td
                       key={cell.id}
                       className={`p-2 font-medium text-gray-700 dark:text-slate-100 ${
+                        cell.getValue() === "accepted" ||
                         cell.getValue() === "delivered"
                           ? "bg-green-200/60 uppercase text-green-700 dark:bg-green-700"
                           : cell.getValue() === "canceled"

@@ -1,4 +1,3 @@
-import { RiArrowGoBackLine } from "react-icons/ri";
 import { Link, useOutletContext } from "react-router-dom";
 
 import OrderTable from "../components/Order/OrderTable";
@@ -6,7 +5,7 @@ import OrderServices from "../api/services/order.service";
 
 interface Props {}
 
-const Orders = (props: Props) => {
+const ClientOrderHistory = (props: Props) => {
   const ctx: UserContext = useOutletContext();
   const { data: userOrders, isLoading } = OrderServices.useOrdersByUser(ctx.id);
   return (
@@ -18,7 +17,7 @@ const Orders = (props: Props) => {
           <OrderTable
             orders={userOrders.allOrders.filter(
               (order) =>
-                order.status === "accepted" || order.status === "pending"
+                order.status === "canceled" || order.status === "delivered"
             )}
           />
         ) : (
@@ -32,4 +31,4 @@ const Orders = (props: Props) => {
   );
 };
 
-export default Orders;
+export default ClientOrderHistory;

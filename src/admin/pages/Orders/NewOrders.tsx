@@ -6,16 +6,16 @@ import { formatDate } from "../../../utils/formatDate";
 import OrderServices from "../../../api/services/order.service";
 interface Props {}
 
-const ActiveOrders = (props: Props) => {
+const NewOrders = (props: Props) => {
   const [page, setPage] = useState<number>(1);
-  const { data: orders } = OrderServices.usePaginatedActiveOrders(page);
+  const { data: orders } = OrderServices.usePaginatedPendingOrders(page);
 
   const totalPages = Math.ceil(orders ? orders.length / 8 : 1);
 
   return (
     <div className="mt-10 flex h-full items-center justify-center">
       <div className="flex w-full flex-col items-center justify-center space-y-10 px-4 pb-10">
-        <h2 className="text-2xl font-semibold text-green-800">Active Orders</h2>
+        <h2 className="text-2xl font-semibold text-green-800">New Orders</h2>
 
         <ul className="mx-auto w-full max-w-7xl space-y-4">
           {orders ? (
@@ -62,4 +62,4 @@ const ActiveOrders = (props: Props) => {
   );
 };
 
-export default ActiveOrders;
+export default NewOrders;

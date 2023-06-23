@@ -44,11 +44,6 @@
 // custom hook version
 import { useState, useEffect } from "react";
 
-type OptionSelect = {
-  value: string;
-  label: string;
-};
-
 type GetTimeReturnType = {
   deliveryTimes: OptionSelect[];
   initialHour: string;
@@ -62,41 +57,43 @@ const useDeliveryTimes = (
   const [deliveryTimes, setDeliveryTimes] = useState<OptionSelect[]>([]);
 
   useEffect(() => {
-    let hours = [];
-    let hour = date.getHours();
-    let minute = date.getMinutes();
-    let closingHour = parseInt(closingTime.split(":")[0]);
-    if (openingTime) {
-      const [openingHour, openingMinute] = openingTime.split(":");
-      if (
-        hour < parseInt(openingHour) ||
-        (hour === parseInt(openingHour) && minute < parseInt(openingMinute))
-      ) {
-        hour = parseInt(openingHour);
-        minute = parseInt(openingMinute);
+    if (closingTime && openingTime) {
+      let hours = [];
+      let hour = date.getHours();
+      let minute = date.getMinutes();
+      let closingHour = parseInt(closingTime.split(":")[0]);
+      if (openingTime) {
+        const [openingHour, openingMinute] = openingTime.split(":");
+        if (
+          hour < parseInt(openingHour) ||
+          (hour === parseInt(openingHour) && minute < parseInt(openingMinute))
+        ) {
+          hour = parseInt(openingHour);
+          minute = parseInt(openingMinute);
+        }
       }
-    }
 
-    if (minute % 15 !== 0) {
-      minute = minute - (minute % 15) + 15;
-    }
-
-    let hourValue = "";
-
-    while (hour < closingHour) {
-      if (minute === 60) {
-        hour++;
-        minute = 0;
+      if (minute % 15 !== 0) {
+        minute = minute - (minute % 15) + 15;
       }
-      hourValue = `${hour}:${minute === 0 ? "00" : minute}`;
-      hours.push({ value: hourValue, label: hourValue });
-      minute += 15;
-    }
 
-    setDeliveryTimes([
-      { value: "asap", label: "As soon as possible" },
-      ...hours,
-    ]);
+      let hourValue = "";
+
+      while (hour < closingHour) {
+        if (minute === 60) {
+          hour++;
+          minute = 0;
+        }
+        hourValue = `${hour}:${minute === 0 ? "00" : minute}`;
+        hours.push({ value: hourValue, label: hourValue });
+        minute += 15;
+      }
+
+      setDeliveryTimes([
+        { value: "asap", label: "As soon as possible" },
+        ...hours,
+      ]);
+    }
   }, [closingTime, openingTime, date]);
 
   return { deliveryTimes, initialHour: "asap" };

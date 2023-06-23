@@ -97,6 +97,20 @@ const OrderDetails = (props: Props) => {
           </span>
         </div>
       </div>
+      {ctx && ctx.isAdmin && order?.status === "accepted" && (
+        <div className="flex justify-center">
+          <GenericButton
+            classes="rounded-lg font-medium"
+            text="Complete"
+            onClick={() =>
+              updateOrder({
+                data: { status: Status.DELIVERED },
+                id: order?._id!,
+              })
+            }
+          />
+        </div>
+      )}
       {ctx && ctx.isAdmin && order?.status === "pending" && (
         <div className="flex justify-center gap-4">
           <GenericButton

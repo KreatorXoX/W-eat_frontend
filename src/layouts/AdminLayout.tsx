@@ -1,13 +1,22 @@
-import { Outlet, NavLink, useOutletContext } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  useOutletContext,
+  useNavigate,
+} from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { FiSettings, FiUsers } from "react-icons/fi";
 import { IoRestaurantOutline } from "react-icons/io5";
-import { MdDeliveryDining, MdSettingsApplications } from "react-icons/md";
+import { MdDeliveryDining } from "react-icons/md";
+
+import { AiOutlinePoweroff } from "react-icons/ai";
+import { useAuthStore } from "../context/useAuthStore";
 type Props = {};
 
 const AdminLayout = (props: Props) => {
   const ctx = useOutletContext();
-
+  const navigate = useNavigate();
+  const logOut = useAuthStore((state) => state.logOut);
   return (
     <main className="mx-auto flex h-screen flex-col lg:flex-row">
       <aside className="w-full rounded-lg bg-neutral-200 text-left lg:w-[14rem] ">
@@ -92,6 +101,20 @@ const AdminLayout = (props: Props) => {
                   <span>Settings</span>
                 </p>
               </NavLink>
+            </li>
+            <li>
+              <button
+                className="hover:text-red-700"
+                onClick={() => {
+                  logOut();
+                  navigate("/");
+                }}
+              >
+                <p className="flex flex-col items-center text-sm lg:flex-row lg:gap-3 lg:text-lg">
+                  <AiOutlinePoweroff className=" inline text-xl" />
+                  <span>Sign Out</span>
+                </p>
+              </button>
             </li>
           </ul>
         </nav>
