@@ -39,7 +39,11 @@ const NewProductForm = (props: Props) => {
   });
 
   const createProductHandler: SubmitHandler<NewProductInput> = (data) => {
-    createProduct(data);
+    createProduct(data, {
+      onSuccess: () => {
+        navigate("/admin/menu/products");
+      },
+    });
   };
 
   const { fields, append, remove } = useFieldArray({

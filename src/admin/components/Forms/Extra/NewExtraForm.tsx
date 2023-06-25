@@ -42,7 +42,11 @@ const NewExtraForm = (props: Props) => {
   });
 
   const createExtraHandler: SubmitHandler<NewExtraInput> = (data) => {
-    createExtra(data);
+    createExtra(data, {
+      onSuccess: () => {
+        navigate("/admin/menu/extra");
+      },
+    });
   };
   return (
     <form onSubmit={handleSubmit(createExtraHandler)} className="space-y-4">

@@ -21,8 +21,7 @@ const getMenu = async () => {
 const useMenu = () => {
   return useQuery(["menu"], {
     queryFn: () => getMenu(),
-    staleTime: 100000,
-    cacheTime: 100000,
+    staleTime: Infinity,
   });
 };
 

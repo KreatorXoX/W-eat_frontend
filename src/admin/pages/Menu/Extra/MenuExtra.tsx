@@ -63,7 +63,10 @@ const MenuExtra = (props: Props) => {
           }}
         />
       ) : (
-        <p>No extras created yet</p>
+        <p className="h-16 text-center text-xl">
+          No extra is created,{" "}
+          <span className="italic text-red-500 underline">yet</span>
+        </p>
       )}
     </div>
   );

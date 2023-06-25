@@ -1,6 +1,6 @@
 type Props = {
   name: string;
-  value: number | string;
+  value: number | string | undefined;
 };
 const OrderCard = ({ name, value }: Props) => {
   return (
@@ -17,7 +17,7 @@ const OrderCard = ({ name, value }: Props) => {
       font-semibold outline-none
       "
       >
-        {value}
+        {value || "None"}
       </div>
     </div>
   );

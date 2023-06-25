@@ -39,7 +39,11 @@ const NewCategoryForm = (props: Props) => {
   });
 
   const createNewCategoryHandler: SubmitHandler<NewCategoryInput> = (data) => {
-    createCategory(data);
+    createCategory(data, {
+      onSuccess: () => {
+        navigate("/admin/menu/categories");
+      },
+    });
   };
   return (
     <form

@@ -195,7 +195,14 @@ interface IRestaurant extends IApi {
 }
 
 interface IMenu extends IApi {
-  categories: ICategory[];
-  restaurant: IRestaurant;
-  rating: number;
+  categories?: ICategory[];
+  restaurant?: IRestaurant;
+  rating?: number;
+}
+
+interface IRevenue {
+  totalOrders: number | undefined;
+  totalEarned: number | undefined;
+  ordersCompleted: number | undefined;
+  ordersCanceled: number | undefined;
 }

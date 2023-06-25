@@ -34,7 +34,11 @@ const NewExtraProductForm = (props: Props) => {
       price: data.price ? data.price : undefined,
     };
 
-    createExtraItem(transformedData);
+    createExtraItem(transformedData, {
+      onSuccess: () => {
+        navigate("/admin/menu/extra-product");
+      },
+    });
   };
   return (
     <form

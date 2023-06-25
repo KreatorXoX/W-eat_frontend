@@ -13,6 +13,7 @@ const getAllOrders = async () => {
 const useOrders = () => {
   return useQuery(["orders"], {
     queryFn: () => getAllOrders(),
+    refetchInterval: 6 * 10 * 1000,
   });
 };
 

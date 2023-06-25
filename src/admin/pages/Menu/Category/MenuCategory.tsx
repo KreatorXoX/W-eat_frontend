@@ -57,7 +57,10 @@ const MenuCategory = (props: Props) => {
           }}
         />
       ) : (
-        <p>No category created yet</p>
+        <p className="h-16 text-center text-xl">
+          No category is created,{" "}
+          <span className="italic text-red-500 underline">yet</span>
+        </p>
       )}
     </div>
   );

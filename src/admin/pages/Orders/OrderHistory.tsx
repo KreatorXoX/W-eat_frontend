@@ -45,21 +45,27 @@ const OrderHistory = (props: Props) => {
   );
   return (
     <div className="flex h-full flex-col items-center justify-center sm:px-10">
-      <h2 className="mt-10 text-2xl font-semibold text-green-800">
-        Order History
-      </h2>
-      {orders ? (
-        <Table
-          {...{
-            data: orders.filter(
-              (order) =>
-                order.status === "delivered" || order.status === "canceled"
-            ),
-            columns,
-          }}
-        />
+      {orders && orders.length > 0 ? (
+        <>
+          <h2 className="mt-10 text-2xl font-semibold text-green-800">
+            Order History
+          </h2>
+          {
+            <Table
+              {...{
+                data: orders.filter(
+                  (order) =>
+                    order.status === "delivered" || order.status === "canceled"
+                ),
+                columns,
+              }}
+            />
+          }
+        </>
       ) : (
-        <p>No orders are placed yet</p>
+        <p className="mt-10 h-16 text-center text-xl">
+          No orders, <span className="italic text-red-500 underline">yet</span>
+        </p>
       )}
     </div>
   );

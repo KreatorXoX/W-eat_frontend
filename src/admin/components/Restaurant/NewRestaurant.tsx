@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import GenericButton from "../../../shared/components/UI-Elements/GenericButton";
 
-import NewRestaurantForm from "../../components/Forms/Restaurant/NewRestaurantForm";
+import NewRestaurantForm from "../Forms/Restaurant/NewRestaurantForm";
 
 type Props = {};
 

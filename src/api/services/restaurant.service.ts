@@ -19,6 +19,18 @@ const useRestaurant = () => {
   });
 };
 
+// Get Revenue
+const getRevenue = async () => {
+  const response = await axiosApi.get<IRevenue>("/revenue");
+  return response.data;
+};
+
+const useRevenue = () => {
+  return useQuery(["revenue"], {
+    queryFn: () => getRevenue(),
+  });
+};
+
 // Create New Restaurant
 const createRestaurant = async (data: NewRestaurantInput) => {
   const transformedData: NewRestaurantInput = {
@@ -86,6 +98,7 @@ const useUpdateRestaurant = () => {
 
 const RestaurantServices = {
   useRestaurant,
+  useRevenue,
   useCreateRestaurant,
   useUpdateRestaurant,
 };

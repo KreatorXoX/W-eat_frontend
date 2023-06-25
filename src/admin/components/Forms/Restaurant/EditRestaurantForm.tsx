@@ -49,7 +49,14 @@ const EditRestaurantForm = () => {
   const editCategoryHandler: SubmitHandler<UpdateRestaurantInput> = (data) => {
     // if isDirty then send it to backend otherwise values are the same.
     console.log(isDirty);
-    updateRestaurant({ data: data, id: restaurant?._id! });
+    updateRestaurant(
+      { data: data, id: restaurant?._id! },
+      {
+        onSuccess: () => {
+          navigate("/admin/menu/categories");
+        },
+      }
+    );
   };
 
   return (
@@ -131,7 +138,7 @@ const EditRestaurantForm = () => {
           label="Minimum Amount of Purchase"
           placeholder="ex: 20"
           id="minDeliveryAmount"
-          {...register("minDeliveryAmount")}
+          {...register("minDeliveryAmount", { valueAsNumber: true })}
           error={errors.minDeliveryAmount?.message}
         />
 
@@ -141,7 +148,7 @@ const EditRestaurantForm = () => {
           label="Delivery Cost"
           placeholder="ex: 5"
           id="deliveryCost"
-          {...register("deliveryCost")}
+          {...register("deliveryCost", { valueAsNumber: true })}
           error={errors.deliveryCost?.message}
         />
       </div>

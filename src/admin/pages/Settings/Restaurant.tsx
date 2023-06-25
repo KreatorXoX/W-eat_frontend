@@ -1,6 +1,6 @@
 import { useState } from "react";
-import EditRestaurant from "./EditRestaurant";
-import NewRestaurant from "./NewRestaurant";
+import EditRestaurant from "../../components/Restaurant/EditRestaurant";
+import NewRestaurant from "../../components/Restaurant/NewRestaurant";
 import RestaurantServices from "../../../api/services/restaurant.service";
 type Props = {};
 

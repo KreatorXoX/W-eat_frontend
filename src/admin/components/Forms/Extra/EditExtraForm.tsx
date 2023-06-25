@@ -52,7 +52,14 @@ const EditExtraForm = () => {
   const editExtraHandler: SubmitHandler<UpdateExtraInput> = (data) => {
     // if not isDirty navigate to main menu
 
-    updateExtra({ data: data, id: id! });
+    updateExtra(
+      { data: data, id: id! },
+      {
+        onSuccess: () => {
+          navigate("/admin/menu/extra");
+        },
+      }
+    );
   };
   return (
     <form onSubmit={handleSubmit(editExtraHandler)} className="space-y-4">

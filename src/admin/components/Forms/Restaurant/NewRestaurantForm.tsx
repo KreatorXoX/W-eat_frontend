@@ -4,7 +4,7 @@ import Input from "../../../../shared/components/Form/Input";
 import GenericButton from "../../../../shared/components/UI-Elements/GenericButton";
 
 import { useNavigate } from "react-router-dom";
-import { formatData } from "../../../../utils/formatingDAta/formatData";
+
 import RestaurantServices from "../../../../api/services/restaurant.service";
 import {
   NewRestaurantInput,
@@ -29,7 +29,11 @@ const NewRestaurantForm = (props: Props) => {
     data
   ) => {
     console.log(data);
-    createRestaurant(data);
+    createRestaurant(data, {
+      onSuccess: () => {
+        navigate("/admin/menu/categories");
+      },
+    });
   };
   return (
     <form

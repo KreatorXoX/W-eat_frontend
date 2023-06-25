@@ -47,7 +47,15 @@ const EditExtraProductForm = (props: Props) => {
       allergens: data.allergens,
       price: data.price,
     };
-    if (isDirty) updateExtraItem({ data: transformedData, id: id! });
+    if (isDirty)
+      updateExtraItem(
+        { data: transformedData, id: id! },
+        {
+          onSuccess: () => {
+            navigate("/admin/menu/extra-product");
+          },
+        }
+      );
   };
   return (
     <form

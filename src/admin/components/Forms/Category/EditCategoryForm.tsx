@@ -62,7 +62,14 @@ const EditCategoryForm = () => {
 
   const editCategoryHandler: SubmitHandler<UpdateCategoryInput> = (data) => {
     // if isDirty then send it to backend otherwise values are the same.
-    updateCategory({ data: data, id: id! });
+    updateCategory(
+      { data: data, id: id! },
+      {
+        onSuccess: () => {
+          navigate("/admin/menu/categories");
+        },
+      }
+    );
   };
 
   return (

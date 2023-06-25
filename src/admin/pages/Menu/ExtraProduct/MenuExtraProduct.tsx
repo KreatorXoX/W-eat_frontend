@@ -77,7 +77,10 @@ const MenuExtraProduct = (props: Props) => {
           }}
         />
       ) : (
-        <div>No extra yet</div>
+        <p className="h-16 text-center text-xl">
+          No extra product is created,{" "}
+          <span className="italic text-red-500 underline">yet</span>
+        </p>
       )}
     </div>
   );

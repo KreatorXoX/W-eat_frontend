@@ -74,7 +74,10 @@ const MenuProduct = (props: Props) => {
           }}
         />
       ) : (
-        <p>No product created yet</p>
+        <p className="h-16 text-center text-xl">
+          No product is created,{" "}
+          <span className="italic text-red-500 underline">yet</span>
+        </p>
       )}
     </div>
   );

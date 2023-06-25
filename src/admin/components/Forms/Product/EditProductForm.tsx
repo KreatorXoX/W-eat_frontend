@@ -66,7 +66,14 @@ const EditProductForm = (props: Props) => {
     // submit the form if isDirty else
     // naivigate to main menu
 
-    updateProduct({ data: data, id: id! });
+    updateProduct(
+      { data: data, id: id! },
+      {
+        onSuccess: () => {
+          navigate("/admin/menu/products");
+        },
+      }
+    );
   };
 
   const { fields, append, remove } = useFieldArray({
