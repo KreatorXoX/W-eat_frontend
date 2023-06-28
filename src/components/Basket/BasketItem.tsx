@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { TbMinus, TbPlus } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import { CartItem, useShoppingCart } from "../../context/shoppingCartStore";
+import { useShoppingCart } from "../../context/shoppingCartStore";
 
 type Props = {
   item: CartItem;
