@@ -44,7 +44,7 @@ const Checkout = (props: Props) => {
 
   const { mutateAsync: placeOrder } = useMutation({
     mutationFn: (order: any) => {
-      return axios.post("http://localhost:1337/api/orders", order);
+      return axios.post(`${import.meta.env.BASE_URL}/orders`, order);
     },
     onSuccess: (response) => {
       const orderId = response.data?.orderId;
