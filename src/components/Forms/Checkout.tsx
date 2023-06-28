@@ -44,7 +44,7 @@ const Checkout = (props: Props) => {
 
   const { mutateAsync: placeOrder } = useMutation({
     mutationFn: (order: any) => {
-      return axios.post(`${import.meta.env.BASE_URL}/orders`, order);
+      return axios.post(`${import.meta.env.VITE_BASE_URL}/orders`, order);
     },
     onSuccess: (response) => {
       const orderId = response.data?.orderId;

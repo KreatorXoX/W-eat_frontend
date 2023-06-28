@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "../context/useAuthStore";
 
 const axiosApi = axios.create({
-  baseURL: `${import.meta.env.BASE_URL}`,
+  baseURL: `${import.meta.env.VITE_BASE_URL}`,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
@@ -29,7 +29,7 @@ axiosApi.interceptors.response.use(
     if (err?.response?.status === 403 && !originalReq?.sent) {
       originalReq.sent = true;
       const newAccessToken = await axios.get<IToken>(
-        `${import.meta.env.BASE_URL}/auth/refresh`,
+        `${import.meta.env.VITE_BASE_URL}/auth/refresh`,
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,

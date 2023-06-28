@@ -20,12 +20,15 @@ const AfterPayment = (props: Props) => {
 
   const { mutate: validateOrder } = useMutation({
     mutationFn: (updateData: OrderUpdate) =>
-      axios.patch(`${import.meta.env.BASE_URL}/orders/${orderId}`, updateData),
+      axios.patch(
+        `${import.meta.env.VITE_BASE_URL}/orders/${orderId}`,
+        updateData
+      ),
   });
 
   const { mutate: deleteOrder } = useMutation({
     mutationFn: (orderId: string) =>
-      axios.delete(`${import.meta.env.BASE_URL}/orders/${orderId}`),
+      axios.delete(`${import.meta.env.VITE_BASE_URL}/orders/${orderId}`),
   });
 
   let content: JSX.Element | null = null;
