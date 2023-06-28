@@ -13,21 +13,21 @@ const Home = (props: Props) => {
   return (
     <>
       <TopSection
-        name={restaurantMenuAndInfo?.restaurant.name}
+        name={restaurantMenuAndInfo?.restaurant?.name}
         rating={restaurantMenuAndInfo?.rating}
-        reviews={restaurantMenuAndInfo?.restaurant.reviews?.length}
+        reviews={restaurantMenuAndInfo?.restaurant?.reviews?.length}
         deliveryInfo={{
-          averageTime: restaurantMenuAndInfo?.restaurant.averageDeliveryTime,
-          deliveryCost: restaurantMenuAndInfo?.restaurant.deliveryCost,
-          minCost: restaurantMenuAndInfo?.restaurant.minDeliveryAmount,
+          averageTime: restaurantMenuAndInfo?.restaurant?.averageDeliveryTime,
+          deliveryCost: restaurantMenuAndInfo?.restaurant?.deliveryCost,
+          minCost: restaurantMenuAndInfo?.restaurant?.minDeliveryAmount,
         }}
         workingHours={{
           openingTime:
-            restaurantMenuAndInfo?.restaurant.operationTime.openingTime,
+            restaurantMenuAndInfo?.restaurant?.operationTime.openingTime,
           closingTime:
-            restaurantMenuAndInfo?.restaurant.operationTime.closingTime,
+            restaurantMenuAndInfo?.restaurant?.operationTime.closingTime,
         }}
-        sections={restaurantMenuAndInfo?.categories.map((cat) => cat.name)}
+        sections={restaurantMenuAndInfo?.categories?.map((cat) => cat.name)}
       />
       <MenuItemList
         popularProducts={products?.filter((prod) => prod.tag === "popular")}
