@@ -17,6 +17,7 @@ type Props = {
   placeholder?: string;
   isMulti?: boolean;
   isClearable?: boolean;
+  isSearchable?: boolean;
   id: string;
   half: boolean;
   label: string;
@@ -107,7 +108,7 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
                   ...customStyles,
                 }}
                 isClearable={props.isClearable}
-                isSearchable
+                isSearchable={props.isSearchable}
                 hideSelectedOptions={true}
                 options={props.options}
                 maxMenuHeight={130}
