@@ -108,7 +108,7 @@ const Input = forwardRef<HTMLInputElement & HTMLTextAreaElement, Props>(
                   ...customStyles,
                 }}
                 isClearable={props.isClearable}
-                isSearchable={props.isSearchable}
+                isSearchable={props.isSearchable ? props.isSearchable : false}
                 hideSelectedOptions={true}
                 options={props.options}
                 maxMenuHeight={130}
