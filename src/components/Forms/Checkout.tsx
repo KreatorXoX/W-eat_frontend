@@ -423,9 +423,8 @@ const Checkout = (props: Props) => {
           )}
         </div>
         <button
+          type="submit"
           className="
-          
-            
               w-full
              rounded-full bg-orange-600 py-2
             px-10 text-lg font-medium text-slate-100 disabled:pointer-events-none
