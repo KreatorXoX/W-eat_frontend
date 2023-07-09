@@ -11,7 +11,7 @@ const Home = (props: Props) => {
 
   // getMenu includes categories restaurant info and restaurant rating
 
-  if (!isLoading) return <LoadingScreen />;
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <>
