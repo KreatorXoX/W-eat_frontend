@@ -56,7 +56,6 @@ import Oauth from "./pages/Oauth";
 import NewOrders from "./admin/pages/Orders/NewOrders";
 import ClientOrdersLayout from "./layouts/ClientOrdersLayout";
 import ClientOrderHistory from "./pages/ClientOrderHistory";
-import ContactLayout from "./layouts/ContactLayout";
 import ContactUs from "./pages/ContactUs";
 
 const router = createBrowserRouter([
@@ -212,8 +211,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/contact-us",
-        element: <ContactLayout />,
-        children: [{ index: true, element: <ContactUs /> }],
+        element: <ContactUs />,
       },
       {
         element: <AdminRoute />,
