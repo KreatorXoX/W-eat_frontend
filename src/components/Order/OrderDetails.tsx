@@ -4,7 +4,8 @@ import { formatDate } from "../../utils/formatDate";
 import GenericButton from "../../shared/components/UI-Elements/GenericButton";
 import DetailedOrderItem from "../../admin/components/Orders/DetailedOrderItem";
 import { Status } from "../../utils/schema/order.schema";
-
+import { useState } from "react";
+import ReviewForm from "../Forms/Review";
 type Props = {};
 
 type adminCtx = {
@@ -15,6 +16,8 @@ type adminCtx = {
 const OrderDetails = (props: Props) => {
   const ctx: adminCtx = useOutletContext();
 
+  const [showReview, setShowReview] = useState(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -22,8 +25,18 @@ const OrderDetails = (props: Props) => {
   const { mutate: updateOrder } = OrderServices.useUpdateOrder();
 
   return (
-    <div className="space-y-3 p-5 text-sm text-gray-700 md:text-lg lg:px-4 lg:py-0">
+    <div className="space-y-3 p-5 text-sm text-gray-700 dark:text-slate-200 md:text-lg lg:px-4 lg:py-0">
+      {order?.status === "delivered" && (
+        <button
+          onClick={() => setShowReview((prev) => !prev)}
+          className="w-full rounded-sm bg-orange-500 text-center text-slate-200 transition-colors duration-300 hover:bg-orange-600"
+        >
+          {showReview ? "Cancel" : "Review This Order"}
+        </button>
+      )}
       <div>
+        {showReview && <ReviewForm />}
+
         <div className="flex w-full items-start justify-between">
           <div className="mb-2 flex flex-col justify-center">
             <h4>
@@ -91,9 +104,11 @@ const OrderDetails = (props: Props) => {
           <h4 className="font-semibold">Cart Total</h4>
           <span className="ml-1 font-semibold">
             ${" "}
-            {order?.totalPrice &&
-              order?.deliveryCost &&
-              (order.totalPrice + order.deliveryCost).toFixed(2)}
+            {order?.totalPrice && order?.deliveryCost
+              ? (order.totalPrice + order.deliveryCost).toFixed(2)
+              : order?.totalPrice
+              ? order.totalPrice.toFixed(2)
+              : " - "}
           </span>
         </div>
       </div>

@@ -1,12 +1,14 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
+
 import ReviewItem from "../components/ReviewItem/ReviewItem";
+import MenuServices from "../api/services/menu.service";
 
 type Props = {};
 
 export default function Reviews({}: Props) {
+  const { data: restaurantMenuAndInfo } = MenuServices.useMenu();
   const navigate = useNavigate();
   return (
     <div className="flex h-screen flex-col gap-2 pb-4 lg:h-fit lg:pb-0">
@@ -14,7 +16,7 @@ export default function Reviews({}: Props) {
         <h2 className="text-xl font-medium">Reviews</h2>
         <span>
           <AiOutlineClose
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/")}
             className="cursor-pointer text-2xl"
           />
         </span>
@@ -25,19 +27,22 @@ export default function Reviews({}: Props) {
         </h3>
         <div className="flex flex-row items-center gap-5 text-slate-100">
           <h2 className="flex h-20 w-20 items-center justify-center border-r border-gray-500 text-2xl lg:h-28 lg:w-28 lg:text-5xl">
-            4,3
+            {restaurantMenuAndInfo?.rating?.toFixed(1)}
           </h2>
           <div className="flex flex-col gap-1 text-sm text-slate-300">
             <span className="flex flex-col text-xs">
               <Rating
                 fillColor="rgb(234 88 12)"
-                initialValue={5}
+                initialValue={restaurantMenuAndInfo?.rating}
                 size={25}
                 SVGstyle={{ display: "inline" }}
                 readonly
                 allowTitleTag={false}
               />
-              <span>out of 0 reviews</span>
+              <span>
+                out of {restaurantMenuAndInfo?.restaurant?.reviews?.length || 0}{" "}
+                reviews
+              </span>
             </span>
             <span>
               All revies come from customers who have ordered from W/eat
@@ -47,15 +52,17 @@ export default function Reviews({}: Props) {
       </div>
 
       <div className="space-y-4 overflow-y-scroll px-4 lg:max-h-[30rem]">
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
-        <ReviewItem />
+        {restaurantMenuAndInfo?.restaurant?.reviews &&
+        restaurantMenuAndInfo.restaurant.reviews.length > 0 ? (
+          restaurantMenuAndInfo.restaurant.reviews.map((orderReview) => (
+            <ReviewItem key={orderReview._id} review={orderReview} />
+          ))
+        ) : (
+          <p className="pt-2 text-center text-xl">
+            There are no reviews,{" "}
+            <span className="italic text-red-500 underline">yet</span>
+          </p>
+        )}
       </div>
     </div>
   );

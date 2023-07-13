@@ -27,7 +27,7 @@ const DetailedOrderItem = ({
         <span>$ {productPrice?.price.toFixed(2)}</span>
       </div>
       {/* show the extras */}
-      <ul className="list-disc text-gray-500">
+      <ul className="list-disc text-gray-500 dark:text-gray-400">
         {extras.map((extra) => (
           <DetailedExtraItem
             key={extra._id}

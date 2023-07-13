@@ -15,7 +15,7 @@ const ContactUs = ({
     <div className="flex h-screen flex-col items-center justify-center bg-gray-100 text-gray-600 md:space-y-16">
       <div className="flex flex-col space-y-10 text-center">
         <div className="flex flex-col items-center justify-center space-y-2">
-          <h2 className="text-7xl italic">Contact Us</h2>
+          <h2 className="text-4xl italic md:text-7xl">Contact Us</h2>
           <div className="w-1/2 border border-b-red-400"></div>
         </div>
         <h4 className="text-xl font-medium">HOW TO GET IN TOUCH ?</h4>
@@ -28,13 +28,13 @@ const ContactUs = ({
                 <h2 className="">Let{`'`}s Talk!</h2>
                 <h2 className="">Tell us what's on your mind.</h2>
               </div>
-              <div className="flex flex-row justify-center gap-4 text-base md:flex-col md:items-start md:font-bold">
+              <div className="flex flex-col justify-center gap-4 text-base md:items-start md:font-bold">
                 <span>
-                  <ImLocation className="mr-[1px] inline text-xl text-amber-500 md:mr-2 md:text-3xl" />
+                  <ImLocation className="mr-2 inline text-xl text-amber-500 md:text-3xl" />
                   {contactAddress}
                 </span>
                 <span>
-                  <GrMail className="mr-[1px] inline text-xl text-amber-500 md:mr-2 md:text-3xl" />
+                  <GrMail className="mr-2 inline text-xl text-amber-500 md:text-3xl" />
                   {contactEmail}
                 </span>
               </div>

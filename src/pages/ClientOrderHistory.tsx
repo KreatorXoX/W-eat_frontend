@@ -8,21 +8,19 @@ interface Props {}
 const ClientOrderHistory = (props: Props) => {
   const ctx: UserContext = useOutletContext();
   const { data: userOrders, isLoading } = OrderServices.useOrdersByUser(ctx.id);
+  const completedOrders = userOrders?.allOrders.filter(
+    (order) => order.status === "canceled" || order.status === "delivered"
+  );
   return (
     <div>
       <ul>
         {isLoading ? (
           <p>Loading</p>
-        ) : userOrders?.allOrders && userOrders.allOrders.length > 0 ? (
-          <OrderTable
-            orders={userOrders.allOrders.filter(
-              (order) =>
-                order.status === "canceled" || order.status === "delivered"
-            )}
-          />
+        ) : completedOrders && completedOrders.length > 0 ? (
+          <OrderTable orders={completedOrders} />
         ) : (
           <p className="h-16 text-center text-xl">
-            You never placed an order,{" "}
+            There are no completed orders,{" "}
             <span className="italic text-red-500 underline">yet</span>
           </p>
         )}

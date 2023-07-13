@@ -3,9 +3,6 @@ import { MdDeliveryDining } from "react-icons/md";
 import { BiShoppingBag } from "react-icons/bi";
 import { Rating } from "react-simple-star-rating";
 import { Link } from "react-router-dom";
-type Props = {};
-
-const sectionsArr = ["popular", "tai", "beef"];
 
 function TopSection({
   name,

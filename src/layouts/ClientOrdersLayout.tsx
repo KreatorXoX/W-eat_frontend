@@ -12,7 +12,7 @@ type Props = {};
 const ClientOrdersLayout = (props: Props) => {
   const ctx = useOutletContext();
   const path = useLocation().pathname;
-  console.log(path);
+
   return (
     <div className="flex h-full flex-col justify-start space-y-10 px-1 text-gray-800 dark:text-slate-200 sm:px-5">
       <div className="mt-5 flex items-center gap-10 lg:mt-0">

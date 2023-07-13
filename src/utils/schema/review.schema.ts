@@ -2,15 +2,15 @@ import { z } from "zod";
 
 // create review schema
 export const newReviewSchema = z.object({
-  user: z.string(),
+  user: z.string().optional(),
   content: z
     .string()
-    .nonempty({ message: "Review content cannot be empty string" })
-    .optional(),
+    .nonempty({ message: "Review content cannot be empty string" }),
   rating: z
     .number()
     .min(1, "Rating cannot be less than 1")
-    .max(5, "Rating cannot be more than 5"),
+    .max(5, "Rating cannot be more than 5")
+    .optional(),
   response: z
     .string()
     .nonempty({ message: "Review response cannot be empty string" })
