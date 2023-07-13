@@ -57,6 +57,7 @@ import NewOrders from "./admin/pages/Orders/NewOrders";
 import ClientOrdersLayout from "./layouts/ClientOrdersLayout";
 import ClientOrderHistory from "./pages/ClientOrderHistory";
 import ContactUs from "./pages/ContactUs";
+import Reviews from "./pages/Reviews";
 
 const router = createBrowserRouter([
   {
@@ -136,6 +137,11 @@ const router = createBrowserRouter([
             ],
           },
           {
+            path: "/reviews",
+            element: <ModalLayout />,
+            children: [{ index: true, element: <Reviews /> }],
+          },
+          {
             path: "/cart",
             element: <CartLayout />,
             children: [{ index: true, element: <Cart /> }],
@@ -213,6 +219,7 @@ const router = createBrowserRouter([
         path: "/contact-us",
         element: <ContactUs />,
       },
+
       {
         element: <AdminRoute />,
         // implement a sign-in as admin to access! error page!

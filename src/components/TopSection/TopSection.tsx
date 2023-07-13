@@ -2,6 +2,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { MdDeliveryDining } from "react-icons/md";
 import { BiShoppingBag } from "react-icons/bi";
 import { Rating } from "react-simple-star-rating";
+import { Link } from "react-router-dom";
 type Props = {};
 
 const sectionsArr = ["popular", "tai", "beef"];
@@ -48,9 +49,12 @@ function TopSection({
             readonly
             allowTitleTag={false}
           />
-          <span className="text-sm underline hover:cursor-pointer hover:no-underline">
+          <Link
+            to="/reviews"
+            className="text-sm underline hover:cursor-pointer hover:no-underline"
+          >
             {reviews} reviews
-          </span>
+          </Link>
         </div>
         <div className="my-2 flex items-center gap-5 text-sm">
           <div className="flex items-center gap-2">
