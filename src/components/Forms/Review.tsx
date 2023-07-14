@@ -9,9 +9,11 @@ import { useAuthStore } from "../../context/useAuthStore";
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { Rating } from "react-simple-star-rating";
+import ReviewServices from "../../api/services/review.service";
 type Props = {};
 
 const Review = (props: Props) => {
+  const { mutate: createNewReview } = ReviewServices.useCreateReview();
   const [rating, setRating] = useState(0);
 
   const token = useAuthStore((state) => state.token);
@@ -37,6 +39,7 @@ const Review = (props: Props) => {
       content: data.content,
       rating: rating || 5,
     };
+    createNewReview(review, { onSuccess: () => console.log("success") });
   };
   useEffect(() => {
     if (isSubmitSuccessful) {

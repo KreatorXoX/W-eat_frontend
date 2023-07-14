@@ -3,12 +3,15 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Rating } from "react-simple-star-rating";
 
 import ReviewItem from "../components/ReviewItem/ReviewItem";
+import ReviewServices from "../api/services/review.service";
 import MenuServices from "../api/services/menu.service";
 
 type Props = {};
 
 export default function Reviews({}: Props) {
   const { data: restaurantMenuAndInfo } = MenuServices.useMenu();
+  const { data: reviews } = ReviewServices.useReviews();
+  console.log(reviews);
   const navigate = useNavigate();
   return (
     <div className="flex h-screen flex-col gap-2 pb-4 lg:h-fit lg:pb-0">
@@ -39,10 +42,7 @@ export default function Reviews({}: Props) {
                 readonly
                 allowTitleTag={false}
               />
-              <span>
-                out of {restaurantMenuAndInfo?.restaurant?.reviews?.length || 0}{" "}
-                reviews
-              </span>
+              <span>out of {reviews?.length || 0} reviews</span>
             </span>
             <span>
               All revies come from customers who have ordered from W/eat
@@ -52,9 +52,8 @@ export default function Reviews({}: Props) {
       </div>
 
       <div className="space-y-4 overflow-y-scroll px-4 lg:max-h-[30rem]">
-        {restaurantMenuAndInfo?.restaurant?.reviews &&
-        restaurantMenuAndInfo.restaurant.reviews.length > 0 ? (
-          restaurantMenuAndInfo.restaurant.reviews.map((orderReview) => (
+        {reviews && reviews.length > 0 ? (
+          reviews.map((orderReview) => (
             <ReviewItem key={orderReview._id} review={orderReview} />
           ))
         ) : (

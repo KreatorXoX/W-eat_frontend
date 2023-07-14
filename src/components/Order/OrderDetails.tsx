@@ -36,7 +36,6 @@ const OrderDetails = (props: Props) => {
       )}
       <div>
         {showReview && <ReviewForm />}
-
         <div className="flex w-full items-start justify-between">
           <div className="mb-2 flex flex-col justify-center">
             <h4>
