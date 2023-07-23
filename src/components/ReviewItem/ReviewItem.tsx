@@ -13,7 +13,7 @@ const ReviewItem = ({ review }: Props) => {
         <p>{review?.user?.name}</p>
         <span className="text-xs">{formatDate(review?.createdAt)}</span>
       </div>
-      <article className="font-sm text-gray-800">
+      <article className="font-sm text-gray-800 dark:text-slate-200">
         {review?.content ||
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum asperiores in nam vel accusantium porro! Natus aperiam necessitatibus esse aliquid! Aspernatur sequi temporibus dolore repudiandae harum dolor recusandae eius corporis."}
       </article>
