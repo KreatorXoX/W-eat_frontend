@@ -1,21 +1,21 @@
 import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import { useTheme } from "../context/themeStore";
-import useWindowSize from "../utils/useWindowSize";
+// import useWindowSize from "../utils/useWindowSize";
 type Props = {};
 
 const CartLayout = (props: Props) => {
   const dark = useTheme((state) => state.dark);
-  const windowDimensions = useWindowSize();
+  // const windowDimensions = useWindowSize();
 
-  useEffect(() => {
-    if (windowDimensions.width > 1024) document.body.style.overflow = "auto";
-    else document.body.style.overflow = "hidden";
+  // useEffect(() => {
+  //   if (windowDimensions.width > 1024) document.body.style.overflow = "auto";
+  //   else document.body.style.overflow = "hidden";
 
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [windowDimensions.width]);
+  //   return () => {
+  //     document.body.style.overflow = "auto";
+  //   };
+  // }, [windowDimensions.width]);
 
   return (
     <div
