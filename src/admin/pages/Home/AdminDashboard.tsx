@@ -6,7 +6,7 @@ const AdminDashboard = (props: Props) => {
   const { data: revenue } = RestaurantServices.useRevenue();
 
   return (
-    <div className="mx-auto grid h-full max-w-4xl grid-cols-1 gap-4 overflow-auto p-5 px-20 md:grid-cols-2 lg:gap-10">
+    <div className="mx-auto grid h-full max-w-5xl grid-cols-1 gap-4 overflow-auto p-5 px-20 sm:grid-cols-2 md:grid-cols-3 lg:gap-10">
       <OrderCard name="Total Orders" value={revenue?.totalOrders} />
       <OrderCard
         name="Total Earned"
@@ -16,8 +16,22 @@ const AdminDashboard = (props: Props) => {
             : "None"
         }`}
       />
-      <OrderCard name="Orders Completed" value={revenue?.ordersCompleted} />
-      <OrderCard name="Orders Canceled" value={revenue?.ordersCanceled} />
+      <OrderCard
+        name="Pending Orders"
+        value={revenue?.ordersPending}
+        where="orders"
+      />
+      <OrderCard
+        name="Active Orders"
+        value={revenue?.ordersActive}
+        where="orders/active-orders"
+      />
+      <OrderCard
+        name="Completed Orders"
+        value={revenue?.ordersCompleted}
+        where="orders/order-history"
+      />
+      <OrderCard name="Canceled Orders" value={revenue?.ordersCanceled} />
     </div>
   );
 };

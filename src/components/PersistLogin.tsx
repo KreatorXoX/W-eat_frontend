@@ -8,7 +8,7 @@ const PersistLogin = () => {
 
   const token = useAuthStore((state) => state.token);
   const setCredentials = useAuthStore((state) => state.setCredentials);
-
+  console.log(token);
   useEffect(() => {
     let isMounted = true;
 
@@ -31,7 +31,7 @@ const PersistLogin = () => {
     };
   }, []);
 
-  return <Outlet />;
+  return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
 };
 
 export default PersistLogin;

@@ -17,6 +17,7 @@ const AdminLayout = (props: Props) => {
   const ctx = useOutletContext();
   const navigate = useNavigate();
   const logOut = useAuthStore((state) => state.logOut);
+
   return (
     <main className="mx-auto flex h-screen flex-col lg:flex-row">
       <aside className="w-full rounded-lg bg-neutral-200 text-left lg:w-[14rem] ">

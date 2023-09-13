@@ -201,8 +201,10 @@ interface IMenu extends IApi {
 }
 
 interface IRevenue {
-  totalOrders: number | undefined;
-  totalEarned: number | undefined;
-  ordersCompleted: number | undefined;
-  ordersCanceled: number | undefined;
+  totalOrders?: number;
+  totalEarned?: number;
+  ordersActive?: number;
+  ordersCompleted?: number;
+  ordersCanceled?: number;
+  ordersPending?: number;
 }
